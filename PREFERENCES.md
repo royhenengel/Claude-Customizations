@@ -4,7 +4,7 @@ This document tracks preferences, rules, and decisions for Claude Code customiza
 
 ---
 
-## Skills & Agents Management
+## Skills, Agents & MCP Servers
 
 ### When to Use Which
 
@@ -12,10 +12,27 @@ This document tracks preferences, rules, and decisions for Claude Code customiza
 |----------|-----------|-----|
 | Reusable prompts/templates | **Skill** | Simple, shares conversation context |
 | Domain knowledge/standards | **Skill** | Instructions loaded when relevant |
+| Quick behavior enhancements | **Skill** | No subprocess overhead |
 | Multi-step autonomous tasks | **Agent** | Runs independently, returns results |
 | Parallel execution | **Agent** | Multiple agents can run simultaneously |
 | Complex exploration/research | **Agent** | Isolated context, thorough investigation |
-| Quick enhancements | **Skill** | No subprocess overhead |
+| External API integration | **MCP Server** | Direct tool access to external services |
+| Real-time data from services | **MCP Server** | Live connection to databases, APIs, apps |
+| Actions in external systems | **MCP Server** | Create, update, delete in connected services |
+
+### Tool Selection Guide
+
+```
+Need to extend Claude's knowledge/behavior?
+├── Static instructions or templates? → Skill
+├── Autonomous multi-step work? → Agent
+└── Connect to external service/API? → MCP Server
+
+Need to interact with external system?
+├── Read/write data? → MCP Server
+├── One-time API call? → Skill (with fetch) or MCP Server
+└── Complex workflow automation? → MCP Server + Agent
+```
 
 ### Overlap Analysis (Last checked: 2024-12-22)
 
@@ -25,6 +42,10 @@ Checked pairs:
 - `skill-assistant` vs `skill-creator` — **Complementary**, not conflicting. One finds/installs skills, the other guides creation.
 
 **Agents — None installed yet.**
+
+**MCP Servers — No conflicts found.**
+- `notion` — Notion workspace integration (search, read, create, update pages/databases)
+- `n8n-mcp` — n8n workflow automation (create, manage, execute workflows)
 
 ### Bundled Items
 
@@ -38,7 +59,7 @@ Each sub-folder has its own `SKILL.md` with type-specific instructions.
 
 ### Installation Rules
 
-Applies to both skills and agents:
+Applies to skills, agents, and MCP servers:
 
 1. **Avoid duplicates** — Before installing, check if a similar one exists
 2. **Clean install preferred** — When updating, delete the old directory first:
@@ -48,6 +69,7 @@ Applies to both skills and agents:
    ```
 3. **Naming convention** — Use kebab-case for directories (e.g., `my-skill-name`, `my-agent-name`)
 4. **Check for overlap** — If two items do similar things, keep only one or ensure they handle distinct use cases
+5. **MCP server config** — Store in `.mcp.json` (project-level, gitignored for API keys) or `~/.claude.json` (user-level)
 
 ### Priority & Conflicts
 
@@ -101,6 +123,23 @@ Always name important sessions with `/rename <name>` for easy retrieval later.
 | Invocation | `/skill-name` or auto-matched | Task tool with `subagent_type` |
 | Context | Shares main conversation | Isolated subprocess |
 | Use case | Reusable prompts, domain knowledge | Multi-step autonomous tasks |
+
+---
+
+## Installed MCP Servers
+
+| Server | Purpose | Capabilities |
+|--------|---------|--------------|
+| `notion` | Notion workspace | Search, fetch, create/update pages & databases, manage comments |
+| `n8n-mcp` | Workflow automation | Create/manage n8n workflows, search nodes, deploy templates, execute workflows |
+
+### MCP Server Selection
+
+| Need | Server |
+|------|--------|
+| Note-taking, documentation, databases | `notion` |
+| Workflow automation, integrations | `n8n-mcp` |
+| Both systems connected | Use n8n workflow with Notion nodes |
 
 ---
 
@@ -158,3 +197,4 @@ Source: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome
 | 2024-12-22 | Installed 23 skills from awesome-claude-skills |
 | 2024-12-22 | Set up symlinks for ~/.claude/skills and ~/.claude/agents |
 | 2024-12-22 | Unified skills & agents management with decision criteria |
+| 2024-12-22 | Added MCP servers to tool selection framework (notion, n8n-mcp) |
