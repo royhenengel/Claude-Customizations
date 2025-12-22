@@ -4,40 +4,58 @@ This document tracks preferences, rules, and decisions for Claude Code customiza
 
 ---
 
-## Skills Management
+## Skills & Agents Management
+
+### When to Use Which
+
+| Use Case | Best Tool | Why |
+|----------|-----------|-----|
+| Reusable prompts/templates | **Skill** | Simple, shares conversation context |
+| Domain knowledge/standards | **Skill** | Instructions loaded when relevant |
+| Multi-step autonomous tasks | **Agent** | Runs independently, returns results |
+| Parallel execution | **Agent** | Multiple agents can run simultaneously |
+| Complex exploration/research | **Agent** | Isolated context, thorough investigation |
+| Quick enhancements | **Skill** | No subprocess overhead |
 
 ### Overlap Analysis (Last checked: 2024-12-22)
 
-**No conflicts found.**
+**Skills — No conflicts found.**
 
 Checked pairs:
 - `skill-assistant` vs `skill-creator` — **Complementary**, not conflicting. One finds/installs skills, the other guides creation.
 
-### Bundled Skills
+**Agents — None installed yet.**
 
-Some skills contain sub-skills in nested folders:
+### Bundled Items
+
+Some skills/agents contain sub-items in nested folders:
 
 | Bundle | Contains |
 |--------|----------|
-| `document-skills/` | `docx/`, `pdf/`, `pptx/`, `xlsx/` |
+| `skills/document-skills/` | `docx/`, `pdf/`, `pptx/`, `xlsx/` |
 
 Each sub-folder has its own `SKILL.md` with type-specific instructions.
 
 ### Installation Rules
 
-1. **Avoid duplicates** — Before installing a skill, check if a similar one exists
-2. **Clean install preferred** — When updating a skill, delete the old directory first:
+Applies to both skills and agents:
+
+1. **Avoid duplicates** — Before installing, check if a similar one exists
+2. **Clean install preferred** — When updating, delete the old directory first:
    ```bash
    rm -rf skills/my-skill && cp -R /source/my-skill skills/
+   rm -rf agents/my-agent && cp -R /source/my-agent agents/
    ```
-3. **Naming convention** — Use kebab-case for skill directories (e.g., `my-skill-name`)
+3. **Naming convention** — Use kebab-case for directories (e.g., `my-skill-name`, `my-agent-name`)
+4. **Check for overlap** — If two items do similar things, keep only one or ensure they handle distinct use cases
 
-### Skill Priority
+### Priority & Conflicts
 
-When multiple skills match a request:
-- Both are loaded into context (no strict priority)
-- Conflicting instructions may cause unpredictable behavior
-- **Resolution**: Remove or rename one skill to avoid overlap
+When multiple skills/agents could handle a request:
+- Skills: Both loaded into context (may cause unpredictable behavior if conflicting)
+- Agents: User/Claude chooses which to invoke
+
+**Resolution**: Remove duplicates or ensure clear separation of concerns
 
 ---
 
@@ -139,3 +157,4 @@ Source: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome
 | 2024-12-22 | Initial document created |
 | 2024-12-22 | Installed 23 skills from awesome-claude-skills |
 | 2024-12-22 | Set up symlinks for ~/.claude/skills and ~/.claude/agents |
+| 2024-12-22 | Unified skills & agents management with decision criteria |
