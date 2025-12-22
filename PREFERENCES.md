@@ -131,6 +131,7 @@ MCP servers are **not always running** — they start with Claude Code sessions 
 /Users/royengel/Projects/Claude Code/claude-customizations/
 ├── skills/           # All installed skills
 ├── agents/           # Custom agents
+├── commands/         # Slash commands (symlinked to ~/.claude/commands)
 ├── mcp/              # MCP server docs/configs
 ├── CLAUDE.md         # Auto-loaded by Claude Code
 ├── PREFERENCES.md    # This file (referenced by CLAUDE.md)
@@ -277,3 +278,4 @@ Source: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome
 | 2024-12-22 | Added scaling considerations and MCP server types (stdio vs http) |
 | 2024-12-22 | Added skill resources section; installed web-asset-generator |
 | 2024-12-22 | Installed obra/superpowers (14 skills + code-reviewer agent) |
+| 2024-12-22 | Installed commands: /brainstorm, /write-plan, /execute-plan |
