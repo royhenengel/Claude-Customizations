@@ -181,10 +181,29 @@ Always name important sessions with `/rename <name>` for easy retrieval later.
 
 ## Installed MCP Servers
 
+### Active (no auth required)
+
 | Server | Purpose | Capabilities |
 |--------|---------|--------------|
 | `notion` | Notion workspace | Search, fetch, create/update pages & databases, manage comments |
 | `n8n-mcp` | Workflow automation | Create/manage n8n workflows, search nodes, deploy templates, execute workflows |
+| `sequential-thinking` | Structured reasoning | Break complex problems into logical steps |
+| `filesystem` | Local file access | Read, write, edit files in home directory |
+| `memory` | Persistent memory | Context retention across sessions |
+| `puppeteer` | Browser automation | Web scraping, testing, UI automation |
+
+### Disabled (needs credentials)
+
+| Server | Purpose | Setup Required |
+|--------|---------|----------------|
+| `github` | GitHub integration | GitHub Personal Access Token |
+| `postgres` | Database queries | PostgreSQL connection string |
+| `apidog` | API specs to code | OpenAPI spec URL or path |
+| `figma` | Design to code | Figma API key |
+
+To enable disabled servers, edit `.mcp.json`:
+1. Add your credentials
+2. Set `"disabled": false`
 
 ### MCP Server Selection
 
@@ -192,7 +211,14 @@ Always name important sessions with `/rename <name>` for easy retrieval later.
 |------|--------|
 | Note-taking, documentation, databases | `notion` |
 | Workflow automation, integrations | `n8n-mcp` |
-| Both systems connected | Use n8n workflow with Notion nodes |
+| Complex problem solving | `sequential-thinking` |
+| File operations | `filesystem` |
+| Cross-session memory | `memory` |
+| Web automation, scraping | `puppeteer` |
+| GitHub repos, PRs, issues | `github` (needs token) |
+| Database queries | `postgres` (needs connection) |
+| API development | `apidog` (needs spec) |
+| Design implementation | `figma` (needs token) |
 
 ---
 
@@ -519,3 +545,4 @@ Source: [obra/superpowers](https://github.com/obra/superpowers), [glittercowboy/
 | 2024-12-22 | Installed Context Engineering Kit: 5 skills, 13 agents, 37 commands |
 | 2024-12-22 | Added Native Commands (Built-in) reference section |
 | 2024-12-22 | Added CLI Flags reference section (--continue, --resume, etc.) |
+| 2024-12-22 | Installed 8 new MCP servers: sequential-thinking, filesystem, memory, puppeteer, github, postgres, apidog, figma |
