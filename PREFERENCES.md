@@ -184,9 +184,21 @@ Always name important sessions with `/rename <name>` for easy retrieval later.
 
 ---
 
+## Skill & Agent Resources
+
+| Resource | Description |
+|----------|-------------|
+| [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills) | Curated skills collection (installed) |
+| [travisvn/awesome-claude-skills](https://github.com/travisvn/awesome-claude-skills) | Curated list with community skills |
+| [obra/superpowers](https://github.com/obra/superpowers) | 20+ skills: TDD, debugging, git workflows, code review |
+| [K-Dense-AI/claude-scientific-skills](https://github.com/K-Dense-AI/claude-scientific-skills) | 125+ scientific skills: drug discovery, bioinformatics, ML |
+| [anthropics/skills](https://github.com/anthropics/skills) | Official Anthropic skills repository |
+
+---
+
 ## Installed Skills
 
-Source: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills)
+Source: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome-claude-skills), [alonw0/web-asset-generator](https://github.com/alonw0/web-asset-generator)
 
 ### By Category
 
@@ -217,6 +229,7 @@ Source: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome
 - slack-gif-creator
 - theme-factory
 - video-downloader
+- web-asset-generator
 
 **Productivity**
 - file-organizer
@@ -240,3 +253,4 @@ Source: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome
 | 2024-12-22 | Unified skills & agents management with decision criteria |
 | 2024-12-22 | Added MCP servers to tool selection framework (notion, n8n-mcp) |
 | 2024-12-22 | Added scaling considerations and MCP server types (stdio vs http) |
+| 2024-12-22 | Added skill resources section; installed web-asset-generator |
