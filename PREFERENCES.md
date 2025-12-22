@@ -409,6 +409,31 @@ Source: [VoltAgent/awesome-claude-code-subagents](https://github.com/VoltAgent/a
 
 ---
 
+## CLI Flags
+
+Command-line options when launching Claude Code:
+
+| Flag | Description |
+|------|-------------|
+| `--continue` | Resume most recent conversation in current directory |
+| `--resume` | Interactive picker for all sessions |
+| `--resume <id>` | Resume specific session by ID |
+| `--print` | Print response without interactive mode |
+| `--output-format` | Output format: text, json, stream-json |
+| `--model <model>` | Specify model (sonnet, opus, haiku) |
+| `--permission-mode` | Set permission mode: default, plan, bypassPermissions |
+| `--allowedTools` | Comma-separated list of allowed tools |
+| `--disallowedTools` | Comma-separated list of disallowed tools |
+| `--mcp-config` | Path to MCP config file |
+| `--add-dir <path>` | Add directory to context |
+| `--verbose` | Enable verbose logging |
+| `--dangerously-skip-permissions` | Skip all permission prompts (use with caution) |
+| `-p, --prompt <text>` | Start with initial prompt |
+| `-h, --help` | Show help |
+| `-v, --version` | Show version |
+
+---
+
 ## Native Commands (Built-in)
 
 These are Claude Code's built-in slash commands:
@@ -493,3 +518,4 @@ Source: [obra/superpowers](https://github.com/obra/superpowers), [glittercowboy/
 | 2024-12-22 | Installed TÂCHES: 8 skills, 3 agents, 29 commands (including 12 /consider: thinking models) |
 | 2024-12-22 | Installed Context Engineering Kit: 5 skills, 13 agents, 37 commands |
 | 2024-12-22 | Added Native Commands (Built-in) reference section |
+| 2024-12-22 | Added CLI Flags reference section (--continue, --resume, etc.) |
