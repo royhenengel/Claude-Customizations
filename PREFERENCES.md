@@ -42,7 +42,9 @@ Checked pairs:
 - `skill-assistant` vs `skill-creator` — **Complementary**, not conflicting. One finds/installs skills, the other guides creation.
 - `anthropic` (new) replaced `anthropic-best-practices.md` (loose file) — new skill is more comprehensive.
 
-**Agents — 1 installed (code-reviewer from obra/superpowers).**
+**Agents — 125 installed from [VoltAgent/awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents).**
+
+Note: VoltAgent's `code-reviewer.md` replaced obra/superpowers version.
 
 **MCP Servers — No conflicts found.**
 - `notion` — Notion workspace integration (search, read, create, update pages/databases)
@@ -202,6 +204,7 @@ Always name important sessions with `/rename <name>` for easy retrieval later.
 | [VoltAgent/awesome-claude-skills](https://github.com/VoltAgent/awesome-claude-skills) | Community skills collection |
 | [PleasePrompto/notebooklm-skill](https://github.com/PleasePrompto/notebooklm-skill) | NotebookLM integration (installed) |
 | [czlonkowski/n8n-skills](https://github.com/czlonkowski/n8n-skills) | n8n workflow skills - complements n8n-mcp (installed) |
+| [VoltAgent/awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents) | 125 specialized Task tool agents (installed) |
 
 ---
 
@@ -309,6 +312,66 @@ Source: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome
 
 ---
 
+## Installed Agents
+
+Source: [VoltAgent/awesome-claude-code-subagents](https://github.com/VoltAgent/awesome-claude-code-subagents)
+
+### By Category
+
+**Core Development (11)**
+- api-designer, backend-developer, electron-pro, frontend-developer, fullstack-developer
+- graphql-architect, microservices-architect, mobile-developer, ui-designer
+- websocket-engineer, wordpress-master
+
+**Language Specialists (26)**
+- angular-architect, cpp-pro, csharp-developer, django-developer, dotnet-core-expert
+- dotnet-framework-4.8-expert, flutter-expert, golang-pro, java-architect, javascript-pro
+- kotlin-specialist, laravel-specialist, nextjs-developer, php-pro, powershell-5.1-expert
+- powershell-7-expert, python-pro, rails-expert, react-specialist, rust-engineer
+- spring-boot-engineer, sql-pro, swift-expert, typescript-pro, vue-expert
+
+**Infrastructure (14)**
+- azure-infra-engineer, cloud-architect, database-administrator, deployment-engineer
+- devops-engineer, devops-incident-responder, incident-responder, kubernetes-specialist
+- network-engineer, platform-engineer, security-engineer, sre-engineer
+- terraform-engineer, windows-infra-admin
+
+**Quality & Security (12)**
+- accessibility-tester, architect-reviewer, chaos-engineer, code-reviewer
+- compliance-auditor, debugger, error-detective, penetration-tester
+- performance-engineer, powershell-security-hardening, qa-expert, test-automator
+
+**Data & AI (12)**
+- ai-engineer, data-analyst, data-engineer, data-scientist, database-optimizer
+- llm-architect, machine-learning-engineer, ml-engineer, mlops-engineer
+- nlp-engineer, postgres-pro, prompt-engineer
+
+**Developer Experience (12)**
+- build-engineer, cli-developer, dependency-manager, documentation-engineer
+- dx-optimizer, git-workflow-manager, legacy-modernizer, mcp-developer
+- powershell-module-architect, powershell-ui-architect, refactoring-specialist, tooling-engineer
+
+**Specialized Domains (12)**
+- api-documenter, blockchain-developer, embedded-systems, fintech-engineer
+- game-developer, iot-engineer, m365-admin, mobile-app-developer
+- payment-integration, quant-analyst, risk-manager, seo-specialist
+
+**Business & Product (10)**
+- business-analyst, content-marketer, customer-success-manager, legal-advisor
+- product-manager, project-manager, sales-engineer, scrum-master
+- technical-writer, ux-researcher
+
+**Meta & Orchestration (9)**
+- agent-organizer, context-manager, error-coordinator, it-ops-orchestrator
+- knowledge-synthesizer, multi-agent-coordinator, performance-monitor
+- task-distributor, workflow-orchestrator
+
+**Research & Analysis (7)**
+- competitive-analyst, data-researcher, market-researcher, research-analyst
+- search-specialist, trend-analyst
+
+---
+
 ## Changelog
 
 | Date | Change |
@@ -326,3 +389,4 @@ Source: [ComposioHQ/awesome-claude-skills](https://github.com/ComposioHQ/awesome
 | 2024-12-22 | Fixed obra/superpowers installation; added ship-learn-next, move-code-quality-skill, git-pushing |
 | 2024-12-22 | Cherry-picked from claude-starter: anthropic, ios, supabase (replaced anthropic-best-practices.md) |
 | 2024-12-22 | Installed notebooklm skill and n8n-skills (7 skills complementing n8n-mcp server) |
+| 2024-12-22 | Installed 125 agents from VoltAgent/awesome-claude-code-subagents (replaced obra/superpowers code-reviewer) |
