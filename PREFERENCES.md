@@ -409,6 +409,34 @@ Source: [VoltAgent/awesome-claude-code-subagents](https://github.com/VoltAgent/a
 
 ---
 
+## Native Commands (Built-in)
+
+These are Claude Code's built-in slash commands:
+
+| Command | Description |
+|---------|-------------|
+| `/bug` | Report bugs (sends conversation to Anthropic) |
+| `/clear` | Clear conversation history |
+| `/compact` | Compact conversation to save context |
+| `/config` | Open config panel |
+| `/cost` | Show token usage and cost |
+| `/doctor` | Check Claude Code health/setup |
+| `/help` | Show help |
+| `/init` | Initialize CLAUDE.md in current directory |
+| `/login` | Switch Anthropic accounts |
+| `/logout` | Sign out |
+| `/mcp` | Show MCP server status |
+| `/memory` | Edit CLAUDE.md files |
+| `/model` | Switch model (Sonnet/Opus/Haiku) |
+| `/permissions` | Manage tool permissions |
+| `/pr-comments` | View PR comments |
+| `/review` | Request code review |
+| `/status` | Show session status |
+| `/terminal-setup` | Configure terminal integration |
+| `/vim` | Toggle vim mode |
+
+---
+
 ## Installed Commands
 
 Source: [obra/superpowers](https://github.com/obra/superpowers), [glittercowboy/taches-cc-resources](https://github.com/glittercowboy/taches-cc-resources), [NeoLabHQ/context-engineering-kit](https://github.com/NeoLabHQ/context-engineering-kit)
@@ -464,3 +492,4 @@ Source: [obra/superpowers](https://github.com/obra/superpowers), [glittercowboy/
 | 2024-12-22 | Kept both code-reviewers: code-reviewer (VoltAgent, general) + code-reviewer-plan (obra, plan-alignment) |
 | 2024-12-22 | Installed TÂCHES: 8 skills, 3 agents, 29 commands (including 12 /consider: thinking models) |
 | 2024-12-22 | Installed Context Engineering Kit: 5 skills, 13 agents, 37 commands |
+| 2024-12-22 | Added Native Commands (Built-in) reference section |
