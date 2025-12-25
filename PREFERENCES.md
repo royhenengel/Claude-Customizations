@@ -167,6 +167,45 @@ Always name important sessions with `/rename <name>` for easy retrieval later.
 
 ---
 
+## Behavioral Rules
+
+### Context-First Data Retrieval
+
+**Trigger:** Any request to "load", "read", "check", or "follow" rules/content from external sources (Notion, APIs, files).
+
+**Before making external API calls, ALWAYS:**
+
+1. **Check existing context first**
+   - Read MCP memory for previously stored content
+   - Review conversation summary for already-extracted information
+   - Check if the data was loaded in a previous session
+
+2. **If content exists in memory/context:**
+   - Confirm rules are present
+   - State "ready" or summarize what's loaded
+   - Do NOT re-fetch from source
+
+3. **If content does NOT exist:**
+   - Fetch only what's needed
+   - For large documents (Notion pages with nested blocks): extract key rules, not full content
+   - Stop when you have actionable information
+
+**Never:**
+- Re-fetch data that's already in memory or conversation context
+- Chase nested content (toggles, children) when top-level summaries suffice
+- Interpret "load rules" as "fetch complete document structure"
+- Make multiple sequential API calls when a summary already exists
+
+**Why this matters:**
+- Notion pages can exceed 80K+ characters
+- Nested block fetching multiplies API calls (6-10+ per document)
+- Token limits cause failures and file dumps
+- User time is wasted on redundant operations
+
+**"Load" means:** Verify rules are accessible and follow them. Not: re-download everything.
+
+---
+
 ## Skills vs Agents
 
 | Aspect | Skills | Agents |
@@ -546,3 +585,4 @@ Source: [obra/superpowers](https://github.com/obra/superpowers), [glittercowboy/
 | 2024-12-22 | Added Native Commands (Built-in) reference section |
 | 2024-12-22 | Added CLI Flags reference section (--continue, --resume, etc.) |
 | 2024-12-22 | Installed 8 new MCP servers: sequential-thinking, filesystem, memory, puppeteer, github, postgres, apidog, figma |
+| 2024-12-24 | Added "Context-First Data Retrieval" behavioral rule to prevent redundant API fetching |

@@ -39,3 +39,14 @@ To add/modify skills, agents, commands, or MCP servers:
 1. Work in `/Users/royengel/Projects/Claude Code/claude-customizations/`
 2. Changes automatically apply globally via symlinks
 3. Commit to git for version control
+
+## Uncertainty Protocol
+
+When performing bulk operations or making decisions that affect multiple items:
+- STOP and flag uncertain items BEFORE making any changes
+- Never assume based on surface-level patterns (keywords, names, etc.)
+- Present uncertain items to user for clarification first
+- Act only after receiving explicit confirmation
+- If more than 20% of items are uncertain, question whether the approach itself is correct
+
+This applies universally: code changes, file organization, data categorization, refactoring, or any batch operation.
