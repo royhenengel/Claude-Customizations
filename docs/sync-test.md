@@ -15,7 +15,7 @@ console.log('Sync working!');
 ```
 
 ## Status
-**Test #7** - Updated at 2025-12-27 after fixing webhookId.
+**Test #8** - Updated at 2025-12-27 after adding authentication param.
 
 ---
 *Last updated: 2025-12-27*
