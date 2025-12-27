@@ -4,9 +4,10 @@ This is a test document to verify the GitHub ↔ Notion sync is working.
 
 ## Features Tested
 
-- Headings (H1, H2)
+- Headings (H1, H2, H3)
 - Bullet points
 - Code blocks
+- Paragraphs
 
 ## Code Example
 
@@ -15,13 +16,10 @@ const syncTest = true;
 console.log('Sync working!');
 ```
 
-## Checklist
+## Status
 
-- Push to GitHub triggers n8n webhook
-- n8n converts markdown to Notion blocks
-- Page created in Resources database
-- Sync metadata populated
+**Test #2** - Updated at 2025-12-27 to trigger sync with v2 workflow.
 
 ---
 
-*Created: 2024-12-27*
+*Last updated: 2025-12-27*
