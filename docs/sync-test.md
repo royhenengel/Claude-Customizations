@@ -15,7 +15,7 @@ console.log('Sync working!');
 ```
 
 ## Status
-**Test #3** - Updated at 2025-12-27 to trigger sync with v2 workflow after credential fix.
+**Test #4** - Updated at 2025-12-27 to trigger sync with v3 workflow (fixed filter nodes).
 
 ---
 *Last updated: 2025-12-27*
