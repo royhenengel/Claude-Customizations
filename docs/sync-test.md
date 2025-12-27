@@ -15,7 +15,7 @@ console.log('Sync working!');
 ```
 
 ## Status
-**Test #5** - Updated at 2025-12-27 to trigger sync after workflow reactivation.
+**Test #6** - Updated at 2025-12-27 to trigger new v3 workflow.
 
 ---
 *Last updated: 2025-12-27*
