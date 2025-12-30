@@ -2,7 +2,7 @@
 
 This document provides a quick reference to all installed Claude Code skills organized by category.
 
-**Total Skills:** 66 unique skills (excluding catalog duplicates)
+**Total Skills:** 73 unique skills (excluding catalog duplicates)
 
 ---
 
@@ -104,6 +104,20 @@ This document provides a quick reference to all installed Claude Code skills org
 | slack-gif-creator | Create animated GIFs optimized for Slack with validators for size constraints |
 | theme-factory | Toolkit for styling artifacts with 10 pre-set themes (colors/fonts) |
 | web-asset-generator | Generate favicons, app icons (PWA), and social media meta images |
+
+---
+
+## Diagrams & Visualization
+
+| Skill | Description |
+|-------|-------------|
+| diagram-strategist | Expert in software diagram strategy, selection, and data architecture upstream of rendering |
+| mermaid-diagram | Creates syntactically correct Mermaid diagrams preventing common errors |
+| visualizing-with-mermaid | Create professional Mermaid diagrams with styling, visual hierarchy, dark mode |
+| discover-diagrams | Gateway skill for discovering and loading specialized Mermaid diagram skills |
+| architecture-diagrams | Create system architecture diagrams using Mermaid, PlantUML, and C4 model |
+| plantuml | Generate PlantUML diagrams from text descriptions and convert to PNG/SVG |
+| drawio-diagrams-enhanced | Create draw.io XML diagrams with PMP/PMBOK templates and icon libraries |
 
 ---
 
