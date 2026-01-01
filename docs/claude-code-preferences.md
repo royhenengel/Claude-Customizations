@@ -1,4 +1,4 @@
-# Claude Code Preferences & Decisions
+# Claude Code Prefers
 
 This document tracks preferences, rules, and decisions for Claude Code customization.
 
@@ -7,8 +7,6 @@ This document tracks preferences, rules, and decisions for Claude Code customiza
 ## Skills, Agents & MCP Servers
 
 ### When to Use Which
-
-<!-- Table not supported -->
 
 ### Tool Selection Guide
 
@@ -62,8 +60,6 @@ Note: Both repos provided code-reviewer agents. Kept both with distinct purposes
 
 Some skills/agents contain sub-items in nested folders:
 
-<!-- Table not supported -->
-
 Each sub-folder has its own `SKILL.md` with type-specific instructions.
 
 ### Installation Rules
@@ -102,25 +98,17 @@ When multiple skills/agents could handle a request:
 
 **Skills:**
 
-<!-- Table not supported -->
-
 *Skills only load when relevant — unused ones don't cost much.*
 
 **Agents:**
-
-<!-- Table not supported -->
 
 *Install freely — agents are just available options until invoked.*
 
 **MCP Servers:**
 
-<!-- Table not supported -->
-
 *Be selective with MCP servers — each one is an active dependency.*
 
 ### MCP Server Types
-
-<!-- Table not supported -->
 
 MCP servers are **not always running** — they start with Claude Code sessions and can be enabled/disabled per project.
 
@@ -149,8 +137,6 @@ MCP servers are **not always running** — they start with Claude Code sessions 
 ## Session Management
 
 ### Resuming Conversations
-
-<!-- Table not supported -->
 
 ### Best Practice
 
@@ -220,8 +206,6 @@ Every 10-15 messages on long tasks:
 
 ### Quick Reference
 
-<!-- Table not supported -->
-
 **Golden Rule**: Files are permanent; conversation context is not.
 
 ---
@@ -229,4 +213,3 @@ Every 10-15 messages on long tasks:
 ## Behavioral Rules
 
 ### Context-First Data Retrieval
-
