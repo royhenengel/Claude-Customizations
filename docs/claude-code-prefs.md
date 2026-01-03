@@ -662,3 +662,4 @@ Source: [obra/superpowers](https://github.com/obra/superpowers), [glittercowboy/
 
 <\!-- Fix test: 07:03:38 -->
 <\!-- Test sync: 2026-01-03 07:12:16 -->
+<\!-- Pagination fix test: 2026-01-03 07:14:39 -->
