@@ -1,336 +1,202 @@
-# Incident Report Command Implementation Plan
+# Incident Report - /fix Enhancement Plan
 
 ## Objective
 
-Create a `/incident-report` skill that investigates incidents using parallel analysis agents, performs Five Whys root cause analysis, generates standardized reports, and auto-creates prevention items in the backlog.
+Enhance the existing `/fix` skill with incident report generation and a defer/fix decision fork after the investigation phase. No new skill. Modify `skills/Code-Quality/fix/SKILL.md`.
 
 ## Context
 
 @planning/specs/incident-report-command/SPEC.md
 @planning/specs/incident-report-command/RESEARCH.md
-@skills/Learning/compound/SKILL.md
+@skills/Code-Quality/fix/SKILL.md
 @skills/Planning/my-workflow/templates/incident-template.md
 
 ## Task Summary
 
 | # | Task | Type | Dependencies | Blocking |
-|---|------|------|--------------|----------|
-| 1 | Create SKILL.md with frontmatter and workflow skeleton | auto | - | - |
-| 2 | Implement Step 1: Context detection and feature identification | auto | Task 1 | - |
-| 3 | Implement Step 2: Parallel investigation agents | auto | Task 2 | - |
-| 4 | Implement Step 3: Report generation from agent outputs | auto | Task 3 | - |
-| 5 | Implement Step 4: Backlog integration (prevention items) | auto | Task 4 | - |
-| 6 | Implement Step 5: Confirmation and output | auto | Task 5 | - |
-| 7 | Update incident-template.md to match new standard | auto | Task 4 | - |
-| 8 | Create symlink for skill discovery | auto | Task 6 | - |
-| 9 | End-to-end verification | checkpoint:human-verify | Tasks 6-8 | yes |
+| - | ---- | ---- | ------------ | -------- |
+| 1 | Walk through existing /fix flow step by step | research | - | - |
+| 2 | Design insertion point and report generation step | design | Task 1 | - |
+| 3 | Design decision fork (defer or fix now) | design | Task 2 | - |
+| 4 | Implement report generation step in /fix SKILL.md | auto | Task 3 | - |
+| 5 | Implement decision fork in /fix SKILL.md | auto | Task 4 | - |
+| 6 | Implement defer path (backlog + cross-reference) | auto | Task 5 | - |
+| 7 | Update incident-template.md to match report format | auto | Task 4 | - |
+| 8 | End-to-end verification | checkpoint:human-verify | Tasks 6-7 | yes |
 
 ## Tasks
 
-### Task 1: Create SKILL.md with frontmatter and workflow skeleton
+### Task 1: Walk through existing /fix flow step by step
 
-**Type**: auto
-**Files**: `skills/Documentation/incident-report/SKILL.md` (create)
+**Type**: research
+**Files**: `skills/Code-Quality/fix/SKILL.md` (read)
 **Dependencies**: None
 
-**Context**: The skill needs proper YAML frontmatter for slash command discovery and a complete step-based workflow structure. Following the /compound pattern as the closest analog.
+**Context**: Before modifying /fix, understand every step of the current workflow. Read the full SKILL.md and document what each step does, what data it produces, and where incident report content naturally emerges.
 
 **Action**:
-Create `skills/Documentation/incident-report/SKILL.md` with:
-- Frontmatter: `name: incident-report`, `description: Investigate incidents with root cause analysis and generate standardized reports`, `arguments: [{name: context, description: Brief description of the incident (or leave blank for auto-detect), required: false}]`
-- Place in `Documentation` group (new group directory, alongside existing skills that generate docs)
-- Skeleton with Steps 1-5 as section headers
-- Relationship note linking to /fix and /compound (incident-report documents what went wrong, /compound documents solutions, /fix fixes issues)
 
-**Verify**: File exists at correct path with valid YAML frontmatter
-**Done**: SKILL.md created with frontmatter and skeleton structure
+1. Read `skills/Code-Quality/fix/SKILL.md` end to end
+2. For each step, document: what it does, what output it produces, what data could feed the incident report
+3. Identify the exact insertion point for report generation (after Step 5, before Step 6)
+4. Note any steps that need adjustment to support the defer path
+
+**Verify**: Complete understanding of current /fix flow documented
+**Done**: Step-by-step analysis with insertion point identified
 
 ---
 
-### Task 2: Implement Step 1: Context detection and feature identification
+### Task 2: Design insertion point and report generation step
 
-**Type**: auto
-**Files**: `skills/Documentation/incident-report/SKILL.md` (modify)
+**Type**: design
+**Files**: `skills/Code-Quality/fix/SKILL.md` (read)
 **Dependencies**: Task 1
 
-**Context**: The skill needs to identify what incident to report. It must work with explicit context (argument) or auto-detect from conversation. It also needs to determine which feature the incident belongs to and derive the output path.
+**Context**: Using the step-by-step analysis from Task 1, design how report generation fits between Step 5 (Root Cause) and Step 6 (Propose Fix). The report should use data already gathered in Steps 2-5.
 
 **Action**:
-Implement Step 1 in SKILL.md:
 
-1. **If `{{context}}` provided**: Use as starting description
-2. **If no context**: Scan conversation for incident indicators:
-   - Error messages or failures
-   - Process violations or workflow deviations
-   - "Something went wrong" / "broke" / "failed" indicators
-   - Ask user if unclear (multiple choice like /compound)
-3. **Feature detection**:
-   - If in worktree: derive feature name from branch (`git branch --show-current`)
-   - If on main: ask which feature the incident relates to, or use "general"
-4. **Severity classification**: Ask user to confirm severity (critical/major/minor) with descriptions:
-   - Critical: data loss, security breach, production impact
-   - Major: workflow broken, significant rework needed
-   - Minor: inconvenience, cosmetic, workaround available
+1. Map each report section to its data source in existing /fix steps
+2. Design the new step (Step 5a or renumber): severity classification, report generation, file storage
+3. Determine if any existing steps need modification to produce data in the right format
+4. Decide whether to use parallel agents or synthesize directly from step outputs
 
-**Verify**: Step 1 logic handles both explicit and auto-detect paths
-**Done**: Context detection produces incident description, feature name, and severity
+**Verify**: Report generation design uses existing step outputs without duplication
+**Done**: Design documented with section-to-step mapping
 
 ---
 
-### Task 3: Implement Step 2: Parallel investigation agents
+### Task 3: Design decision fork (defer or fix now)
 
-**Type**: auto
-**Files**: `skills/Documentation/incident-report/SKILL.md` (modify)
+**Type**: design
+**Files**: `skills/Code-Quality/fix/SKILL.md` (read)
 **Dependencies**: Task 2
 
-**Context**: This is the core analysis step. Three parallel agents investigate different aspects of the incident. Following the /compound pattern of parallel agent invocation. Each agent should receive the incident description and relevant file context.
+**Context**: After the report is generated, the user decides: defer (add to backlog, done) or fix now (continue to Step 6). This must integrate cleanly with the existing flow, including worktree scenarios.
 
 **Action**:
-Implement Step 2 with 3 parallel agents:
 
-**Agent 1 - Timeline Reconstructor:**
-- Read conversation history for sequence of events
-- Check git log for recent commits related to the incident
-- Check git diff for relevant changes
-- Produce chronological timeline with timestamps where available
-- Output: Timeline table (Time | Event) and factual "What Happened" narrative
+1. Design the decision prompt (presentation of report summary + options)
+2. Design the defer path: how to append to BACKLOG.md with cross-reference
+3. Ensure the "fix now" path continues seamlessly into existing Step 6
+4. Handle worktree scenarios (Scenario A fix worktree, Scenario B feature worktree, main branch)
 
-**Agent 2 - Root Cause Analyzer:**
-- Receive incident description and timeline context
-- Read relevant files mentioned in the incident
-- Perform Five Whys analysis (mandatory, go 5 levels deep)
-- Identify contributing factors
-- Output: Five Whys chain, root cause statement, contributing factors list
-
-**Agent 3 - Impact Assessor:**
-- Check which files/artifacts were affected (git diff, file references)
-- Assess scope of impact (single file, multiple files, workflow, architecture)
-- Identify downstream effects
-- Produce affected artifacts table
-- Output: Impact summary, affected artifacts table (File | Status | Issue), severity validation
-
-All 3 agents should use haiku model (per model-selection.md: lightweight workers).
-
-**Verify**: All 3 agents produce structured output when invoked
-**Done**: Investigation produces timeline, root cause analysis, and impact assessment
+**Verify**: Both paths work for all worktree scenarios
+**Done**: Decision fork design with defer and fix paths specified
 
 ---
 
-### Task 4: Implement Step 3: Report generation from agent outputs
+### Task 4: Implement report generation step in /fix SKILL.md
 
 **Type**: auto
-**Files**: `skills/Documentation/incident-report/SKILL.md` (modify)
+**Files**: `skills/Code-Quality/fix/SKILL.md` (modify)
 **Dependencies**: Task 3
 
-**Context**: Synthesize agent outputs into a standardized incident report document. The report format must be consistent across all incidents.
+**Context**: Insert the report generation step into the existing /fix SKILL.md after Step 5.
 
 **Action**:
-Implement Step 3 - report generation:
 
-1. **Derive filename**: `INCIDENT-{YYYY-MM-DD}-{slug}.md` where slug is kebab-case from incident description (max 40 chars)
-2. **Derive storage path**: `planning/specs/{feature}/INCIDENT-{date}-{slug}.md`
-3. **Ensure directory exists**: `mkdir -p planning/specs/{feature}/`
-4. **Generate report** from template:
+1. Add severity classification (if not already captured in Step 1)
+2. Add report generation using data from Steps 2-5
+3. Write report to `planning/specs/{feature}/INCIDENT-{date}-{slug}.md`
+4. Keep the step concise to stay within 400-line limit
 
-```markdown
-# Incident Report: {Brief Description}
-
-**Date**: {YYYY-MM-DD}
-**Feature**: {feature name}
-**Severity**: {critical|major|minor}
-**Status**: Open
-
-## Summary
-
-{2-3 sentence summary synthesized from all agent outputs}
-
-## What Happened
-
-{Timeline Reconstructor output - factual narrative}
-
-## Timeline
-
-| Time | Event |
-|------|-------|
-{Timeline Reconstructor output - table}
-
-## Root Cause
-
-{Root Cause Analyzer output - Five Whys}
-
-### Five Whys
-
-1. **Why?** {first why}
-2. **Why?** {second why}
-3. **Why?** {third why}
-4. **Why?** {fourth why}
-5. **Why?** {fifth why}
-
-**Root Cause**: {statement}
-
-### Contributing Factors
-
-- {factor 1}
-- {factor 2}
-
-## Impact
-
-{Impact Assessor output - summary}
-
-### Affected Artifacts
-
-| File | Status | Issue |
-|------|--------|-------|
-{Impact Assessor output - table}
-
-## Resolution
-
-{What was done or needs to be done to address the immediate issue}
-
-## Prevention
-
-- [ ] {Actionable prevention item 1}
-- [ ] {Actionable prevention item 2}
-
-## Lessons Learned
-
-- {Systemic insight 1}
-- {Systemic insight 2}
-```
-
-5. **Write file** to derived path
-
-**Verify**: Generated report contains all required sections with content from agents
-**Done**: Report file written with complete, formatted content
+**Verify**: Report generates correctly with all required sections
+**Done**: Report generation step added to SKILL.md
 
 ---
 
-### Task 5: Implement Step 4: Backlog integration
+### Task 5: Implement decision fork in /fix SKILL.md
 
 **Type**: auto
-**Files**: `skills/Documentation/incident-report/SKILL.md` (modify)
+**Files**: `skills/Code-Quality/fix/SKILL.md` (modify)
 **Dependencies**: Task 4
 
-**Context**: Prevention items from the report must be appended to BACKLOG.md with a cross-reference to the incident report. This ensures systemic fixes are tracked.
+**Context**: Add the defer/fix decision after report generation.
 
 **Action**:
-Implement Step 4 - backlog integration:
 
-1. **Read current BACKLOG.md** to determine correct insertion point
-2. **Format prevention entries** with incident cross-reference:
-   ```markdown
-   - [ ] {Prevention item description}
-     - **Incident**: [{report filename}](specs/{feature}/{report filename})
-   ```
-3. **Determine section**: Place under the most relevant existing category (Workflow Guardrails, Skill & Agent Architecture, Docs & Knowledge Capture, etc.). If no category fits, place under "Quick Wins" or ask user
-4. **Append entries** to BACKLOG.md at the identified section
-5. **Show user** what was added before writing (confirmation step)
+1. Present report summary with defer/fix options
+2. "Fix now" continues to existing Step 6 (no changes needed downstream)
+3. "Defer" triggers the backlog integration path
 
-**Verify**: Prevention items appear in BACKLOG.md with correct cross-reference links
-**Done**: BACKLOG.md updated with prevention items linked to incident report
+**Verify**: Decision fork presents correctly and both paths route correctly
+**Done**: Decision fork integrated into SKILL.md
 
 ---
 
-### Task 6: Implement Step 5: Confirmation and output
+### Task 6: Implement defer path (backlog + cross-reference)
 
 **Type**: auto
-**Files**: `skills/Documentation/incident-report/SKILL.md` (modify)
+**Files**: `skills/Code-Quality/fix/SKILL.md` (modify)
 **Dependencies**: Task 5
 
-**Context**: Final step displays summary and file paths. Following existing skill patterns for completion output.
+**Context**: When user chooses "defer," add the issue to BACKLOG.md with a cross-reference to the incident report, then exit the /fix workflow.
 
 **Action**:
-Implement Step 5 - confirmation output:
 
-```text
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Incident Report Created
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. Read BACKLOG.md to find correct insertion point
+2. Append issue with cross-reference to incident report file
+3. Display confirmation with backlog entry and report path
+4. Exit /fix workflow (skip Steps 6-10)
 
-Report: planning/specs/{feature}/INCIDENT-{date}-{slug}.md
-Severity: {severity}
-Root Cause: {one-line root cause}
-
-Prevention items added to BACKLOG.md:
-- {item 1}
-- {item 2}
-```
-
-**Verify**: Output displays correct paths and summary
-**Done**: Completion banner shown with all relevant information
+**Verify**: Backlog entry created with correct cross-reference link
+**Done**: Defer path creates backlog entry and exits cleanly
 
 ---
 
-### Task 7: Update incident-template.md to match new standard
+### Task 7: Update incident-template.md to match report format
 
 **Type**: auto
 **Files**: `skills/Planning/my-workflow/templates/incident-template.md` (modify)
 **Dependencies**: Task 4
 
-**Context**: The existing template is simpler than the new standard. Update it to match the report format defined in Task 4, so manual report creation (without the command) still produces consistent reports.
+**Context**: Keep the manual template in sync with the automated report format.
 
 **Action**:
-Replace contents of `incident-template.md` with the full report template from Task 4, using `{placeholder}` syntax for all variable fields. Preserve the template's role as a manual-use reference.
+Replace contents of `incident-template.md` with the report template used in Task 4, using `{placeholder}` syntax.
 
-**Verify**: Template matches the report structure from Task 4
-**Done**: Template updated with all required sections
+**Verify**: Template matches generated report structure
+**Done**: Template updated
 
 ---
 
-### Task 8: Create symlink for skill discovery
-
-**Type**: auto
-**Files**: `skills/incident-report` (create symlink)
-**Dependencies**: Task 6
-
-**Context**: Claude Code discovers skills at depth 2. Skills in group directories need symlinks for discovery (per INCIDENT-2026-02-06-skill-discovery.md). The `Documentation` group is new and needs a symlink.
-
-**Action**:
-1. Create group directory if needed: `mkdir -p skills/Documentation/incident-report/`
-2. Create symlink: `ln -s skills/Documentation/incident-report skills/incident-report`
-3. Verify symlink works: `ls -la skills/incident-report/SKILL.md`
-
-**Verify**: `ls skills/incident-report/SKILL.md` resolves correctly
-**Done**: Skill discoverable as `/incident-report` slash command
-
----
-
-### Task 9: End-to-end verification
+### Task 8: End-to-end verification
 
 **Type**: checkpoint:human-verify
 **Blocking**: yes
-**Dependencies**: Tasks 6, 7, 8
-
-**Context**: Verify the complete skill works by reviewing the generated artifacts.
+**Dependencies**: Tasks 6, 7
 
 **Action**:
-1. Verify SKILL.md has valid frontmatter (name, description, arguments)
-2. Verify all 5 steps are implemented with clear instructions
-3. Verify agent prompts are specific enough to produce useful output
-4. Verify report template contains all required sections
-5. Verify symlink resolves correctly
-6. Review the skill against coding standards (under 400 lines, no hardcoded paths)
 
-**Verify**: Human reviews skill file and confirms it's ready for use
-**Done**: Skill approved for merge
+1. /fix SKILL.md still under 400 lines
+2. Report generation step uses data from Steps 2-5
+3. Decision fork handles both defer and fix paths
+4. Defer path creates backlog entry with cross-reference
+5. Fix path continues to Step 6 unchanged
+6. Incident template matches report format
+7. No hardcoded paths
+8. All worktree scenarios handled
+
+**Verify**: Human reviews and approves
+**Done**: Enhancement approved for merge
 
 ## Verification
 
-- [ ] SKILL.md exists at `skills/Documentation/incident-report/SKILL.md`
-- [ ] Symlink exists at `skills/incident-report` pointing to group directory
+- [ ] /fix SKILL.md modified (not a new skill)
 - [ ] SKILL.md under 400 lines
-- [ ] Frontmatter valid (name, description, arguments)
-- [ ] All 5 steps implemented
-- [ ] 3 parallel agents defined with clear prompts
-- [ ] Report template has all required sections
-- [ ] Backlog integration appends with cross-reference
-- [ ] `incident-template.md` updated to match new standard
+- [ ] Report generation uses existing step outputs (no duplication)
+- [ ] Decision fork: defer creates backlog entry with cross-reference
+- [ ] Decision fork: fix continues to Step 6 unchanged
+- [ ] Report has all required sections
+- [ ] `incident-template.md` updated to match
 - [ ] No hardcoded paths
+- [ ] All worktree scenarios (fix worktree, feature worktree, main) handled
 
 ## Success Criteria
 
-- `/incident-report` generates a complete incident report from conversation context
+- /fix generates an incident report after investigation phase
 - Root cause analysis uses Five Whys method and produces actionable findings
-- Prevention items appear in BACKLOG.md after command completes
+- Defer path: issue appears in BACKLOG.md with report cross-reference
+- Fix path: continues through existing /fix Steps 6-10 unchanged
 - Report format matches standardized template across different incident types
-- Existing incident template updated to match new standard

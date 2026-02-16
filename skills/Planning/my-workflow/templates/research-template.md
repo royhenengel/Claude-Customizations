@@ -40,7 +40,7 @@
 
 #### Deep-Dive: {Selected Option}
 
-{Detailed analysis of the recommended option:
+{Detailed analysis of a specific option:
 - How it works
 - Key features/capabilities
 - Limitations and gotchas
@@ -73,17 +73,6 @@
 - {Key takeaway 2}
 - {Anti-pattern or pitfall to avoid}
 
-## Tradeoff Analysis
-
-| Factor | Choice Made | Alternative | Why This Choice |
-|--------|-------------|-------------|-----------------|
-| {e.g., Simplicity vs Features} | {what we chose} | {what we didn't} | {reasoning} |
-
-### Risks
-
-- {Risk 1}: {mitigation strategy}
-- {Risk 2}: {mitigation strategy}
-
 ## Architectural Implications
 
 ### System Boundaries
@@ -100,26 +89,10 @@
 
 {Where does this connect with other parts of the system?}
 
-## Approach
+### Risks
 
-{Chosen approach and why - summarize the decision}
-
-## Alternatives Considered
-
-| Option | Pros | Cons | Decision |
-|--------|------|------|----------|
-| A | ... | ... | SELECTED |
-| B | ... | ... | Rejected: {reason} |
-
-## Key Decisions
-
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| {e.g., Library for X} | {what we chose} | {why} |
-
-## Open Questions
-
-- {Question 1 that needs answering before or during implementation}
+- {Risk 1}: {mitigation strategy}
+- {Risk 2}: {mitigation strategy}
 
 ## Sources
 
