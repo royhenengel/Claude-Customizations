@@ -84,11 +84,13 @@ From the `git worktree list` output (Step 2), exclude the main worktree (first e
 
 For each remaining worktree path, check if any registry entry's resolved Worktree path matches it.
 
-If a worktree has no matching registry entry, extract the branch name from the porcelain output and flag: `Unregistered worktree: '{path}' on branch '{branch}' has no registry entry`
+If a worktree has no matching registry entry, extract the branch name from the porcelain output (`branch refs/heads/{name}` line). If the worktree is in detached HEAD state (no `branch` line, or line reads `detached`), use "(detached)" as the branch name.
+
+Flag: `Unregistered worktree: '{path}' on branch '{branch}' has no registry entry`
 
 **Check 5 - Status consistency**
 
-For each non-complete entry where Status is "active" or "drafted":
+For each non-complete entry where Status is "active", "drafted", or "ready":
 
 If both Branch is `-` (or branch does not exist per Check 1) AND Worktree is `-` (or path does not exist per Check 2), flag: `{feature}: Status is '{status}' but no branch or worktree exists (stale)`
 
@@ -202,7 +204,9 @@ git worktree remove {path}
 git branch -d {branch}
 ```
 
-If `git branch -d` fails because the branch is not fully merged, report this and do NOT force-delete. Let the user decide.
+If `git branch -d` fails because the branch is not fully merged, report the error and do NOT force-delete. Present the user with options: (a) force-delete with `git branch -D`, (b) skip branch deletion, (c) abort remaining fixes.
+
+If `git worktree remove` fails (e.g., uncommitted changes), report the error and ask whether to force with `--force` or skip.
 
 **Adding new registry entries** (for unregistered worktrees):
 

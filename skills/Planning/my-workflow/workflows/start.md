@@ -96,7 +96,7 @@ Run the validation checks from the `validate-registry` skill against the Feature
 
 3. Check for unregistered worktrees (in git but not in registry)
 
-4. Check for status inconsistencies (active/drafted with no branch/worktree, complete with worktree still present)
+4. Check for status inconsistencies (active/drafted/ready with no branch/worktree, complete with worktree still present)
 
 **If issues found**, display a warning block before the Project Status dashboard:
 
