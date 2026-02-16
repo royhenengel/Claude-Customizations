@@ -27,11 +27,11 @@ repo-root/
 │       └── {feature}/                 # One directory per feature
 │           ├── CLAUDE.md              # Feature Context (auto-loaded)
 │           ├── SPEC.md                # Feature Spec (requirements)
-│           ├── RESEARCH.md            # Feature Research (analysis, decisions)
+│           ├── DISCOVERY.md           # Feature Discovery (collaborative decision record)
+│           ├── RESEARCH.md            # Feature Research (data, analysis, findings)
 │           ├── PLAN.md                # Feature Plan (executable tasks)
 │           ├── PROGRESS.md            # Feature Progress (live tracking during work)
 │           ├── SUMMARY.md             # Feature Summary (outcomes, post-completion)
-│           ├── DISCOVERY.md           # Discovery Document (optional, deep analysis)
 │           ├── INCIDENT-{date}.md     # Incident Report (optional, post-incident)
 │           └── archive/               # Archived artifacts (post-completion)
 │
@@ -49,13 +49,13 @@ repo-root/
 | Project State | STATE.md | planning/ | Current stage, active features, decisions | Yes |
 | Project Backlog | BACKLOG.md | planning/ | Improvements, ideas, technical debt | Yes |
 | Feature Spec | SPEC.md | planning/specs/{feature}/ | Requirements for a feature | Yes |
-| Feature Research | RESEARCH.md | planning/specs/{feature}/ | Analysis, tradeoffs, decisions | Yes |
+| Feature Discovery | DISCOVERY.md | planning/specs/{feature}/ | Collaborative decision record from user-Claude dialogue | Yes |
+| Feature Research | RESEARCH.md | planning/specs/{feature}/ | Data, analysis, and findings that inform decisions | Yes |
 | Feature Plan | PLAN.md | planning/specs/{feature}/ | Executable implementation tasks | Yes |
 | Feature Progress | PROGRESS.md | planning/specs/{feature}/ | Live tracking of progress, current state, gap stack | Yes |
 | Feature Summary | SUMMARY.md | planning/specs/{feature}/ | Outcomes after feature completion | Yes |
 | Feature Context | CLAUDE.md | planning/specs/{feature}/ | Cascading context for feature (auto-loaded) | Yes |
-| Discovery Document | DISCOVERY.md | planning/specs/{feature}/ | Deep analysis when scope expands beyond RESEARCH.md | Yes |
-| Incident Report | INCIDENT-{date}.md | planning/specs/{feature}/ | Post-incident documentation | Yes |
+| Incident Report | INCIDENT-{YYYY-MM-DD}-{slug}.md | planning/incidents/ | Post-incident documentation | Yes |
 | Guide | {name}.md | docs/ | Standalone guides with no better home | No |
 | Solution | {category}/{name}.md | planning/solutions/ | Solved problem documentation | Yes |
 
@@ -84,7 +84,14 @@ Decision tree for where a new document goes:
 - Stale content (counts, dates, references) must be verifiable against the source of truth.
 - Every directory with a CLAUDE.md should have content describing that directory's purpose and key files.
 
-## When to Use DISCOVERY.md vs RESEARCH.md
+## DISCOVERY.md vs RESEARCH.md
 
-- **RESEARCH.md**: Standard feature research during /plan. Focused analysis of a defined problem.
-- **DISCOVERY.md**: Created when scope expands significantly during execution. Captures architectural questions, organizational analysis, or cross-cutting concerns that exceed RESEARCH.md's scope. A feature may have both.
+These are complementary documents, both created during /plan.
+
+- **DISCOVERY.md**: Records the collaborative discovery process between user and Claude. Contains the back-and-forth that shaped the feature: questions asked, answers given, choices made, how scope evolved, and why decisions landed where they did. Think of it as the decision log from the planning conversation.
+
+- **RESEARCH.md**: Contains the raw data, analysis, and findings that informed those decisions. Codebase patterns discovered, existing code analyzed, external research gathered, option comparisons, technical constraints identified. Think of it as the evidence file.
+
+**DISCOVERY captures the process** (how we got here). **RESEARCH captures the evidence** (what we found).
+
+A feature always has both. DISCOVERY.md is created first (or alongside) RESEARCH.md during /plan, not deferred to execution.
