@@ -1,6 +1,6 @@
 # Project State
 
-**Last Updated**: 2026-02-12
+**Last Updated**: 2026-02-15
 
 ### claude-flow
 
@@ -26,6 +26,7 @@
 | auto-trigger-fix | fix | complete | - | - |
 | instruction-compliance | fix | active | instruction-compliance | ~/worktrees/claude-customizations/instruction-compliance |
 | incident-report-command | feature | drafted | incident-report-command | .worktrees/incident-report-command |
+| registry-consistency-check | feature | complete | registry-consistency-check | .worktrees/registry-consistency-check |
 
 ## Decisions
 

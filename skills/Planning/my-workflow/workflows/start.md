@@ -86,6 +86,32 @@ git worktree list --porcelain | grep "^worktree" | grep -v "$(git rev-parse --sh
 
 For each active worktree, read its feature PROGRESS.md (`planning/specs/{feature}/PROGRESS.md`) to get live status (stage, progress).
 
+**Validate registry consistency:**
+
+Run the validation checks from the `validate-registry` skill against the Feature Registry and git state. Specifically:
+
+1. Gather git state: `git branch --list`, `git worktree list`, `git worktree list --porcelain`
+
+2. For each non-complete registry entry: verify branch exists, worktree path exists, worktree is registered
+
+3. Check for unregistered worktrees (in git but not in registry)
+
+4. Check for status inconsistencies (active/drafted with no branch/worktree, complete with worktree still present)
+
+**If issues found**, display a warning block before the Project Status dashboard:
+
+```text
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️ Registry Issues
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+- {issue description} → Fix: {suggestion}
+
+Run /validate-registry --fix to resolve.
+```
+
+**If no issues found**, skip silently (do not add noise to clean state).
+
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Project Status
