@@ -20,9 +20,7 @@
 ```text
 Why 1: {symptom} → Because {immediate cause}
 Why 2: {immediate cause} → Because {deeper cause}
-Why 3: {deeper cause} → Because {contributing factor}
-Why 4: {contributing factor} → Because {systemic issue}
-Why 5: {systemic issue} → Because {root cause}
+[Continue until root cause reached]
 
 Root Cause: {the fundamental issue to fix}
 ```

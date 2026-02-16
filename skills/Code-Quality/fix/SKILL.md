@@ -129,79 +129,17 @@ If yes, create worktree and restart /fix in the new worktree context. If no, add
 
 ## Step 2: Git History Search
 
-**Check existing solutions first:**
+**Check existing solutions first:** If `planning/solutions/` exists, search for matching problems. Present matches with filenames and titles. If user wants to review, read and assess applicability. Apply directly if matching; otherwise proceed.
 
-If `planning/solutions/` exists, search for matching problems:
-
-```bash
-# Search solution files for related keywords
-grep -rl "<relevant-keyword>" planning/solutions/ 2>/dev/null | head -5
-```
-
-If matching solutions found, present them:
-
-```text
-Found existing solution(s) that may match:
-- planning/solutions/{category}/{filename}.md: {title from frontmatter}
-
-Review before investigating? (yes/no)
-```
-
-If user says yes, read the matching solution(s) and assess applicability. If the solution matches, apply it directly. If not, proceed with investigation.
-
-Search for related past work:
-
-```bash
-# Search commit messages for related keywords
-git log --oneline --all --grep="<relevant-keyword>" | head -20
-
-# Search for changes to potentially related files
-git log --oneline -20 -- <suspected-files>
-
-# Look at recent commits for context
-git log --oneline -15
-```
-
-Document findings:
-- Related past fixes
-- Similar issues that were addressed
-- Patterns or approaches used before
-- What was tried and why
+Search for related past work via git log (keyword search, file-specific changes, recent commits). Document: related past fixes, similar issues addressed, patterns used, what was tried and why.
 
 ## Step 3: Read Project Conventions
 
-Read project-specific instructions:
-
-```bash
-# Check for CLAUDE.md in project root and common locations
-cat CLAUDE.md 2>/dev/null || cat .claude/CLAUDE.md 2>/dev/null || echo "No CLAUDE.md found"
-
-# Check for other convention files
-cat .editorconfig 2>/dev/null | head -20
-cat .eslintrc* 2>/dev/null | head -20
-```
-
-Identify:
-- Code style and patterns to follow
-- Constraints the fix must respect
-- Project-specific rules or preferences
+Read CLAUDE.md, .editorconfig, linter configs, and other convention files. Identify code style, constraints the fix must respect, and project-specific rules.
 
 ## Step 4: Map Affected Areas
 
-Identify what might be impacted:
-
-1. **Direct dependencies**: What imports/uses the problematic code?
-2. **Reverse dependencies**: What does the problematic code import/use?
-3. **Related functionality**: What features share logic with this area?
-4. **Tests**: What tests cover this area?
-
-```bash
-# Find usages of the affected code
-grep -r "<function-or-class-name>" --include="*.{ts,js,py,go,rs}" . | head -20
-
-# Find test files for this area
-find . -name "*test*" -o -name "*spec*" | grep -i "<relevant-name>" | head -10
-```
+Identify what might be impacted: direct dependencies (what imports the code), reverse dependencies (what the code imports), related functionality (shared logic), and tests covering this area. Search for usages and test files.
 
 ## Step 5: Root Cause Analysis (Five Whys)
 
@@ -212,13 +150,11 @@ Analyze WHY the issue exists using the Five Whys method:
 3. Each "Why?" must be backed by evidence, not speculation
 4. Stop when fixing the answer would prevent the original symptom (not all issues need 5 levels)
 
-Document the analysis:
+Document the analysis (adjust depth as needed):
 ```
 Why 1: {symptom} → Because {immediate cause}
 Why 2: {immediate cause} → Because {deeper cause}
-Why 3: {deeper cause} → Because {contributing factor}
-Why 4: {contributing factor} → Because {systemic issue}
-Why 5: {systemic issue} → Because {root cause}
+[Continue until root cause reached]
 
 Root Cause: {the fundamental issue to fix}
 ```
@@ -268,14 +204,14 @@ How do you want to proceed?
 
 **Defer (option 2):**
 
-1. Append to `planning/BACKLOG.md`:
+1. Create `planning/BACKLOG.md` if it doesn't exist. Append:
    ```
    - [ ] {Issue summary} - See [INCIDENT-{date}-{slug}](planning/incidents/INCIDENT-{date}-{slug}.md)
    ```
 2. Update incident report: Status → `deferred`, Resolution → `Deferred to backlog. See planning/BACKLOG.md.`
 3. Display confirmation and **exit /fix workflow** (skip Steps 6-10)
 
-**State update** (worktree only): Update fix PROGRESS.md with triage decision.
+**State update** (worktree only): Update fix PROGRESS.md with triage decision, stage → `deferred`.
 
 ## Step 6: Propose Fix
 
@@ -378,47 +314,15 @@ Skip for trivial fixes (typos, missing imports, obvious errors).
 
 ### Documentation Review
 
-Launch doc-enforcer agent in audit mode:
-
-```text
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-DOCUMENTATION REVIEW: Compliance Check
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-**Agent - Documentation (docs-enforcer):**
-
-```text
-Audit documentation for the {fix-name} fix.
-
-Focus:
-- Fix state directory complete (PROGRESS.md with current state)
-- No misplaced files
-- Modified markdown files follow documentation type system
-
-Provide audit results with severity levels.
-```
+Launch **docs-enforcer** agent: audit documentation for the fix. Focus on fix state directory completeness, misplaced files, and documentation type system compliance. Provide results with severity levels.
 
 ### PR Review
 
-After PR is created in Step 10, launch review agents on the full PR diff:
+After PR is created in Step 10, launch three review agents in parallel on the full PR diff:
 
-```text
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-PR REVIEW: Full Diff Analysis
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-Launch in parallel:
-
-**Agent 1 - Code Review (code-reviewer):**
-Review the full PR diff for code quality and consistency.
-
-**Agent 2 - Test Coverage (test-coverage-reviewer):**
-Review test coverage for the fix. Flag untested paths.
-
-**Agent 3 - Contracts (contracts-reviewer):**
-Review changes to public APIs, data models, and type definitions for breaking changes.
+1. **code-reviewer**: Code quality and consistency
+2. **test-coverage-reviewer**: Test coverage, flag untested paths
+3. **contracts-reviewer**: Public APIs, data models, type definitions for breaking changes
 
 Present consolidated findings. Critical issues must be addressed before merge.
 
@@ -435,7 +339,8 @@ All fixes run in worktrees (Step 1a redirects main to worktree creation).
 
 2. **Create PR** with fix summary
 
-3. **Update incident report** with PR link (if report exists from Step 5a)
+3. **Update incident report** with PR link (if report exists from Step 5a):
+   Add to Resolution section: `Fixed in PR #{number} ({url})`
 
 4. **Run Step 9b PR reviewers** (3 review agents first, then doc-enforcer last)
 
@@ -450,48 +355,3 @@ All fixes run in worktrees (Step 1a redirects main to worktree creation).
 9. Update project STATE.md Feature Registry: fix status → `complete`
 
 **Note**: For in-feature fixes (Scenario B-related from Step 1a), Step 10 does not apply. The fix is committed as part of the feature's /build finalization.
-
-## Output Format
-
-Use this format for the fix report:
-
-```markdown
-## Fix Investigation
-
-### Git History
-[Relevant past fixes/commits found, or "No related history found"]
-
-### Project Conventions
-[Relevant conventions that apply, or "No specific conventions found"]
-
-### Affected Areas
-[Files and code that may be impacted]
-
-### Root Cause
-[Five Whys analysis: Why 1 → Why 2 → ... → Root Cause]
-
----
-
-## Proposed Fix
-
-[Description of fix and rationale]
-[Reference to how this relates to past work if applicable]
-
-**Awaiting approval to implement.**
-
----
-
-## Verification
-
-### Tests Run
-[Test results or "No tests found"]
-
-### Regression Checklist
-- [ ] [Area 1]: [What to verify]
-- [ ] [Area 2]: [What to verify]
-- [ ] [Area 3]: [What to verify]
-
-### Convention Notes
-[If applicable: notification about potential convention change]
-[If not applicable: "No convention changes identified"]
-```

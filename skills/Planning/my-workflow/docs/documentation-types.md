@@ -55,7 +55,7 @@ repo-root/
 | Feature Progress | PROGRESS.md | planning/specs/{feature}/ | Live tracking of progress, current state, gap stack | Yes |
 | Feature Summary | SUMMARY.md | planning/specs/{feature}/ | Outcomes after feature completion | Yes |
 | Feature Context | CLAUDE.md | planning/specs/{feature}/ | Cascading context for feature (auto-loaded) | Yes |
-| Incident Report | INCIDENT-{date}.md | planning/specs/{feature}/ | Post-incident documentation | Yes |
+| Incident Report | INCIDENT-{YYYY-MM-DD}-{slug}.md | planning/incidents/ | Post-incident documentation | Yes |
 | Guide | {name}.md | docs/ | Standalone guides with no better home | No |
 | Solution | {category}/{name}.md | planning/solutions/ | Solved problem documentation | Yes |
 

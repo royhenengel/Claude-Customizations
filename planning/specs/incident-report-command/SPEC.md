@@ -23,7 +23,7 @@ Enhance the existing `/fix` skill with incident report capabilities. When a prob
 - [ ] Defer path: appends issue to `planning/BACKLOG.md` with incident report cross-reference. Done.
 - [ ] Fix path: continues through existing /fix Steps 6-10
 - [ ] Supports three severity levels: critical, major, minor
-- [ ] Uses parallel analysis agents for investigation (following /compound pattern)
+- [ ] Uses direct synthesis from step outputs for report generation (no parallel agents)
 
 ### Non-Functional
 
