@@ -21,7 +21,7 @@
 | auto-trigger-fix | fix | complete | - | - |
 | instruction-compliance | fix | complete | - | - |
 | incident-report-command | feature | complete | - | - |
-| registry-consistency-check | feature | complete | registry-consistency-check | .worktrees/registry-consistency-check |
+| registry-consistency-check | feature | complete | - | - |
 
 ## Decisions
 
@@ -63,6 +63,7 @@
 
 ## Notes
 
+- (2026-02-17) registry-consistency-check merged via PR #13. validate-registry skill with 6 audit checks and fix mode. /start workflow integration for main branch. Worktree cleaned up.
 - (2026-02-16) incident-report-command merged via PR #12. /fix enhanced with incident report generation and defer/fix triage. 14 files changed across 2 sessions.
 - (2026-02-08) audit-agents merged via PR #4. 135 agents audited, 132 kept, 3 archived.
 - (2026-02-08) FAILURE: STATE.md not updated during 90-min architectural discussion at Task 4 checkpoint. Rule 4 stop triggered but not recorded. All pivot context was only in chat history. Must update STATE.md at every state change, not just task completions.
