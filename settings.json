@@ -1,0 +1,151 @@
+{
+  "env": {
+    "MCP_TIMEOUT": "120000",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Read(**)",
+      "Write(**)",
+      "Edit(**)",
+      "Glob",
+      "Grep",
+      "WebFetch",
+      "WebSearch",
+      "Task(*)",
+      "mcp__*__*",
+      "Skill(skills/**)",
+      "Skill(agents/**)",
+      "Skill(hooks/**)",
+      "Skill(commands/**)",
+      "Skill(plugins/**)",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__apply_migration",
+      "mcp__supabase__execute_sql",
+      "Read(//Users/royengel/.claude/**)",
+      "Skill(diagrams-builder)",
+      "Skill(diagrams-builder:*)",
+      "mcp__mcp-mermaid__generate_mermaid_diagram",
+      "mcp__filesystem__list_directory",
+      "mcp__notion-workspace__test_search_api",
+      "mcp__notion-workspace__list_notes",
+      "mcp__notion-workspace__analyze_page",
+      "mcp__code-executor__search_tools",
+      "mcp__code-executor__list_servers",
+      "Read(//Users/royengel/**)",
+      "mcp__code-executor__execute_code",
+      "mcp__filesystem__directory_tree",
+      "mcp__notion-workspace__list_tasks",
+      "mcp__memory__search_nodes",
+      "mcp__n8n-mcp__n8n_list_workflows",
+      "mcp__n8n-mcp__n8n_get_workflow",
+      "Skill(notion-search)",
+      "Skill(notion-search:*)",
+      "mcp__code-executor__get_tool_signature",
+      "Skill(build)",
+      "Skill(build:*)",
+      "mcp__github__get_file_contents",
+      "mcp__github__search_repositories",
+      "Skill(stop)",
+      "Skill(stop:*)",
+      "mcp__plugin_claude-mem_mcp-search__search",
+      "Skill(plan)",
+      "Skill(plan:*)",
+      "mcp__reddit__browse_subreddit",
+      "mcp__plugin_claude-mem_mcp-search__get_observations",
+      "mcp__filesystem__read_text_file",
+      "mcp__notion-workspace__create_topic",
+      "mcp__notion-workspace__add_topics_to_resource",
+      "mcp__notion-workspace__add_relations",
+      "mcp__notion-workspace__delete_topic"
+    ],
+    "additionalDirectories": [
+      "/Users/royengel"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /Users/royengel/.claude/hooks/scripts/user-issue-hook.js",
+            "timeout": 5000
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /Users/royengel/.claude/hooks/scripts/auto-commit-claude-mem.js",
+            "timeout": 10000
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /Users/royengel/.claude/hooks/scripts/ecosystem-awareness-hook.js",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "A code file was modified. Check if planning/STATE.md needs updating.\n\nChange: $ARGUMENTS\n\nRules:\n1. SKIP if file is in planning/ (avoid loops)\n2. Update Progress if a task was completed\n3. Add to Notes if something unexpected was discovered\n4. Update Current Focus if work shifted\n\nRespond with:\n- updates_needed: true/false\n- changes: [list of STATE.md updates]\n- systemMessage: one-line summary",
+            "timeout": 15000
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /Users/royengel/.claude/hooks/scripts/issue-detector-tool-hook.js",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ntfy publish --title 'Claude Code' --tags 'robot,warning' claude-code-roy 'Permission needed'"
+          }
+        ]
+      },
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ntfy publish --title 'Claude Code' --tags 'robot,question' claude-code-roy \"What's next?\""
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "/Users/royengel/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "code-simplifier@claude-plugins-official": true,
+    "claude-mem@thedotmack": true,
+    "plannotator@plannotator": true,
+    "hookify@claude-plugins-official": true
+  },
+  "skipDangerousModePermissionPrompt": true
+}

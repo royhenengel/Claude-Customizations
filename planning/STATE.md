@@ -1,11 +1,6 @@
 # Project State
 
-**Last Updated**: 2026-02-15
-
-### claude-flow
-
-- Status: complete
-- Progress: 7/7
+**Last Updated**: 2026-02-17
 
 ## Feature Registry
 
@@ -24,8 +19,8 @@
 | everything-claude-code-migration | feature | complete | - | - |
 | reddit-mcp-server | feature | complete | - | - |
 | auto-trigger-fix | fix | complete | - | - |
-| instruction-compliance | fix | active | instruction-compliance | ~/worktrees/claude-customizations/instruction-compliance |
-| incident-report-command | feature | drafted | incident-report-command | .worktrees/incident-report-command |
+| instruction-compliance | fix | complete | - | - |
+| incident-report-command | feature | complete | - | - |
 | registry-consistency-check | feature | complete | registry-consistency-check | .worktrees/registry-consistency-check |
 
 ## Decisions
@@ -44,6 +39,7 @@
 - (2026-02-08) repo-documentation Q2: documentation-types.md scoped to Scenario B only (any my-workflow project). This repo's unique structure (skills/, agents/, hooks/, mcp/) described in CLAUDE.md and README.md, not in the portable type system.
 - (2026-02-08) repo-documentation Q1 (REVISED): Governance docs + AI-CHAT-PREFS move to root rules/ directory (= ~/.claude/rules/). Auto-loaded globally via Anthropic's native user-level rules mechanism. Replaces both skill-gating and SessionStart hook.
 - (2026-02-08) repo-documentation: Scope expanded to full information architecture. Pulled "Consolidate CLAUDE.md and claude-code-prefs.md" backlog item into this feature. DISCOVERY.md v2 written.
+- (2026-02-16) incident-report-command: Enhanced /fix skill with incident report generation (Step 5a), triage decision fork (Step 5b: defer or fix now), and flexible Five Whys root cause analysis. No new skill created. PR #12.
 - (2026-02-12) compound-workflow-integration: Hybrid automation approach. Auto-capture (no prompt) for /fix and /build deviation fixes. /compound remains standalone for manual use. Trivial fixes skipped. Reverse lookup in /fix Step 2 surfaces existing solutions before investigation.
 - (2026-02-07) Workflow: Parallel work mode enabled. Multiple features can be active in separate worktrees. Single-active constraint temporarily suspended.
 - (2026-02-06) Workflow: Decouple worktree creation from /plan and /build. Worktree is conversational setup, auto-opens VS Code window. /plan and /build are directory-agnostic. Project-local .worktrees/ default. See specs/my-workflow/WORKTREE-WORKFLOW.md.
@@ -67,6 +63,7 @@
 
 ## Notes
 
+- (2026-02-16) incident-report-command merged via PR #12. /fix enhanced with incident report generation and defer/fix triage. 14 files changed across 2 sessions.
 - (2026-02-08) audit-agents merged via PR #4. 135 agents audited, 132 kept, 3 archived.
 - (2026-02-08) FAILURE: STATE.md not updated during 90-min architectural discussion at Task 4 checkpoint. Rule 4 stop triggered but not recorded. All pivot context was only in chat history. Must update STATE.md at every state change, not just task completions.
 - (2026-02-03) automate-stop worktree cleaned up, branch deleted

@@ -74,178 +74,144 @@ Derive name from branch:
 git branch --show-current
 ```
 
-Check if feature PROGRESS.md already exists:
+Check PROGRESS.md to determine context:
 ```bash
 ls planning/specs/{name}/PROGRESS.md 2>/dev/null
 ```
 
-**Scenario A - Fix worktree** (PROGRESS.md exists with `**Type**: fix`, or no PROGRESS.md exists):
-
-If no PROGRESS.md exists, create fix state directory and file:
-```bash
-mkdir -p planning/specs/{fix-name}
-```
-
-Create `planning/specs/{fix-name}/PROGRESS.md`:
-
-```markdown
-# {Fix Name} State
-
-**Type**: fix
-**Stage**: investigating
-**Last Updated**: {timestamp}
-
-## Issue
-
-{From Step 1 - problem description}
-
-## Root Cause
-
-(Pending - determined in Step 5)
-
-## Proposed Fix
-
-(Pending - determined in Step 6)
-
-## Current State
-
-### What's Working
-
-(Nothing verified yet)
-
-### What's Not Working
-
-{The reported issue}
-
-### Next Steps
-
-1. Complete investigation (Steps 2-5)
-```
-
-Update `planning/STATE.md` Feature Registry:
-```markdown
-| {fix-name} | fix | active | {branch} | {worktree-path} |
-```
-
-Continue to Step 2 with full state tracking.
-
-**Scenario B - Feature worktree** (PROGRESS.md exists with `**Type**: feature` or no Type field):
-
-The user is running /fix while working on a feature. Do NOT create separate fix state.
+Detect scenario: if PROGRESS.md has `**Type**: fix` or no PROGRESS.md exists → **fix worktree**. If PROGRESS.md has `**Type**: feature` or no Type field → **feature worktree**.
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🔍 Fix context: inside feature worktree ({name})
+🔍 Fix context: inside worktree ({name})
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-Is this fix related to the current feature ({name})?
+Ask first (all worktree contexts):
 
-1. **Yes, related to this feature** → Run /fix Steps 2-8 (investigation + implementation). No separate fix PROGRESS.md. Track findings in feature PROGRESS.md Notes section. Fix becomes part of the feature PR. Skip Steps 9a and 10 (quality gates run with the feature's /build completion).
+```
+Is this fix related to what you're working on now ({name})?
 
-2. **No, unrelated** → Add to `planning/BACKLOG.md` for separate handling. Options:
-   a. Create a fix worktree from main (commit current work first)
-   b. Note for later, continue feature work
+1. Yes, related
+2. No, unrelated
+```
 
-Continue to Step 2 (Scenario A and B-related only).
+**Related (option 1):**
+
+- **Fix worktree**: If no PROGRESS.md exists, create fix state:
+  ```bash
+  mkdir -p planning/specs/{fix-name}
+  ```
+  Create `planning/specs/{fix-name}/PROGRESS.md` with `**Type**: fix`, `**Stage**: investigating`, Issue section from Step 1, and placeholder Root Cause / Proposed Fix sections. Update `planning/STATE.md` Feature Registry. Continue to Step 2 with full state tracking (Steps 2-10).
+
+- **Feature worktree**: No separate fix state. Track findings in feature PROGRESS.md Notes section. Fix becomes part of the feature PR. Run Steps 2-8, skip Steps 9a and 10 (quality gates run with the feature's /build completion).
+
+**Unrelated (option 2):**
+
+Add to `planning/BACKLOG.md` for separate handling. Options:
+  a. Create a fix worktree from main (commit current work first)
+  b. Note for later, continue current work
+
+Continue to Step 2 (related only).
 
 **If on main** (not in a worktree):
 
-No fix state directory or PROGRESS.md is created. /fix runs its full 10-step process. A branch is created in Step 10 for PR-based review.
+Redirect to worktree creation. Fixes should not be developed directly on main.
+
+```
+Fixes require a dedicated worktree. Create one now?
+
+1. Yes → Create fix worktree from main (invoke /git-worktrees)
+2. No → Add to backlog for later
+```
+
+If yes, create worktree and restart /fix in the new worktree context. If no, add to `planning/BACKLOG.md` and exit.
 
 ## Step 2: Git History Search
 
-**Check existing solutions first:**
+**Check existing solutions first:** If `planning/solutions/` exists, search for matching problems. Present matches with filenames and titles. If user wants to review, read and assess applicability. Apply directly if matching; otherwise proceed.
 
-If `planning/solutions/` exists, search for matching problems:
-
-```bash
-# Search solution files for related keywords
-grep -rl "<relevant-keyword>" planning/solutions/ 2>/dev/null | head -5
-```
-
-If matching solutions found, present them:
-
-```text
-Found existing solution(s) that may match:
-- planning/solutions/{category}/{filename}.md: {title from frontmatter}
-
-Review before investigating? (yes/no)
-```
-
-If user says yes, read the matching solution(s) and assess applicability. If the solution matches, apply it directly. If not, proceed with investigation.
-
-Search for related past work:
-
-```bash
-# Search commit messages for related keywords
-git log --oneline --all --grep="<relevant-keyword>" | head -20
-
-# Search for changes to potentially related files
-git log --oneline -20 -- <suspected-files>
-
-# Look at recent commits for context
-git log --oneline -15
-```
-
-Document findings:
-- Related past fixes
-- Similar issues that were addressed
-- Patterns or approaches used before
-- What was tried and why
+Search for related past work via git log (keyword search, file-specific changes, recent commits). Document: related past fixes, similar issues addressed, patterns used, what was tried and why.
 
 ## Step 3: Read Project Conventions
 
-Read project-specific instructions:
-
-```bash
-# Check for CLAUDE.md in project root and common locations
-cat CLAUDE.md 2>/dev/null || cat .claude/CLAUDE.md 2>/dev/null || echo "No CLAUDE.md found"
-
-# Check for other convention files
-cat .editorconfig 2>/dev/null | head -20
-cat .eslintrc* 2>/dev/null | head -20
-```
-
-Identify:
-- Code style and patterns to follow
-- Constraints the fix must respect
-- Project-specific rules or preferences
+Read CLAUDE.md, .editorconfig, linter configs, and other convention files. Identify code style, constraints the fix must respect, and project-specific rules.
 
 ## Step 4: Map Affected Areas
 
-Identify what might be impacted:
+Identify what might be impacted: direct dependencies (what imports the code), reverse dependencies (what the code imports), related functionality (shared logic), and tests covering this area. Search for usages and test files.
 
-1. **Direct dependencies**: What imports/uses the problematic code?
-2. **Reverse dependencies**: What does the problematic code import/use?
-3. **Related functionality**: What features share logic with this area?
-4. **Tests**: What tests cover this area?
+## Step 5: Root Cause Analysis (Five Whys)
 
-```bash
-# Find usages of the affected code
-grep -r "<function-or-class-name>" --include="*.{ts,js,py,go,rs}" . | head -20
+Analyze WHY the issue exists using the Five Whys method:
 
-# Find test files for this area
-find . -name "*test*" -o -name "*spec*" | grep -i "<relevant-name>" | head -10
+1. Start with the symptom (what user sees)
+2. Ask "Why?" repeatedly until you reach the actionable root cause
+3. Each "Why?" must be backed by evidence, not speculation
+4. Stop when fixing the answer would prevent the original symptom (not all issues need 5 levels)
+
+Document the analysis (adjust depth as needed):
 ```
+Why 1: {symptom} → Because {immediate cause}
+Why 2: {immediate cause} → Because {deeper cause}
+[Continue until root cause reached]
 
-## Step 5: Root Cause Analysis
-
-Before proposing a fix, analyze WHY the issue exists:
-
-1. **Symptom vs. Cause**: Is the reported issue the root problem, or a symptom of something deeper?
-2. **Causal Chain**: Trace back from the symptom to the original cause
-3. **Contributing Factors**: What conditions allow this issue to occur?
-
-Document the causal chain:
-```
-Symptom: [What user sees]
-  ← Immediate cause: [What directly produces the symptom]
-    ← Contributing factor: [What enables the immediate cause]
-      ← Root cause: [The fundamental issue to fix]
+Root Cause: {the fundamental issue to fix}
 ```
 
 **State update** (worktree only): Update fix PROGRESS.md - set "Root Cause" section, stage → `proposed`.
+
+## Step 5a: Incident Report
+
+Classify severity (ask user): **critical** (production/data/security), **major** (broken functionality, workaround exists), **minor** (cosmetic/edge case).
+
+Create `planning/incidents/` directory if needed. Generate `INCIDENT-{YYYY-MM-DD}-{slug}.md` (slug: kebab-case from issue description, max 5 words) using the incident report template, populated from investigation steps:
+
+| Section | Source |
+|---|---|
+| Frontmatter (date, feature, severity) | Auto-detect + severity from above. Set Status: `open` |
+| Summary | Synthesize Steps 1 + 5 (2-3 sentences) |
+| What Happened | Step 1 issue description + Step 2 git history |
+| Root Cause | Step 5 Five Whys output (direct copy) |
+| Impact | Step 4 affected areas (narrative) |
+| Affected Artifacts | Step 4 file mapping (reshape to table: File/Component, Impact) |
+| Resolution | "Pending" |
+| Prevention | Derived from root cause (actionable items) |
+| Lessons Learned | Synthesis from all investigation steps |
+
+Say:
+```text
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 Incident Report Generated
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Report: planning/incidents/INCIDENT-{date}-{slug}.md
+Severity: {severity}
+
+Summary: {2-3 sentence summary}
+```
+
+## Step 5b: Triage Decision
+
+```
+How do you want to proceed?
+
+1. Fix now → Continue to Step 6 (Propose Fix)
+2. Defer → Add to backlog and exit
+```
+
+**Fix now (option 1):** Continue to Step 6.
+
+**Defer (option 2):**
+
+1. Create `planning/BACKLOG.md` if it doesn't exist. Append:
+   ```
+   - [ ] {Issue summary} - See [INCIDENT-{date}-{slug}](planning/incidents/INCIDENT-{date}-{slug}.md)
+   ```
+2. Update incident report: Status → `deferred`, Resolution → `Deferred to backlog. See planning/BACKLOG.md.`
+3. Display confirmation and **exit /fix workflow** (skip Steps 6-10)
+
+**State update** (worktree only): Update fix PROGRESS.md with triage decision, stage → `deferred`.
 
 ## Step 6: Propose Fix
 
@@ -285,6 +251,8 @@ After approval:
 
 **State update** (worktree only): Update fix PROGRESS.md - stage → `implementing`, update Current State (What's Working, What's Not Working).
 
+**Incident report update**: Update the report's Resolution section with the actual fix applied. Update Status: `open` → `resolved`.
+
 ## Step 8: Regression Checklist
 
 Identify related areas for manual verification:
@@ -305,6 +273,8 @@ Be specific - file names, functionality, scenarios to test.
 
 ## Step 9: Convention Check
 
+> **Note**: The incident report (Step 5a) already captures Prevention items from root cause analysis. Step 9 focuses on convention/process gaps, not the technical fix itself. Some overlap is expected and acceptable.
+
 Evaluate if the fix reveals something convention-worthy:
 
 **Ask yourself:**
@@ -317,10 +287,9 @@ Evaluate if the fix reveals something convention-worthy:
    ```
    ⚠️ Convention Opportunity: This fix revealed [description]. Consider updating project conventions to [recommendation].
    ```
-2. Add to backlog (if planning/BACKLOG.md exists):
-   ```bash
-   # Append to backlog
-   echo "- [ ] [Convention description] - discovered during fix for [issue]" >> planning/BACKLOG.md
+2. Propose backlog entry (if planning/BACKLOG.md exists). Present for user approval before appending:
+   ```
+   - [ ] [Convention description] - discovered during fix for [issue]
    ```
 
 ## Step 9a: Auto-Capture Solution
@@ -345,47 +314,15 @@ Skip for trivial fixes (typos, missing imports, obvious errors).
 
 ### Documentation Review
 
-Launch doc-enforcer agent in audit mode:
-
-```text
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-DOCUMENTATION REVIEW: Compliance Check
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-**Agent - Documentation (docs-enforcer):**
-
-```text
-Audit documentation for the {fix-name} fix.
-
-Focus:
-- Fix state directory complete (PROGRESS.md with current state)
-- No misplaced files
-- Modified markdown files follow documentation type system
-
-Provide audit results with severity levels.
-```
+Launch **docs-enforcer** agent: audit documentation for the fix. Focus on fix state directory completeness, misplaced files, and documentation type system compliance. Provide results with severity levels.
 
 ### PR Review
 
-After PR is created in Step 10, launch review agents on the full PR diff:
+After PR is created in Step 10, launch three review agents in parallel on the full PR diff:
 
-```text
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-PR REVIEW: Full Diff Analysis
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-Launch in parallel:
-
-**Agent 1 - Code Review (code-reviewer):**
-Review the full PR diff for code quality and consistency.
-
-**Agent 2 - Test Coverage (test-coverage-reviewer):**
-Review test coverage for the fix. Flag untested paths.
-
-**Agent 3 - Contracts (contracts-reviewer):**
-Review changes to public APIs, data models, and type definitions for breaking changes.
+1. **code-reviewer**: Code quality and consistency
+2. **test-coverage-reviewer**: Test coverage, flag untested paths
+3. **contracts-reviewer**: Public APIs, data models, type definitions for breaking changes
 
 Present consolidated findings. Critical issues must be addressed before merge.
 
@@ -393,27 +330,23 @@ Present consolidated findings. Critical issues must be addressed before merge.
 
 When user says "complete", "mark as complete", or similar:
 
-**For all fixes (worktree and main):**
+All fixes run in worktrees (Step 1a redirects main to worktree creation).
 
-1. **Create branch** (if on main, not already on a branch):
-   ```bash
-   git checkout -b fix/{fix-description}
-   ```
-
-2. **Commit and push**:
+1. **Commit and push**:
    - Stage all changes
    - Create conventional commit with fix summary
    - Push to remote
 
-3. **Create PR** with fix summary
+2. **Create PR** with fix summary
 
-4. **Run Step 9a PR reviewers** (doc-enforcer + 3 review agents)
+3. **Update incident report** with PR link (if report exists from Step 5a):
+   Add to Resolution section: `Fixed in PR #{number} ({url})`
+
+4. **Run Step 9b PR reviewers** (3 review agents first, then doc-enforcer last)
 
 5. **Address critical findings** before merge
 
 6. **Merge PR and delete branch**
-
-**Additional steps for worktree fixes:**
 
 7. Remove worktree: `git worktree remove {path}`
 
@@ -422,48 +355,3 @@ When user says "complete", "mark as complete", or similar:
 9. Update project STATE.md Feature Registry: fix status → `complete`
 
 **Note**: For in-feature fixes (Scenario B-related from Step 1a), Step 10 does not apply. The fix is committed as part of the feature's /build finalization.
-
-## Output Format
-
-Use this format for the fix report:
-
-```markdown
-## Fix Investigation
-
-### Git History
-[Relevant past fixes/commits found, or "No related history found"]
-
-### Project Conventions
-[Relevant conventions that apply, or "No specific conventions found"]
-
-### Affected Areas
-[Files and code that may be impacted]
-
-### Root Cause
-[Analysis: Symptom → Immediate cause → Root cause]
-
----
-
-## Proposed Fix
-
-[Description of fix and rationale]
-[Reference to how this relates to past work if applicable]
-
-**Awaiting approval to implement.**
-
----
-
-## Verification
-
-### Tests Run
-[Test results or "No tests found"]
-
-### Regression Checklist
-- [ ] [Area 1]: [What to verify]
-- [ ] [Area 2]: [What to verify]
-- [ ] [Area 3]: [What to verify]
-
-### Convention Notes
-[If applicable: notification about potential convention change]
-[If not applicable: "No convention changes identified"]
-```

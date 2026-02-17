@@ -12,6 +12,8 @@ Plan work with spec-driven approach. Creates requirements and executable plans.
 
 ## Entry Point
 
+> **Timestamp Rule**: Whenever modifying STATE.md or PROGRESS.md in any step below, always update its `**Last Updated**` field to the current date.
+
 User invokes `/plan` or asks to plan work.
 
 ## Steps
@@ -196,7 +198,11 @@ Create the feature-level context file that provides cascading context when worki
 
 @SPEC.md
 
-## Research & Decisions
+## Discovery
+
+@DISCOVERY.md
+
+## Research
 
 @RESEARCH.md
 
@@ -264,9 +270,26 @@ Write to `planning/specs/{feature}/SPEC.md`.
 
 **Validation before proceeding**: Ensure NO `[NEEDS CLARIFICATION]` markers remain. If any exist, resolve them with the user before creating PLAN.md.
 
-### 7. Create RESEARCH.md (Research & Decisions)
+### 7. Create DISCOVERY.md (Decision Record)
 
-Document research findings and approach decisions using the research template:
+Record the collaborative discovery process that shaped the feature. This captures the back-and-forth between user and Claude: questions asked, answers given, choices made, and how scope evolved.
+
+Use the template at `@skills/Planning/my-workflow/templates/discovery-template.md`
+
+**Discovery guidance:**
+
+- **Origin**: Where the feature came from (backlog, user request, incident)
+- **Starting Point**: What was known at the start
+- **Questions and Answers**: Chronological record of dialogue that shaped the feature. Each entry: question asked, answer given, effect on scope/direction
+- **Scope Evolution**: How scope changed through the process
+- **Decisions Made**: Table of choices with alternatives considered and rationale
+- **Approach**: Synthesized summary of what we're building and why
+
+Write to `planning/specs/{feature}/DISCOVERY.md`.
+
+### 8. Create RESEARCH.md (Data & Analysis)
+
+Document the raw research data, analysis, and findings that informed decisions. This is the evidence file, not the decision log (decisions live in DISCOVERY.md).
 
 Use the template at `@skills/Planning/my-workflow/templates/research-template.md`
 
@@ -276,13 +299,12 @@ Use the template at `@skills/Planning/my-workflow/templates/research-template.md
 - **Codebase Analysis**: Discover existing patterns, conventions, and constraints
 - **External Research**: Survey the ecosystem, compare options, deep-dive selected approach
 - **External Inspirations**: Review sources, extract patterns and insights to apply
-- **Tradeoff Analysis**: Document choices made with rationale and risks
 - **Architectural Implications**: Map system boundaries, dependencies, integration points
-- **Key Decisions**: Record each decision with rationale in a table
+- **Risks**: Technical and process risks with mitigation strategies
 
 Write to `planning/specs/{feature}/RESEARCH.md`.
 
-### 8. Create PLAN.md (Detailed Documentation)
+### 9. Create PLAN.md (Detailed Documentation)
 
 Create a comprehensive implementation plan with as many tasks as needed for clarity.
 
@@ -404,7 +426,7 @@ Customize the template:
 
 Write to `planning/specs/{feature}/PROGRESS.md`.
 
-### 9. Update STATE.md and Feature CLAUDE.md
+### 10. Update STATE.md and Feature CLAUDE.md
 
 Update `planning/STATE.md` Feature Registry -- add row for new feature:
 
@@ -436,7 +458,7 @@ Update `planning/specs/{feature}/CLAUDE.md` status:
 Planning complete. Ready for /build.
 ```
 
-### 10. Transition to Building
+### 11. Transition to Building
 
 After plan is created:
 
@@ -449,7 +471,8 @@ After plan is created:
 Created:
 
 - [planning/specs/{feature}/SPEC.md](planning/specs/{feature}/SPEC.md) (requirements)
-- [planning/specs/{feature}/RESEARCH.md](planning/specs/{feature}/RESEARCH.md) (decisions)
+- [planning/specs/{feature}/DISCOVERY.md](planning/specs/{feature}/DISCOVERY.md) (decision record)
+- [planning/specs/{feature}/RESEARCH.md](planning/specs/{feature}/RESEARCH.md) (data & analysis)
 - [planning/specs/{feature}/PLAN.md](planning/specs/{feature}/PLAN.md) (executable plan with {N} tasks)
 - [planning/specs/{feature}/PROGRESS.md](planning/specs/{feature}/PROGRESS.md) (feature state)
 
@@ -467,7 +490,8 @@ planning/
     └── {feature}/
         ├── CLAUDE.md     # Feature context (cascading)
         ├── SPEC.md       # Requirements
-        ├── RESEARCH.md   # Decisions
+        ├── DISCOVERY.md  # Decision record (collaborative dialogue)
+        ├── RESEARCH.md   # Data & analysis (evidence)
         ├── PLAN.md       # Executable plan
         └── PROGRESS.md   # Feature progress (progress, current state)
 ```
@@ -588,7 +612,10 @@ Create feature directory + CLAUDE.md (cascading context)
 Create SPEC.md (requirements)
     |
     v
-Create RESEARCH.md (decisions)
+Create DISCOVERY.md (decision record)
+    |
+    v
+Create RESEARCH.md (data & analysis)
     |
     v
 Create PLAN.md (detailed tasks)
