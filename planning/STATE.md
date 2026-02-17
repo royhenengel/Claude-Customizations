@@ -1,6 +1,6 @@
 # Project State
 
-**Last Updated**: 2026-02-16
+**Last Updated**: 2026-02-17
 
 ## Feature Registry
 
@@ -21,7 +21,7 @@
 | auto-trigger-fix | fix | complete | - | - |
 | instruction-compliance | fix | complete | - | - |
 | incident-report-command | feature | complete | - | - |
-| registry-consistency-check | feature | drafted | registry-consistency-check | .worktrees/registry-consistency-check |
+| registry-consistency-check | feature | complete | registry-consistency-check | .worktrees/registry-consistency-check |
 
 ## Decisions
 
