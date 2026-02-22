@@ -90,7 +90,7 @@ npm test / cargo test / pytest / go test ./...
 Open a new VS Code window, launch the Claude panel, and auto-submit `/plan`:
 
 ```bash
-"/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --new-window "$worktree_path" && sleep 2 && osascript -e '
+env -u CLAUDECODE "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --new-window "$worktree_path" && sleep 2 && osascript -e '
 tell application "System Events"
     key code 53 using {command down, shift down}
     delay 3

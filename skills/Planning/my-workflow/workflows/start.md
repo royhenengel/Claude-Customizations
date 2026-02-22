@@ -169,7 +169,7 @@ Open which worktree?
 
 Open selected worktree in VS Code with Claude panel:
 ```bash
-"/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --new-window "{worktree-path}" && sleep 2 && osascript -e 'tell application "System Events" to key code 53 using {command down, shift down}'
+env -u CLAUDECODE "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --new-window "{worktree-path}" && sleep 2 && osascript -e 'tell application "System Events" to key code 53 using {command down, shift down}'
 ```
 
 ### 2. Create Directory Structure
