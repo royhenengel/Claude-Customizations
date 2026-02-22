@@ -99,27 +99,41 @@ git branch -r --no-merged origin/main 2>/dev/null | grep -v HEAD | sed 's|origin
 git worktree list --porcelain | grep "^branch" | sed 's|branch refs/heads/||'
 ```
 
-Compare the two lists. For each remote feature branch that has no local worktree, include it in the dashboard under a "Available on remote" section.
+Compare the two lists. Cross-reference remote-only branches against the Feature Registry in STATE.md.
 
-**If remote-only branches found**, show them after the "Features in flight" section:
+**Categorize each remote-only branch:**
+
+- **Resumable**: branch matches an in-progress/partial/planned feature in the registry → treat as resumable work
+- **Unregistered**: branch has no registry entry → show as "Available on remote" for awareness
+
+**Resumable features** are shown in the "Features in flight" section alongside local worktrees, marked with a 📡 icon to indicate they need local setup:
 
 ```text
-Available on remote (no local worktree):
-- {branch-name} → Run: git worktree add .worktrees/{name} {branch-name}
+Features in flight:
+- user-auth (building, 3/5 tasks) → .worktrees/user-auth
+- 📡 deletion-cascade (in progress) → remote only, needs local worktree
 ```
 
-And add option 4 to the dashboard menu:
+When resumable features exist, add a **Resume** option to the dashboard menu:
+
 ```text
-4. **Sync a remote feature** (create local worktree for a remote branch)
+{N}. **Resume {feature-name}** (create local worktree from remote branch)
 ```
 
-**Option 4 - Sync a remote feature:**
-
-After user picks a remote branch:
+**Resume option behavior** (automatic, no additional questions):
 
 1. Derive worktree name from branch (strip `feature/` or `fix/` prefix if present, use remainder as kebab-case name)
 2. Create worktree: `git worktree add .worktrees/{name} {branch-name}`
 3. Open in VS Code: `env -u CLAUDECODE "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --new-window ".worktrees/{name}" && sleep 2 && osascript -e 'tell application "System Events" to key code 53 using {command down, shift down}'`
+
+If multiple resumable features exist, list each as a separate numbered option.
+
+**Unregistered remote branches** (if any) are shown after features in flight:
+
+```text
+Also on remote (not in registry):
+- {branch-name}
+```
 
 **Validate registry consistency:**
 
@@ -133,7 +147,9 @@ Run the validation checks from the `validate-registry` skill against the Feature
 
 4. Check for status inconsistencies (active/drafted/ready with no branch/worktree, complete with worktree still present)
 
-**If issues found**, display a warning block before the Project Status dashboard:
+**Exclude resumable features from registry issues.** A feature with a remote branch but no local worktree is not an issue when it's already shown as resumable in the dashboard.
+
+**If other issues found**, display a warning block before the Project Status dashboard:
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
