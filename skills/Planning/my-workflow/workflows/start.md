@@ -86,6 +86,41 @@ git worktree list --porcelain | grep "^worktree" | grep -v "$(git rev-parse --sh
 
 For each active worktree, read its feature PROGRESS.md (`planning/specs/{feature}/PROGRESS.md`) to get live status (stage, progress).
 
+**Detect remote feature branches without local worktrees:**
+
+```bash
+# Fetch latest remote state
+git fetch --prune
+
+# List remote feature branches (exclude main/master)
+git branch -r --no-merged origin/main 2>/dev/null | grep -v HEAD | sed 's|origin/||' | xargs
+
+# List local worktree branches
+git worktree list --porcelain | grep "^branch" | sed 's|branch refs/heads/||'
+```
+
+Compare the two lists. For each remote feature branch that has no local worktree, include it in the dashboard under a "Available on remote" section.
+
+**If remote-only branches found**, show them after the "Features in flight" section:
+
+```text
+Available on remote (no local worktree):
+- {branch-name} → Run: git worktree add .worktrees/{name} {branch-name}
+```
+
+And add option 4 to the dashboard menu:
+```text
+4. **Sync a remote feature** (create local worktree for a remote branch)
+```
+
+**Option 4 - Sync a remote feature:**
+
+After user picks a remote branch:
+
+1. Derive worktree name from branch (strip `feature/` or `fix/` prefix if present, use remainder as kebab-case name)
+2. Create worktree: `git worktree add .worktrees/{name} {branch-name}`
+3. Open in VS Code: `env -u CLAUDECODE "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --new-window ".worktrees/{name}" && sleep 2 && osascript -e 'tell application "System Events" to key code 53 using {command down, shift down}'`
+
 **Validate registry consistency:**
 
 Run the validation checks from the `validate-registry` skill against the Feature Registry and git state. Specifically:
