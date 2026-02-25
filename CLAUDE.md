@@ -9,10 +9,8 @@ Personal Claude Code customizations. This repo is symlinked to `~/.claude/` for 
 - `hooks/` - Event-driven behaviors
 - `mcp/` - MCP server configurations
 - `rules/` - Behavioral rules, standards, and preferences (auto-loaded every session via `~/.claude/rules/`)
-- `planning/` - Project planning, state, and specifications
-- `docs/` - Reference catalogs and operational guides
+- `workspace/` - Project planning, state, features, docs, and archive
 - `scripts/` - Utility scripts
-- `archive/` - Archived/deprecated items
 
 ## Development Workflow
 
@@ -26,11 +24,11 @@ Personal Claude Code customizations. This repo is symlinked to `~/.claude/` for 
 
 Claude Flow is an independent MCP server for multi-agent swarm orchestration. It is separate from the my-workflow system. Use ToolSearch for "claude-flow" to access its tools. Do not mix Claude Flow agents with the `agents/` directory.
 
-## Planning
+## Workspace
 
-- [planning/OVERVIEW.md](planning/OVERVIEW.md) - Project vision, scope, and governance
-- [planning/STATE.md](planning/STATE.md) - Current project state and progress
-- [planning/BACKLOG.md](planning/BACKLOG.md) - Improvements and technical debt
+- [workspace/OVERVIEW.md](workspace/OVERVIEW.md) - Project vision, scope, and governance
+- [workspace/STATE.md](workspace/STATE.md) - Current project state and progress
+- [workspace/BACKLOG.md](workspace/BACKLOG.md) - Improvements and technical debt
 
 ## Key References
 

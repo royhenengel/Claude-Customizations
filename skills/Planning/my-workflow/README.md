@@ -5,7 +5,7 @@ Personal workflow system for solo development with Claude Code.
 ## Quick Start
 
 ```bash
-/start              # Initialize project with planning/ structure + OVERVIEW.md
+/start              # Initialize project with workspace/ structure + OVERVIEW.md
 /plan               # Plan a feature (includes clarification option for unclear ideas)
 /build              # Execute plan with subagent delegation
 ```
@@ -22,12 +22,12 @@ Personal workflow system for solo development with Claude Code.
 After `/start`:
 
 ```text
-planning/
+workspace/
 ├── OVERVIEW.md         # Project definition (vision, scope)
 ├── CLAUDE.md           # Planning context (references OVERVIEW)
 ├── STATE.md            # Living state tracker (includes Current State section)
 ├── BACKLOG.md          # Persistent backlog (Quick Wins, Features, Tech Debt)
-└── specs/
+└── features/
     └── {feature}/
         ├── SPEC.md     # Requirements
         ├── RESEARCH.md # Decisions
@@ -41,7 +41,7 @@ planning/
 
 Initializes project structure, creates OVERVIEW.md (project definition), and installs auto-update hook.
 
-**Creates**: `planning/OVERVIEW.md`, `planning/CLAUDE.md`, `planning/STATE.md`, `planning/BACKLOG.md`, `.claude/hooks.json`
+**Creates**: `workspace/OVERVIEW.md`, `workspace/CLAUDE.md`, `workspace/STATE.md`, `workspace/BACKLOG.md`, `.claude/hooks.json`
 
 **New project**: Invokes brainstorm patterns to help craft the project definition.
 
@@ -53,7 +53,7 @@ Plans work with spec-driven approach.
 
 **Includes inline clarification** option for unclear requirements (Purpose → Scope → Constraints → Success → Approaches).
 
-**Creates**: `planning/specs/{feature}/SPEC.md`, `RESEARCH.md`, `PLAN.md`
+**Creates**: `workspace/specs/{feature}/SPEC.md`, `RESEARCH.md`, `PLAN.md`
 
 **Spec format**: User stories, requirements with `[NEEDS CLARIFICATION]` markers, validation before planning.
 
@@ -184,7 +184,7 @@ To incorporate additional patterns:
 
 1. Read the source skill in `~/.claude/skills/`
 2. Extract the specific pattern you need
-3. Adapt to fit the `planning/` structure
+3. Adapt to fit the `workspace/` structure
 4. Update relevant workflow file
 
 ## Troubleshooting

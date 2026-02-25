@@ -16,7 +16,7 @@ Per-project file at `~/.claude/projects/{hash}/memory/MEMORY.md`. Auto-loaded ev
 
 ### STATE.md (Living Handoff)
 
-`planning/STATE.md`. Read on demand. Updated continuously.
+`workspace/STATE.md`. Read on demand. Updated continuously.
 
 **Purpose**: Always-ready session handoff. A new session resumes work from STATE.md alone.
 **Contains**: Current state, progress, decisions (with rationale), notes.
@@ -32,7 +32,7 @@ Automatic session capture via plugin. Searchable via MCP tools. Injects recent c
 
 ### /compound (Solutions)
 
-Curated problem-solution pairs in `planning/solutions/`. Created via /compound skill.
+Curated problem-solution pairs in `workspace/solutions/`. Created via /compound skill.
 
 **Purpose**: Detailed case files for recurring problems. Root cause analysis with verified fixes.
 **Not here**: One-off debugging (claude-mem), architectural decisions (STATE.md), brief patterns (MEMORY.md).
@@ -52,7 +52,7 @@ Curated problem-solution pairs in `planning/solutions/`. Created via /compound s
 I learned something. Where does it go?
 
 Is it a verified solution to a recurring problem with clear symptoms?
-  YES -> /compound (planning/solutions/) - full diagnostic document
+  YES -> /compound (workspace/solutions/) - full diagnostic document
   NO  -> continue
 
 Is it an architectural or design decision made during feature work?

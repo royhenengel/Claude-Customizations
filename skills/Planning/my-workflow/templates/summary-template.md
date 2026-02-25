@@ -1,7 +1,7 @@
 # {Feature Name} Implementation Summary
 
 **Completed**: {date}
-**Plan**: planning/specs/{feature}/PLAN.md
+**Plan**: workspace/features/{feature}/PLAN.md
 
 ## What Was Built
 

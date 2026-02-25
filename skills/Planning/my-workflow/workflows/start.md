@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Initialize a new project with the unified `planning/` structure, including a project definition (OVERVIEW.md).
+Initialize a new project with the unified `workspace/` structure, including a project definition (OVERVIEW.md).
 
 ## When to Use
 
@@ -24,12 +24,12 @@ Say:
 ```
 
 ```bash
-ls -la planning/ 2>/dev/null || echo "No planning/ directory"
+ls -la workspace/ 2>/dev/null || echo "No workspace/ directory"
 # Detect environment
 if [ -f .git ]; then echo "WORKTREE"; else echo "MAIN"; fi
 ```
 
-**If new project (no planning/)**: Say and proceed to Step 2:
+**If new project (no workspace/)**: Say and proceed to Step 2:
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -44,7 +44,7 @@ Derive feature name from branch:
 git branch --show-current
 ```
 
-Read `planning/specs/{feature}/PROGRESS.md` for feature state.
+Read `workspace/features/{feature}/PROGRESS.md` for feature state.
 
 - **If feature PROGRESS.md exists with content**: Show Current State and offer to resume:
 
@@ -76,7 +76,7 @@ No feature state found. Run `/plan` to start planning this feature.
 
 **If on main branch** (`.git` is a directory):
 
-Read `planning/STATE.md` Feature Registry.
+Read `workspace/STATE.md` Feature Registry.
 
 Discover active worktrees:
 ```bash
@@ -84,7 +84,7 @@ Discover active worktrees:
 git worktree list --porcelain | grep "^worktree" | grep -v "$(git rev-parse --show-toplevel)$"
 ```
 
-For each active worktree, read its feature PROGRESS.md (`planning/specs/{feature}/PROGRESS.md`) to get live status (stage, progress).
+For each active worktree, read its feature PROGRESS.md (`workspace/features/{feature}/PROGRESS.md`) to get live status (stage, progress).
 
 **Detect remote feature branches without local worktrees:**
 
@@ -174,7 +174,7 @@ Features in flight:
 
 Completed: {count} features
 
-Read `planning/BACKLOG.md` and show actionable items:
+Read `workspace/BACKLOG.md` and show actionable items:
 
 From backlog:
 
@@ -193,7 +193,7 @@ What would you like to do?
 After user picks from backlog or describes new work:
 
 1. Derive a kebab-case worktree name from the selection
-2. Register the feature in `planning/STATE.md` Feature Registry (status: `drafted`, type: `feature`, branch and worktree path)
+2. Register the feature in `workspace/STATE.md` Feature Registry (status: `drafted`, type: `feature`, branch and worktree path)
 3. Create worktree using `/git-worktrees` with that name (auto-opens VS Code, launches Claude, submits `/plan`)
 
 Do NOT ask additional questions. Proceed directly to registration and worktree creation.
@@ -226,20 +226,20 @@ env -u CLAUDECODE "/Applications/Visual Studio Code.app/Contents/Resources/app/b
 ### 2. Create Directory Structure
 
 ```bash
-mkdir -p planning/specs
+mkdir -p workspace/features
 ```
 
 ### 3. Create Initial Files
 
 Create the following files silently (don't ask questions yet):
 
-**planning/CLAUDE.md:**
+**workspace/CLAUDE.md:**
 ```markdown
 # Project - Planning Context
 
 ## Project Definition
 
-@planning/OVERVIEW.md
+@workspace/OVERVIEW.md
 
 ## Current Focus
 
@@ -253,13 +253,13 @@ See STATE.md for current stage and focus.
 - `specs/` - Feature specifications and plans
 ```
 
-**planning/STATE.md:**
+**workspace/STATE.md:**
 
 Use the project state template: @skills/Planning/my-workflow/templates/project-state-template.md
 
 Copy the template content and set `**Last Updated**` to today's date.
 
-**planning/BACKLOG.md:**
+**workspace/BACKLOG.md:**
 ```markdown
 # Backlog
 
@@ -293,7 +293,7 @@ Hook configuration:
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "A code file was modified. Check if planning/STATE.md needs updating.\n\nChange: $ARGUMENTS\n\nRules:\n1. SKIP if file is in planning/ (avoid loops)\n2. Update Progress if a task was completed\n3. Add to Notes if something unexpected was discovered\n4. Update Current Focus if work shifted\n\nRespond with:\n- updates_needed: true/false\n- changes: [list of STATE.md updates]\n- systemMessage: one-line summary",
+            "prompt": "A code file was modified. Check if workspace/STATE.md needs updating.\n\nChange: $ARGUMENTS\n\nRules:\n1. SKIP if file is in workspace/ (avoid loops)\n2. Update Progress if a task was completed\n3. Add to Notes if something unexpected was discovered\n4. Update Current Focus if work shifted\n\nRespond with:\n- updates_needed: true/false\n- changes: [list of STATE.md updates]\n- systemMessage: one-line summary",
             "timeout": 15000
           }
         ]
@@ -322,7 +322,7 @@ find . -maxdepth 3 -type f \( -name "*.ts" -o -name "*.js" -o -name "*.py" -o -n
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-Run `/map-codebase` workflow to analyze and store findings in `planning/CODEBASE.md`.
+Run `/map-codebase` workflow to analyze and store findings in `workspace/CODEBASE.md`.
 
 **If no source files → This is greenfield.** Skip codebase analysis.
 
@@ -336,11 +336,11 @@ Display what was created:
 📁 Planning Workspace Ready
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-planning/
+workspace/
 ├── CLAUDE.md    (planning context)
 ├── STATE.md     (stage: starting)
 ├── BACKLOG.md   (improvements backlog)
-└── specs/       (ready for feature specs)
+└── features/       (ready for feature specs)
 
 .claude/
 └── hooks.json   (auto-update hook)
@@ -352,12 +352,12 @@ planning/
 📁 Planning Workspace Ready
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-planning/
+workspace/
 ├── CLAUDE.md    (planning context)
 ├── STATE.md     (stage: starting)
 ├── BACKLOG.md   (improvements backlog)
 ├── CODEBASE.md  (codebase analysis)
-└── specs/       (ready for feature specs)
+└── features/       (ready for feature specs)
 
 .claude/
 └── hooks.json   (auto-update hook)
@@ -400,7 +400,7 @@ Say:
 
 ### 8. Create OVERVIEW.md
 
-After gathering input, create `planning/OVERVIEW.md`:
+After gathering input, create `workspace/OVERVIEW.md`:
 
 ```markdown
 # {Project Name}
@@ -468,13 +468,13 @@ This transitions into the same flow as the main branch dashboard (Scenario C, St
 ## Output Structure
 
 ```text
-planning/
+workspace/
 ├── OVERVIEW.md         # Project definition (vision, scope)
 ├── CLAUDE.md           # Planning context (references OVERVIEW)
 ├── STATE.md            # Feature Registry
 ├── BACKLOG.md          # Persistent backlog of improvements
 ├── CODEBASE.md         # Codebase map (brownfield only)
-└── specs/              # Empty, ready for /plan
+└── features/              # Empty, ready for /plan
 
 .claude/
 └── hooks.json          # Auto-update hook installed
@@ -482,13 +482,13 @@ planning/
 
 ## Resume Behavior
 
-**In a worktree**: Read `planning/specs/{feature}/PROGRESS.md` completely. Summarize Current State and offer to resume.
+**In a worktree**: Read `workspace/features/{feature}/PROGRESS.md` completely. Summarize Current State and offer to resume.
 
-**On main**: Read `planning/STATE.md` Feature Registry. Show features in flight and backlog items.
+**On main**: Read `workspace/STATE.md` Feature Registry. Show features in flight and backlog items.
 
 ## Error Handling
 
-**planning/ already exists with STATE.md:**
+**workspace/ already exists with STATE.md:**
 
 This is normal for resuming work. Read Current State and continue.
 

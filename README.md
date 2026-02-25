@@ -11,15 +11,15 @@ claude-customizations/
 ├── rules/            # Always-loaded governance (auto-loaded via ~/.claude/rules/)
 ├── hooks/            # Event-driven behaviors
 ├── mcp/              # MCP server configurations
-├── docs/             # Reference catalogs and setup guides
 ├── scripts/          # Utility scripts
-├── planning/         # Project planning, state, and specifications
-│   ├── OVERVIEW.md   # Project vision, scope, and governance
-│   ├── STATE.md      # Current project state and progress
-│   ├── BACKLOG.md    # Improvements and technical debt
-│   ├── solutions/    # Reusable problem-solution pairs (/compound)
-│   └── specs/        # Feature specifications
-└── archive/          # Archived/deprecated items
+└── workspace/        # Project planning, state, and knowledge
+    ├── OVERVIEW.md   # Project vision, scope, and governance
+    ├── STATE.md      # Current project state and progress
+    ├── BACKLOG.md    # Improvements and technical debt
+    ├── features/     # Feature specifications
+    ├── solutions/    # Reusable problem-solution pairs (/compound)
+    ├── docs/         # Reference catalogs and setup guides
+    └── archive/      # Archived/deprecated items
 ```
 
 ## How It Works
@@ -49,7 +49,7 @@ The **my-workflow** skill provides a unified development workflow:
 
 ## Guidelines
 
-For project vision and governance, see [planning/OVERVIEW.md](planning/OVERVIEW.md).
+For project vision and governance, see [workspace/OVERVIEW.md](workspace/OVERVIEW.md).
 
 ## Version Control
 

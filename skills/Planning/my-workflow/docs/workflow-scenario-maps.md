@@ -18,7 +18,7 @@ Visual maps of every decision point and path through each workflow command.
 
 | Entry State | Path | Outcome |
 |---|---|---|
-| No planning/ directory | New project setup | Structure created, OVERVIEW.md guided, first feature offered |
+| No workspace/ directory | New project setup | Structure created, OVERVIEW.md guided, first feature offered |
 | Worktree + feature PROGRESS.md | Resume | Shows status, suggests /build |
 | Worktree + no PROGRESS.md | New feature | Suggests /plan |
 | Main branch | Dashboard | Shows features in flight + backlog, offers Plan/Fix/Switch |
@@ -45,7 +45,7 @@ Visual maps of every decision point and path through each workflow command.
 ```mermaid
 flowchart TD
     START["/start invoked"] --> SCAN["Scan project"]
-    SCAN --> EXISTS{"planning/ exists?"}
+    SCAN --> EXISTS{"workspace/ exists?"}
 
     EXISTS -->|"No"| NEW["New Project Setup"]
     EXISTS -->|"Yes"| ENV{"Environment?"}
@@ -91,7 +91,7 @@ flowchart TD
 
 | Entry State | Path | Outcome |
 |---|---|---|
-| No planning/ | Error | Suggest /start |
+| No workspace/ | Error | Suggest /start |
 | Main branch | Redirect | Create worktree, instruct /plan in new window, STOP |
 | Worktree + already planned | Skip | Suggest /build |
 | Worktree + new feature | Plan | Full planning flow |
@@ -117,7 +117,7 @@ Backlog → Selection → Clarify (if needed) → Create directory
 
 ```mermaid
 flowchart TD
-    START["/plan invoked"] --> PREREQ{"planning/ exists?"}
+    START["/plan invoked"] --> PREREQ{"workspace/ exists?"}
     PREREQ -->|"No"| SUGGEST_START["Suggest /start"]
     PREREQ -->|"Yes"| ENV{"Environment?"}
 

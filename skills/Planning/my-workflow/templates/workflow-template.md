@@ -20,7 +20,7 @@ User invokes `/{command-name}` or {alternative trigger description}.
 
 ```bash
 # Verify required state exists
-ls planning/STATE.md 2>/dev/null || echo "No STATE.md - run /start first"
+ls workspace/STATE.md 2>/dev/null || echo "No STATE.md - run /start first"
 ```
 
 {Describe what must exist before this workflow runs.}
@@ -70,7 +70,7 @@ Next steps:
 ## Output Structure
 
 ```
-planning/
+workspace/
 ├── {files created or modified}
 ```
 

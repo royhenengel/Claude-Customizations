@@ -57,8 +57,8 @@ Size Limits: Functions < 50 lines, files < 200 lines, components < 80 lines.
 ## Step 1: Check Prerequisites
 
 ```bash
-ls planning/STATE.md 2>/dev/null || echo "No STATE.md - run /start first"
-ls planning/specs/*/PLAN.md 2>/dev/null || echo "No PLAN.md - run /plan first"
+ls workspace/STATE.md 2>/dev/null || echo "No STATE.md - run /start first"
+ls workspace/features/*/PLAN.md 2>/dev/null || echo "No PLAN.md - run /plan first"
 ```
 
 If no plan exists, suggest running `/plan` first.
@@ -72,9 +72,9 @@ If no plan exists, suggest running `/plan` first.
 if [ -f .git ]; then echo "WORKTREE"; else echo "MAIN"; fi
 ```
 
-**In a worktree**: Auto-detect feature from branch name (`git branch --show-current`). Read `planning/specs/{feature}/STATE.md` and `planning/specs/{feature}/PLAN.md`. Skip feature selection.
+**In a worktree**: Auto-detect feature from branch name (`git branch --show-current`). Read `workspace/features/{feature}/STATE.md` and `workspace/features/{feature}/PLAN.md`. Skip feature selection.
 
-**On main**: Read project STATE.md (`planning/STATE.md`) Feature Registry, show available features.
+**On main**: Read project STATE.md (`workspace/STATE.md`) Feature Registry, show available features.
 
 **If a paused feature exists**, offer to resume:
 
@@ -153,14 +153,14 @@ TodoWrite([
 ])
 ```
 
-**Update feature STATE.md** (`planning/specs/{feature}/STATE.md`):
+**Update feature STATE.md** (`workspace/features/{feature}/STATE.md`):
 
 - Set `**Stage**` to `building`
 - Copy task list from PLAN.md to `## Progress` section
 - Update `**Last Updated**` timestamp
 - Set Current State Next Steps to "Executing Task 1"
 
-**Update project STATE.md** (`planning/STATE.md`) Feature Registry:
+**Update project STATE.md** (`workspace/STATE.md`) Feature Registry:
 
 - Set feature status to `active`
 

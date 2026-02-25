@@ -14,7 +14,7 @@ repo-root/
 ├── docs/                              # Standalone guides and references
 │   └── {guide-name}.md                # Guide (no better home)
 │
-├── planning/                          # Project management
+├── workspace/                          # Project management
 │   ├── CLAUDE.md                      # Planning Context (auto-loaded, navigation)
 │   ├── OVERVIEW.md                    # Project Vision (authoritative governance)
 │   ├── STATE.md                       # Project State (living tracker)
@@ -23,7 +23,7 @@ repo-root/
 │   │   ├── INDEX.md                   # Solutions index
 │   │   └── {category}/               # Problem categories
 │   │       └── {solution}.md          # Individual solution
-│   └── specs/                         # Feature specifications
+│   └── features/                         # Feature specifications
 │       └── {feature}/                 # One directory per feature
 │           ├── CLAUDE.md              # Feature Context (auto-loaded)
 │           ├── SPEC.md                # Feature Spec (requirements)
@@ -45,28 +45,28 @@ repo-root/
 | Project Context | CLAUDE.md | repo root | Operational instructions for Claude (auto-loaded) | Yes |
 | Directory Context | CLAUDE.md | any directory | Cascading context for that directory (auto-loaded) | Yes |
 | Project Intro | README.md | repo root | Human-facing project overview | Yes |
-| Project Vision | OVERVIEW.md | planning/ | Vision, scope, principles, governance | Yes |
-| Project State | STATE.md | planning/ | Current stage, active features, decisions | Yes |
-| Project Backlog | BACKLOG.md | planning/ | Improvements, ideas, technical debt | Yes |
-| Feature Spec | SPEC.md | planning/specs/{feature}/ | Requirements for a feature | Yes |
-| Feature Discovery | DISCOVERY.md | planning/specs/{feature}/ | Collaborative decision record from user-Claude dialogue | Yes |
-| Feature Research | RESEARCH.md | planning/specs/{feature}/ | Data, analysis, and findings that inform decisions | Yes |
-| Feature Plan | PLAN.md | planning/specs/{feature}/ | Executable implementation tasks | Yes |
-| Feature Progress | PROGRESS.md | planning/specs/{feature}/ | Live tracking of progress, current state, gap stack | Yes |
-| Feature Summary | SUMMARY.md | planning/specs/{feature}/ | Outcomes after feature completion | Yes |
-| Feature Context | CLAUDE.md | planning/specs/{feature}/ | Cascading context for feature (auto-loaded) | Yes |
-| Incident Report | INCIDENT-{YYYY-MM-DD}-{slug}.md | planning/incidents/ | Post-incident documentation | Yes |
+| Project Vision | OVERVIEW.md | workspace/ | Vision, scope, principles, governance | Yes |
+| Project State | STATE.md | workspace/ | Current stage, active features, decisions | Yes |
+| Project Backlog | BACKLOG.md | workspace/ | Improvements, ideas, technical debt | Yes |
+| Feature Spec | SPEC.md | workspace/features/{feature}/ | Requirements for a feature | Yes |
+| Feature Discovery | DISCOVERY.md | workspace/features/{feature}/ | Collaborative decision record from user-Claude dialogue | Yes |
+| Feature Research | RESEARCH.md | workspace/features/{feature}/ | Data, analysis, and findings that inform decisions | Yes |
+| Feature Plan | PLAN.md | workspace/features/{feature}/ | Executable implementation tasks | Yes |
+| Feature Progress | PROGRESS.md | workspace/features/{feature}/ | Live tracking of progress, current state, gap stack | Yes |
+| Feature Summary | SUMMARY.md | workspace/features/{feature}/ | Outcomes after feature completion | Yes |
+| Feature Context | CLAUDE.md | workspace/features/{feature}/ | Cascading context for feature (auto-loaded) | Yes |
+| Incident Report | INCIDENT-{YYYY-MM-DD}-{slug}.md | workspace/incidents/ | Post-incident documentation | Yes |
 | Guide | {name}.md | docs/ | Standalone guides with no better home | No |
-| Solution | {category}/{name}.md | planning/solutions/ | Solved problem documentation | Yes |
+| Solution | {category}/{name}.md | workspace/solutions/ | Solved problem documentation | Yes |
 
 ## Placement Rules
 
 Decision tree for where a new document goes:
 
 1. Is it auto-loaded context for a directory? -> **CLAUDE.md** in that directory
-2. Is it a feature artifact (spec, plan, research, progress, summary, discovery)? -> **planning/specs/{feature}/**
-3. Is it project management (state, backlog, governance)? -> **planning/**
-4. Is it a solved problem to reference later? -> **planning/solutions/**
+2. Is it a feature artifact (spec, plan, research, progress, summary, discovery)? -> **workspace/features/{feature}/**
+3. Is it project management (state, backlog, governance)? -> **workspace/**
+4. Is it a solved problem to reference later? -> **workspace/solutions/**
 5. Is it a standalone guide that doesn't fit elsewhere? -> **docs/**
 6. Is it human-facing documentation for a directory? -> **README.md** in that directory
 

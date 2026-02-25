@@ -17,7 +17,7 @@ if [ ! -f .git ]; then exit 0; fi
 BRANCH=$(git branch --show-current 2>/dev/null)
 if [ -z "$BRANCH" ]; then exit 0; fi
 
-STATE_FILE="planning/specs/${BRANCH}/PROGRESS.md"
+STATE_FILE="workspace/features/${BRANCH}/PROGRESS.md"
 if [ ! -f "$STATE_FILE" ]; then exit 0; fi
 
 # Check if there's an active stage (building, planning, ready)

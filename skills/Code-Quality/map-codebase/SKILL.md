@@ -11,7 +11,7 @@ Map an existing codebase to understand its structure, conventions, and patterns.
 2. Maps directory structure and entry points
 3. Analyzes dependencies and tech stack
 4. Identifies patterns and conventions
-5. Creates `planning/CODEBASE.md` with findings
+5. Creates `workspace/CODEBASE.md` with findings
 
 ## Usage
 

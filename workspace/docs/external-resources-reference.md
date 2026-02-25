@@ -38,7 +38,7 @@ External repositories, plugins, and tools that have been evaluated and integrate
 
 | Resource | License | Status | Integration |
 |----------|---------|--------|-------------|
-| [compound-engineering](https://github.com/EveryInc/compound-engineering-plugin) | - | Complete | /compound command → planning/solutions/ |
+| [compound-engineering](https://github.com/EveryInc/compound-engineering-plugin) | - | Complete | /compound command → workspace/solutions/ |
 | [living-requirements](https://github.com/peterbe/death-of-the-prd) | - | Complete | Skill → [skills/Planning/living-requirements/](../skills/Planning/living-requirements/) |
 
 ---
@@ -71,7 +71,7 @@ Original source files stored in `references/` subdirectories:
 
 ## Evaluation History
 
-Detailed analysis of all evaluated repositories: [reddit-sources-evaluation.md](../planning/specs/reddit-sources-evaluation.md)
+Detailed analysis of all evaluated repositories: [reddit-sources-evaluation.md](../features/reddit-sources-evaluation.md)
 
 ---
 

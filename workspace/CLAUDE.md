@@ -2,7 +2,7 @@
 
 ## Project Definition
 
-@planning/OVERVIEW.md
+@workspace/OVERVIEW.md
 
 ## Current Focus
 
@@ -13,13 +13,13 @@ See STATE.md for current stage and focus.
 - `OVERVIEW.md` - Project vision, scope, principles, and governance
 - `STATE.md` - Living state tracker (auto-updated)
 - `BACKLOG.md` - Persistent backlog of improvements
-- `HANDOFF.md` - Session handoff (created by /stop)
-- `specs/` - Feature specifications and plans
+- `features/` - Feature specifications and plans
+- `docs/` - Reference catalogs and operational guides
 - `archive/` - Historical documents (e.g., original constitution.md)
 
 ## Active Feature
 
-See `specs/my-workflow/` for current feature implementation.
+See `features/my-workflow/` for current feature implementation.
 
 
 <claude-mem-context>

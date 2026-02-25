@@ -251,7 +251,7 @@ Options:
 Based on user choice:
 - **Option 1**: Use Gap Protocol to insert. For cross-feature, update Feature Registry.
 - **Option 2**: Add to BACKLOG.md, continue current task.
-- **Option 3**: Create new `planning/specs/{feature}/` directory, add to Feature Registry, continue.
+- **Option 3**: Create new `workspace/features/{feature}/` directory, add to Feature Registry, continue.
 
 ## Step 7: Monitor Context Health
 

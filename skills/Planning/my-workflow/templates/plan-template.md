@@ -6,8 +6,8 @@
 
 ## Context
 
-@planning/specs/{feature}/spec.md
-@planning/specs/{feature}/research.md
+@workspace/features/{feature}/spec.md
+@workspace/features/{feature}/research.md
 {@other relevant files}
 
 ## Task Summary

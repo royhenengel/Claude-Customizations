@@ -23,11 +23,11 @@ User invokes `/plan` or asks to plan work.
 ### 1. Check Prerequisites and Active Features
 
 ```bash
-ls planning/STATE.md 2>/dev/null || echo "No STATE.md - run /start first"
-ls planning/CLAUDE.md 2>/dev/null || echo "No project context"
+ls workspace/STATE.md 2>/dev/null || echo "No STATE.md - run /start first"
+ls workspace/CLAUDE.md 2>/dev/null || echo "No project context"
 ```
 
-If no `planning/` structure exists, suggest running `/start` first.
+If no `workspace/` structure exists, suggest running `/start` first.
 
 **Check context**:
 
@@ -36,10 +36,10 @@ If no `planning/` structure exists, suggest running `/start` first.
 if [ -f .git ]; then echo "WORKTREE"; else echo "MAIN"; fi
 ```
 
-- If in a worktree: derive feature name from branch (`git branch --show-current`). Check if `planning/specs/{feature}/` already exists (if so, this feature is already planned - suggest `/build` instead).
+- If in a worktree: derive feature name from branch (`git branch --show-current`). Check if `workspace/features/{feature}/` already exists (if so, this feature is already planned - suggest `/build` instead).
 - If on main: this is a worktree-first workflow. Planning should happen in a feature worktree for isolation.
 
-  1. Verify `planning/STATE.md` exists (if not, suggest `/start` first)
+  1. Verify `workspace/STATE.md` exists (if not, suggest `/start` first)
   2. Read the Feature Registry to show current project state
   3. Ask user what they want to plan (from backlog or new)
   4. Derive a kebab-case worktree name from their description
@@ -67,7 +67,7 @@ Continue to Step 2 (worktree context only).
 First, check if there's an existing backlog:
 
 ```bash
-cat planning/BACKLOG.md 2>/dev/null || echo "No backlog yet"
+cat workspace/BACKLOG.md 2>/dev/null || echo "No backlog yet"
 ```
 
 **If BACKLOG.md has items**, show them first:
@@ -182,7 +182,7 @@ Once approach is chosen, continue to step 4 with clear requirements.
 ### 4. Create Feature Directory
 
 ```bash
-mkdir -p planning/specs/{feature-name}
+mkdir -p workspace/features/{feature-name}
 ```
 
 Use kebab-case for feature names (e.g., `user-authentication`, `api-integration`).
@@ -219,7 +219,7 @@ Planning in progress.
 @PROGRESS.md
 ```
 
-Write to `planning/specs/{feature}/CLAUDE.md`.
+Write to `workspace/features/{feature}/CLAUDE.md`.
 
 This file will be automatically updated as the feature progresses (e.g., "Implementation in progress", "Complete - pending testing").
 
@@ -266,7 +266,7 @@ If brainstorm was skipped, gather requirements directly:
 - [NEEDS CLARIFICATION: {Question that must be answered before implementation}]
 ```
 
-Write to `planning/specs/{feature}/SPEC.md`.
+Write to `workspace/features/{feature}/SPEC.md`.
 
 **Validation before proceeding**: Ensure NO `[NEEDS CLARIFICATION]` markers remain. If any exist, resolve them with the user before creating PLAN.md.
 
@@ -285,7 +285,7 @@ Use the template at `@skills/Planning/my-workflow/templates/discovery-template.m
 - **Decisions Made**: Table of choices with alternatives considered and rationale
 - **Approach**: Synthesized summary of what we're building and why
 
-Write to `planning/specs/{feature}/DISCOVERY.md`.
+Write to `workspace/features/{feature}/DISCOVERY.md`.
 
 ### 8. Create RESEARCH.md (Data & Analysis)
 
@@ -302,7 +302,7 @@ Use the template at `@skills/Planning/my-workflow/templates/research-template.md
 - **Architectural Implications**: Map system boundaries, dependencies, integration points
 - **Risks**: Technical and process risks with mitigation strategies
 
-Write to `planning/specs/{feature}/RESEARCH.md`.
+Write to `workspace/features/{feature}/RESEARCH.md`.
 
 ### 9. Create PLAN.md (Detailed Documentation)
 
@@ -317,8 +317,8 @@ Create a comprehensive implementation plan with as many tasks as needed for clar
 
 ## Context
 
-@planning/specs/{feature}/SPEC.md
-@planning/specs/{feature}/RESEARCH.md
+@workspace/features/{feature}/SPEC.md
+@workspace/features/{feature}/RESEARCH.md
 {@other relevant files}
 
 ## Task Summary
@@ -409,7 +409,7 @@ Create a comprehensive implementation plan with as many tasks as needed for clar
 | `checkpoint:decision` | Requires human decision with options | Configurable |
 | `checkpoint:human-action` | Requires human to perform action (e.g., deploy, test manually) | Yes |
 
-Write to `planning/specs/{feature}/PLAN.md`.
+Write to `workspace/features/{feature}/PLAN.md`.
 
 ### 8a. Create Feature PROGRESS.md
 
@@ -424,11 +424,11 @@ Customize the template:
 - Copy the task list from PLAN.md Task Summary into `## Progress` section (all unchecked)
 - Set Next Steps to "Begin /build execution"
 
-Write to `planning/specs/{feature}/PROGRESS.md`.
+Write to `workspace/features/{feature}/PROGRESS.md`.
 
 ### 10. Update STATE.md and Feature CLAUDE.md
 
-Update `planning/STATE.md` Feature Registry -- add row for new feature:
+Update `workspace/STATE.md` Feature Registry -- add row for new feature:
 
 ```markdown
 | {feature-name} | feature | ready | {branch-name} | {worktree-path} |
@@ -442,7 +442,7 @@ Do NOT update project STATE.md with Stage, Active Feature, Current Focus, Progre
 - If feature has dependencies, note them in the row
 - Remove from BACKLOG.md if it was picked from there
 
-Record decisions made during planning in the feature PROGRESS.md (`planning/specs/{feature}/PROGRESS.md`):
+Record decisions made during planning in the feature PROGRESS.md (`workspace/features/{feature}/PROGRESS.md`):
 
 ```markdown
 ## Decisions
@@ -450,7 +450,7 @@ Record decisions made during planning in the feature PROGRESS.md (`planning/spec
 - {approach chosen and rationale}
 ```
 
-Update `planning/specs/{feature}/CLAUDE.md` status:
+Update `workspace/features/{feature}/CLAUDE.md` status:
 
 ```markdown
 ## Status
@@ -470,23 +470,23 @@ After plan is created:
 
 Created:
 
-- [planning/specs/{feature}/SPEC.md](planning/specs/{feature}/SPEC.md) (requirements)
-- [planning/specs/{feature}/DISCOVERY.md](planning/specs/{feature}/DISCOVERY.md) (decision record)
-- [planning/specs/{feature}/RESEARCH.md](planning/specs/{feature}/RESEARCH.md) (data & analysis)
-- [planning/specs/{feature}/PLAN.md](planning/specs/{feature}/PLAN.md) (executable plan with {N} tasks)
-- [planning/specs/{feature}/PROGRESS.md](planning/specs/{feature}/PROGRESS.md) (feature state)
+- [workspace/features/{feature}/SPEC.md](workspace/features/{feature}/SPEC.md) (requirements)
+- [workspace/features/{feature}/DISCOVERY.md](workspace/features/{feature}/DISCOVERY.md) (decision record)
+- [workspace/features/{feature}/RESEARCH.md](workspace/features/{feature}/RESEARCH.md) (data & analysis)
+- [workspace/features/{feature}/PLAN.md](workspace/features/{feature}/PLAN.md) (executable plan with {N} tasks)
+- [workspace/features/{feature}/PROGRESS.md](workspace/features/{feature}/PROGRESS.md) (feature state)
 
 Ready to build? Run `/build` to execute the plan.
 
 ## Output Structure
 
 ```text
-planning/
+workspace/
 ├── OVERVIEW.md
 ├── CLAUDE.md
 ├── STATE.md              # Project state (Feature Registry only)
 ├── BACKLOG.md            # Persistent improvements backlog
-└── specs/
+└── features/
     └── {feature}/
         ├── CLAUDE.md     # Feature context (cascading)
         ├── SPEC.md       # Requirements
@@ -592,7 +592,7 @@ Remove unnecessary features. If it's not in the spec, it's not in the plan.
 /plan invoked
     |
     v
-Check prerequisites (planning/ exists?)
+Check prerequisites (workspace/ exists?)
     |
     v
 "What to plan?"

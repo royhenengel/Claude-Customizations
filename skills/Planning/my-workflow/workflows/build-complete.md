@@ -141,7 +141,7 @@ Focus: documentation type system compliance, required sections present, feature 
 # {Feature} Implementation Summary
 
 **Completed**: {timestamp}
-**Plan**: planning/specs/{feature}/PLAN.md
+**Plan**: workspace/features/{feature}/PLAN.md
 
 ## What Was Built
 
@@ -173,19 +173,19 @@ Focus: documentation type system compliance, required sections present, feature 
 - {Enhancements logged for later}
 ```
 
-Write to `planning/specs/{feature}/SUMMARY.md`.
+Write to `workspace/features/{feature}/SUMMARY.md`.
 
 ## Step 11: Update State Files and Feature CLAUDE.md
 
-**Feature STATE.md** (`planning/specs/{feature}/STATE.md`):
+**Feature STATE.md** (`workspace/features/{feature}/STATE.md`):
 - Set stage to `complete`
 - Mark all tasks as checked in Progress
 - Update Current State with final summary
 
-**Project STATE.md** (`planning/STATE.md`) Feature Registry:
+**Project STATE.md** (`workspace/STATE.md`) Feature Registry:
 - Set feature status to `complete`
 
-**Feature CLAUDE.md** (`planning/specs/{feature}/CLAUDE.md`):
+**Feature CLAUDE.md** (`workspace/features/{feature}/CLAUDE.md`):
 - Set status to "Implementation complete. See SUMMARY.md for details."
 
 ## Step 12: Completion Message
@@ -199,7 +199,7 @@ Tasks: {N} completed
 Deviations: {N} (see SUMMARY.md)
 
 Created:
-- planning/specs/{feature}/SUMMARY.md
+- workspace/features/{feature}/SUMMARY.md
 
 Next steps:
 - Review the changes

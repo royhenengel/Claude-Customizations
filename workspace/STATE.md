@@ -1,6 +1,6 @@
 # Project State
 
-**Last Updated**: 2026-02-17
+**Last Updated**: 2026-02-24
 
 ## Feature Registry
 
@@ -70,5 +70,6 @@
 - (2026-02-03) automate-stop worktree cleaned up, branch deleted
 - (2026-02-03) Planning automate-stop feature - Living Current State pattern
 - This project is adopting the workflow system it created (meta/dogfooding)
-- Migration from specs/ to planning/ completed
-- Original constitution.md preserved in planning/archive/ for reference
+- (2026-02-24) Directory restructure: planning/ → workspace/, specs/ → features/, root docs/ → workspace/docs/, root archive/ merged into workspace/archive/. ~40 active files updated. Historical records, archived files, and other-project conventions (.planning/) intentionally unchanged.
+- Migration from specs/ to planning/ completed (superseded by workspace/ rename above)
+- Original constitution.md preserved in workspace/archive/ for reference

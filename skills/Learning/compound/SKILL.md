@@ -130,17 +130,17 @@ created: {timestamp}
 
 Check if solutions directory exists:
 ```bash
-ls planning/solutions/ 2>/dev/null || mkdir -p planning/solutions
+ls workspace/solutions/ 2>/dev/null || mkdir -p workspace/solutions
 ```
 
 Create category directory if needed:
 ```bash
-mkdir -p planning/solutions/{category}
+mkdir -p workspace/solutions/{category}
 ```
 
 Write the solution file:
 ```
-planning/solutions/{category}/{filename}.md
+workspace/solutions/{category}/{filename}.md
 ```
 
 ## Step 5: Confirm and Index
@@ -148,7 +148,7 @@ planning/solutions/{category}/{filename}.md
 Display:
 ```text
 Solution documented:
-  planning/solutions/{category}/{filename}.md
+  workspace/solutions/{category}/{filename}.md
 
 Tags: {tags}
 
@@ -159,8 +159,8 @@ will be faster to resolve.
 Update index if it exists:
 ```bash
 # Append to index if present
-if [ -f planning/solutions/INDEX.md ]; then
-  echo "| {title} | {category} | {date} |" >> planning/solutions/INDEX.md
+if [ -f workspace/solutions/INDEX.md ]; then
+  echo "| {title} | {category} | {date} |" >> workspace/solutions/INDEX.md
 fi
 ```
 

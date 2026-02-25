@@ -97,7 +97,7 @@ Persistent record of improvements, ideas, and technical debt discovered during w
 ## Technical Debt
 
 - [ ] Fix auto-trigger-fix hooks false positives
-  - **Incident**: [INCIDENT-2026-02-05.md](specs/auto-trigger-fix/INCIDENT-2026-02-05.md)
+  - **Incident**: [INCIDENT-2026-02-05.md](features/auto-trigger-fix/INCIDENT-2026-02-05.md)
   - **Status**: Hooks disabled pending fix
   - **Root cause**: Overly broad regex patterns (`/error:/i`, `/\berror\b/i`)
   - **Fix needed**:
@@ -105,3 +105,5 @@ Persistent record of improvements, ideas, and technical debt discovered during w
     2. Add exclusions for grep/search commands
     3. Add exclusions for meta-discussions about the feature
     4. Consider requiring multiple signals before triggering
+- [ ] Check claude-flow in lifeos
+- [ ] Check what's going on with workspace/solutions

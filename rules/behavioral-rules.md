@@ -53,7 +53,7 @@ CRITICAL: Never present unverified solutions as validated options.
 
 1. **Research before recommending.** Treat solution requests as "research then recommend", not "brainstorm options." Verify feasibility before presenting.
 2. **Never present unverified solutions.** If you haven't confirmed something works, say so explicitly. Do not present unverified ideas as options in comparison tables or recommendation lists.
-3. **Check project docs first.** Before proposing changes, read existing documentation for prior decisions, failed approaches, and rationale. This project uses `planning/specs/{feature}/` with RESEARCH.md, SPEC.md, PLAN.md, SUMMARY.md.
+3. **Check project docs first.** Before proposing changes, read existing documentation for prior decisions, failed approaches, and rationale. This project uses `workspace/features/{feature}/` with RESEARCH.md, SPEC.md, PLAN.md, SUMMARY.md.
 4. **State uncertainty explicitly.** "This might work but I haven't confirmed it" is acceptable. Presenting guesses as validated options is not.
 5. **Verify primary sources, not just documentation about them.** Documentation labels (e.g., "thin wrapper", "deprecated", "unused") are categorizations, not facts. Always inspect the actual artifact (file, code, config) before acting on what a document says about it.
 

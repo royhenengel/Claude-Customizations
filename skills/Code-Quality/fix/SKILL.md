@@ -30,7 +30,7 @@ Summarize your understanding and proceed to Step 2. If the issue description has
 
 ### 1a. Relate to Past Work
 
-Scan `planning/specs/` for feature directories. For each directory containing a SUMMARY.md, extract:
+Scan `workspace/features/` for feature directories. For each directory containing a SUMMARY.md, extract:
 - Feature name (directory name, converted from kebab-case to title case)
 - First sentence from the first `##` section after the metadata block
 
@@ -47,7 +47,7 @@ N. Not related to past work
 Pick a number, or describe the context directly:
 ```
 
-If `planning/specs/` does not exist or contains no SUMMARY.md files, skip this step.
+If `workspace/features/` does not exist or contains no SUMMARY.md files, skip this step.
 
 If user selected a feature, automatically include that feature's context (SPEC.md, PLAN.md, SUMMARY.md) in the git history search (Step 2).
 
@@ -76,7 +76,7 @@ git branch --show-current
 
 Check PROGRESS.md to determine context:
 ```bash
-ls planning/specs/{name}/PROGRESS.md 2>/dev/null
+ls workspace/features/{name}/PROGRESS.md 2>/dev/null
 ```
 
 Detect scenario: if PROGRESS.md has `**Type**: fix` or no PROGRESS.md exists → **fix worktree**. If PROGRESS.md has `**Type**: feature` or no Type field → **feature worktree**.
@@ -100,15 +100,15 @@ Is this fix related to what you're working on now ({name})?
 
 - **Fix worktree**: If no PROGRESS.md exists, create fix state:
   ```bash
-  mkdir -p planning/specs/{fix-name}
+  mkdir -p workspace/features/{fix-name}
   ```
-  Create `planning/specs/{fix-name}/PROGRESS.md` with `**Type**: fix`, `**Stage**: investigating`, Issue section from Step 1, and placeholder Root Cause / Proposed Fix sections. Update `planning/STATE.md` Feature Registry. Continue to Step 2 with full state tracking (Steps 2-10).
+  Create `workspace/features/{fix-name}/PROGRESS.md` with `**Type**: fix`, `**Stage**: investigating`, Issue section from Step 1, and placeholder Root Cause / Proposed Fix sections. Update `workspace/STATE.md` Feature Registry. Continue to Step 2 with full state tracking (Steps 2-10).
 
 - **Feature worktree**: No separate fix state. Track findings in feature PROGRESS.md Notes section. Fix becomes part of the feature PR. Run Steps 2-8, skip Steps 9a and 10 (quality gates run with the feature's /build completion).
 
 **Unrelated (option 2):**
 
-Add to `planning/BACKLOG.md` for separate handling. Options:
+Add to `workspace/BACKLOG.md` for separate handling. Options:
   a. Create a fix worktree from main (commit current work first)
   b. Note for later, continue current work
 
@@ -125,11 +125,11 @@ Fixes require a dedicated worktree. Create one now?
 2. No → Add to backlog for later
 ```
 
-If yes, create worktree and restart /fix in the new worktree context. If no, add to `planning/BACKLOG.md` and exit.
+If yes, create worktree and restart /fix in the new worktree context. If no, add to `workspace/BACKLOG.md` and exit.
 
 ## Step 2: Git History Search
 
-**Check existing solutions first:** If `planning/solutions/` exists, search for matching problems. Present matches with filenames and titles. If user wants to review, read and assess applicability. Apply directly if matching; otherwise proceed.
+**Check existing solutions first:** If `workspace/solutions/` exists, search for matching problems. Present matches with filenames and titles. If user wants to review, read and assess applicability. Apply directly if matching; otherwise proceed.
 
 Search for related past work via git log (keyword search, file-specific changes, recent commits). Document: related past fixes, similar issues addressed, patterns used, what was tried and why.
 
@@ -165,7 +165,7 @@ Root Cause: {the fundamental issue to fix}
 
 Classify severity (ask user): **critical** (production/data/security), **major** (broken functionality, workaround exists), **minor** (cosmetic/edge case).
 
-Create `planning/incidents/` directory if needed. Generate `INCIDENT-{YYYY-MM-DD}-{slug}.md` (slug: kebab-case from issue description, max 5 words) using the incident report template, populated from investigation steps:
+Create `workspace/incidents/` directory if needed. Generate `INCIDENT-{YYYY-MM-DD}-{slug}.md` (slug: kebab-case from issue description, max 5 words) using the incident report template, populated from investigation steps:
 
 | Section | Source |
 |---|---|
@@ -185,7 +185,7 @@ Say:
 📋 Incident Report Generated
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Report: planning/incidents/INCIDENT-{date}-{slug}.md
+Report: workspace/incidents/INCIDENT-{date}-{slug}.md
 Severity: {severity}
 
 Summary: {2-3 sentence summary}
@@ -204,11 +204,11 @@ How do you want to proceed?
 
 **Defer (option 2):**
 
-1. Create `planning/BACKLOG.md` if it doesn't exist. Append:
+1. Create `workspace/BACKLOG.md` if it doesn't exist. Append:
    ```
-   - [ ] {Issue summary} - See [INCIDENT-{date}-{slug}](planning/incidents/INCIDENT-{date}-{slug}.md)
+   - [ ] {Issue summary} - See [INCIDENT-{date}-{slug}](workspace/incidents/INCIDENT-{date}-{slug}.md)
    ```
-2. Update incident report: Status → `deferred`, Resolution → `Deferred to backlog. See planning/BACKLOG.md.`
+2. Update incident report: Status → `deferred`, Resolution → `Deferred to backlog. See workspace/BACKLOG.md.`
 3. Display confirmation and **exit /fix workflow** (skip Steps 6-10)
 
 **State update** (worktree only): Update fix PROGRESS.md with triage decision, stage → `deferred`.
@@ -287,7 +287,7 @@ Evaluate if the fix reveals something convention-worthy:
    ```
    ⚠️ Convention Opportunity: This fix revealed [description]. Consider updating project conventions to [recommendation].
    ```
-2. Propose backlog entry (if planning/BACKLOG.md exists). Present for user approval before appending:
+2. Propose backlog entry (if workspace/BACKLOG.md exists). Present for user approval before appending:
    ```
    - [ ] [Convention description] - discovered during fix for [issue]
    ```
@@ -301,7 +301,7 @@ Automatically invoke `/compound` with context from this fix session. Pass the ro
 Do not prompt the user. After capture completes, display:
 
 ```text
-Solution captured: planning/solutions/{category}/{filename}.md
+Solution captured: workspace/solutions/{category}/{filename}.md
 ```
 
 The user can review, edit, or delete solutions at any time.

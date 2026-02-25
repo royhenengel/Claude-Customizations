@@ -3,7 +3,7 @@ name: validate-registry
 description: Validate Feature Registry consistency against git branches, worktrees, and filesystem state. Detects stale entries, unregistered worktrees, and status mismatches.
 ---
 
-Validate the Feature Registry in `planning/STATE.md` against actual git and filesystem state. Detect stale entries, unregistered worktrees, and status mismatches. Two modes: audit (default, read-only) and fix (applies corrections).
+Validate the Feature Registry in `workspace/STATE.md` against actual git and filesystem state. Detect stale entries, unregistered worktrees, and status mismatches. Two modes: audit (default, read-only) and fix (applies corrections).
 
 ## When to Use
 
@@ -15,7 +15,7 @@ Run all checks below, collect findings, and report. Do not modify any files.
 
 ### Step 1: Parse the Feature Registry
 
-Read `planning/STATE.md` and extract the Feature Registry table. For each row, extract:
+Read `workspace/STATE.md` and extract the Feature Registry table. For each row, extract:
 
 - **Feature**: the feature name
 - **Type**: feature, fix, etc.
@@ -192,7 +192,7 @@ After confirmation, apply each fix in order:
 
 **Registry table modifications** (branch, worktree, status changes):
 
-Use the Edit tool to update the corresponding row in the Feature Registry table in `planning/STATE.md`. Match the row by feature name and replace the old cell values with the new ones.
+Use the Edit tool to update the corresponding row in the Feature Registry table in `workspace/STATE.md`. Match the row by feature name and replace the old cell values with the new ones.
 
 **Worktree cleanup** (for "complete but worktree exists"):
 
@@ -210,7 +210,7 @@ If `git worktree remove` fails (e.g., uncommitted changes), report the error and
 
 **Adding new registry entries** (for unregistered worktrees):
 
-Use the Edit tool to append a new row to the Feature Registry table in `planning/STATE.md` with the discovered branch name, worktree path, and status `active`.
+Use the Edit tool to append a new row to the Feature Registry table in `workspace/STATE.md` with the discovered branch name, worktree path, and status `active`.
 
 ### Step 5: Report results
 

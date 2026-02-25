@@ -164,6 +164,6 @@ This document establishes the non-negotiable rules for this repository:
 For runtime development guidance, refer to:
 
 - [README.md](../README.md) - Project overview and structure
-- [planning/CLAUDE.md](CLAUDE.md) - Planning context
+- [workspace/CLAUDE.md](CLAUDE.md) - Workspace context
 
-**Version**: 1.0.0 | **Ratified**: 2025-01-09 | **Last Amended**: 2026-01-18 | **Migrated from**: specs/constitution.md
+**Version**: 1.0.0 | **Ratified**: 2025-01-09 | **Last Amended**: 2026-01-18 | **Migrated from**: features/constitution.md

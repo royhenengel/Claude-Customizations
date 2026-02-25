@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Analyze an existing codebase to understand its structure, patterns, and conventions. Creates `planning/CODEBASE.md` with findings.
+Analyze an existing codebase to understand its structure, patterns, and conventions. Creates `workspace/CODEBASE.md` with findings.
 
 ## When to Use
 
@@ -108,7 +108,7 @@ Look for:
 
 ### 8. Generate CODEBASE.md
 
-Create `planning/CODEBASE.md`:
+Create `workspace/CODEBASE.md`:
 
 ```markdown
 # Codebase Map
@@ -174,18 +174,18 @@ Create `planning/CODEBASE.md`:
 
 ### 9. Update CLAUDE.md Reference
 
-If `planning/CLAUDE.md` exists, ensure it references CODEBASE.md:
+If `workspace/CLAUDE.md` exists, ensure it references CODEBASE.md:
 
 ```markdown
 ## Codebase Context
 
-@planning/CODEBASE.md
+@workspace/CODEBASE.md
 ```
 
 ## Output
 
-- `planning/CODEBASE.md` - Complete codebase map
-- Updated `planning/CLAUDE.md` - References codebase map
+- `workspace/CODEBASE.md` - Complete codebase map
+- Updated `workspace/CLAUDE.md` - References codebase map
 
 ## Tips
 

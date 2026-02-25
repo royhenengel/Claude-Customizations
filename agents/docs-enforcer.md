@@ -33,7 +33,7 @@ Default mode. Scan and report.
    - Check content against the template for that type (required sections present?)
    - Check for staleness indicators (outdated counts, broken links, stale references)
 5. Validate template-based documents against their templates:
-   - Compare `planning/STATE.md` against `templates/project-state-template.md` and `planning/specs/{feature}/PROGRESS.md` against `templates/feature-progress-template.md`
+   - Compare `workspace/STATE.md` against `templates/project-state-template.md` and `workspace/features/{feature}/PROGRESS.md` against `templates/feature-progress-template.md`
    - Check required sections exist, field formats match (e.g. `**Stage**:`, `**Type**:`, `**Last Updated**:`)
    - Flag missing sections, extra sections, or mismatched structure
    - Apply to any document that has a corresponding template in `templates/`
@@ -73,14 +73,14 @@ Explicit invocation only. Scan, report, then fix after confirmation.
 4. Apply fixes, reporting each change
 
 For catalog regeneration, rebuild from source:
-- `docs/claude-skills-reference.md`: Scan `skills/**/SKILL.md` frontmatter
-- `docs/claude-agents-reference.md`: Scan `agents/*.md` frontmatter
-- `docs/claude-mcp-servers-reference.md`: Scan `.mcp.json` or `mcp/` configs
+- `workspace/docs/claude-skills-reference.md`: Scan `skills/**/SKILL.md` frontmatter
+- `workspace/docs/claude-agents-reference.md`: Scan `agents/*.md` frontmatter
+- `workspace/docs/claude-mcp-servers-reference.md`: Scan `.mcp.json` or `mcp/` configs
 
 For completed feature spec archiving:
 
-- Read `planning/STATE.md` Feature Registry for completed features
-- For each completed feature in `planning/specs/{feature}/`:
+- Read `workspace/STATE.md` Feature Registry for completed features
+- For each completed feature in `workspace/features/{feature}/`:
   - CLAUDE.md and SUMMARY.md remain at feature root
   - PLAN.md, RESEARCH.md, SPEC.md must be in `{feature}/archive/`
   - INCIDENT files remain at feature root

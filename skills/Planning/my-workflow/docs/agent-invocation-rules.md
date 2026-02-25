@@ -1,7 +1,7 @@
 # Agent Invocation Rules
 
 **Date**: 2026-02-07
-**Source**: [agent-comparison-v2.md](../../../planning/specs/audit-agents/agent-comparison-v2.md)
+**Source**: [agent-comparison-v2.md](../../../workspace/features/audit-agents/agent-comparison-v2.md)
 
 Quick-reference guide for selecting the right agent. When in doubt, check the trigger first, then the stage, then the language.
 

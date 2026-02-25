@@ -3,7 +3,7 @@ name: my-workflow
 version: 1.0.0
 description: Personal workflow system - principles and stage awareness for solo development. Provides core principles (scope control, deviation rules, Living Current State) and stage-aware behavior for /start, /plan, /build commands.
 triggers:
-  - planning/ directory exists
+  - workspace/ directory exists
   - STATE.md mentions workflow stages
   - User mentions start/plan/build workflow
 ---
@@ -76,7 +76,7 @@ During execution, handle discoveries automatically:
 
 ### 4. Living Current State
 
-Feature PROGRESS.md (`planning/specs/{feature}/PROGRESS.md`) maintains a `## Current State` section that is updated continuously during work. This enables clean session transitions without manual handoff creation.
+Feature PROGRESS.md (`workspace/features/{feature}/PROGRESS.md`) maintains a `## Current State` section that is updated continuously during work. This enables clean session transitions without manual handoff creation.
 
 The Current State captures:
 
@@ -102,8 +102,8 @@ Multiple features run **simultaneously in separate worktrees**. Each worktree ow
 
 **Two-Level State Architecture:**
 
-- **Project STATE.md** (`planning/STATE.md`): Feature Registry, project decisions, project notes. Shared across all worktrees via main branch.
-- **Feature PROGRESS.md** (`planning/specs/{feature}/PROGRESS.md`): Progress, Current State, Gap Stack, feature decisions/notes. Owned by one worktree, never modified by others.
+- **Project STATE.md** (`workspace/STATE.md`): Feature Registry, project decisions, project notes. Shared across all worktrees via main branch.
+- **Feature PROGRESS.md** (`workspace/features/{feature}/PROGRESS.md`): Progress, Current State, Gap Stack, feature decisions/notes. Owned by one worktree, never modified by others.
 
 On merge, feature PROGRESS.md archives with the spec. Project STATE.md registry gets a status update.
 
@@ -165,8 +165,8 @@ Technical standards (coding-standards, security-checklist, model-selection, tech
 
 The workflow uses a **two-level state architecture**:
 
-- **Project STATE.md** (`planning/STATE.md`): Read this to see all features and their status.
-- **Feature PROGRESS.md** (`planning/specs/{feature}/PROGRESS.md`): Read this to understand a specific feature's progress and current state.
+- **Project STATE.md** (`workspace/STATE.md`): Read this to see all features and their status.
+- **Feature PROGRESS.md** (`workspace/features/{feature}/PROGRESS.md`): Read this to understand a specific feature's progress and current state.
 
 **Context Detection**: Detect which level to use based on environment:
 
@@ -174,9 +174,9 @@ The workflow uses a **two-level state architecture**:
 # In a worktree? Use feature PROGRESS.md
 if [ -f .git ]; then
   FEATURE=$(git branch --show-current)
-  # Read planning/specs/$FEATURE/PROGRESS.md
+  # Read workspace/features/$FEATURE/PROGRESS.md
 else
-  # On main branch. Read planning/STATE.md
+  # On main branch. Read workspace/STATE.md
 fi
 ```
 
@@ -269,20 +269,20 @@ Workflow definitions are in `workflows/` subdirectory:
 
 | Command | When to Use | Output |
 |---------|-------------|--------|
-| `/start` | Beginning a new project | `planning/OVERVIEW.md`, `STATE.md` |
-| `/plan` | Ready to plan work | `planning/ROADMAP.md`, specs |
+| `/start` | Beginning a new project | `workspace/OVERVIEW.md`, `STATE.md` |
+| `/plan` | Ready to plan work | `workspace/ROADMAP.md`, features |
 | `/build` | Plan approved, ready to execute | Code changes, PROGRESS.md updates |
 
 ### Project Structure
 
 ```text
-planning/
+workspace/
 ├── CLAUDE.md        # Planning context (cascading)
 ├── OVERVIEW.md      # Project vision (created by /start)
 ├── STATE.md         # Project state: Feature Registry, decisions, notes
 ├── BACKLOG.md       # Persistent improvements backlog
 ├── CODEBASE.md      # Brownfield analysis (if applicable)
-└── specs/
+└── features/
     └── {feature}/
         ├── CLAUDE.md       # Feature context (cascading)
         ├── SPEC.md         # Requirements
@@ -348,7 +348,7 @@ My-Workflow and Claude Code's built-in Plan Mode are **complementary, not confli
 | Aspect | My-Workflow | Built-in Plan Mode |
 |--------|-------------|-------------------|
 | **Scope** | Full project management | Single structured task |
-| **Artifacts** | In project (`planning/`) | In `~/.claude/plans/` |
+| **Artifacts** | In project (`workspace/`) | In `~/.claude/plans/` |
 | **Session scope** | Multi-session with Living Current State | Usually single session |
 | **When to use** | Complex features, ongoing work | Quick structured tasks, one-off planning |
 

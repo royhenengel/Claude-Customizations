@@ -52,7 +52,7 @@ Adapt the level of detail to the task type (coding, research, analysis, writing,
    - Any temporary changes, workarounds, or open questions
    - Current position in the workflow or process
 
-Write to `planning/HANDOFF.md` using the format below.
+Write to `workspace/HANDOFF.md` using the format below.
 
 ## Output Format
 
