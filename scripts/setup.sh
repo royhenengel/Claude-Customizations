@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Setup script: symlinks repo customization directories into ~/.claude/
-# and generates settings.json from template with correct paths.
+# and configures git smudge/clean filters for portable settings.json paths.
 # Safe to re-run — skips already-correct symlinks, warns on conflicts.
 
 set -euo pipefail
@@ -35,15 +35,7 @@ link_item() {
     fi
 }
 
-generate_settings() {
-    local template="$REPO_DIR/settings.json.template"
-    local output="$REPO_DIR/settings.json"
-
-    if [ ! -f "$template" ]; then
-        echo "  SKIP  settings.json (template not found)"
-        return
-    fi
-
+configure_settings_filter() {
     # Determine the other account's home directory
     local other_home=""
     for acct in "${ACCOUNTS[@]}"; do
@@ -59,9 +51,20 @@ generate_settings() {
         return 1
     fi
 
-    sed -e "s|__HOME__|$HOME|g" -e "s|__OTHER_HOME__|$other_home|g" "$template" > "$output"
-    echo "  DONE  settings.json (generated from template)"
+    # Configure git smudge/clean filters for settings.json
+    # Smudge (checkout): __HOME__ → real paths
+    # Clean (stage): real paths → __HOME__
+    git -C "$REPO_DIR" config filter.settings.smudge \
+        "sed 's|__HOME__|$HOME|g; s|__OTHER_HOME__|$other_home|g'"
+    git -C "$REPO_DIR" config filter.settings.clean \
+        "sed 's|$HOME|__HOME__|g; s|$other_home|__OTHER_HOME__|g'"
+
+    echo "  DONE  git filters configured (smudge/clean)"
     echo "        HOME=$HOME  OTHER_HOME=$other_home"
+
+    # Force re-checkout to apply smudge filter (expand placeholders on disk)
+    (cd "$REPO_DIR" && rm -f settings.json && git checkout -- settings.json)
+    echo "  DONE  settings.json expanded with local paths"
 }
 
 echo "Linking customizations from: $REPO_DIR"
@@ -70,8 +73,8 @@ echo
 
 mkdir -p "$CLAUDE_DIR"
 
-# Generate settings.json from template
-generate_settings
+# Configure smudge/clean filters and expand settings.json
+configure_settings_filter
 
 # Symlink settings.json into ~/.claude/
 link_item "$REPO_DIR/settings.json" "$CLAUDE_DIR/settings.json" "settings.json"

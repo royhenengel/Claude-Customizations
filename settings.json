@@ -57,34 +57,34 @@
       "mcp__notion-workspace__add_topics_to_resource",
       "mcp__notion-workspace__add_relations",
       "mcp__notion-workspace__delete_topic",
-      "Read(//Users/lifeos/Projects/LifeOS/planning/**)",
-      "Read(//Users/lifeos/Projects/LifeOS/**)",
+      "Read(/__HOME__/Projects/LifeOS/planning/**)",
+      "Read(/__HOME__/Projects/LifeOS/**)",
       "Read(//tmp/**)",
       "Read(//private/tmp/**)",
-      "Read(//Users/lifeos/.openclaw/**)",
-      "Read(//Users/lifeos/Library/LaunchAgents/**)",
-      "Read(//Users/lifeos/.claude/plugins/cache/thedotmack/claude-mem/10.0.8/**)",
-      "Read(//Users/lifeos/.claude/plugins/marketplaces/thedotmack/**)",
-      "Read(//Users/lifeos/.claude-mem/**)",
+      "Read(/__HOME__/.openclaw/**)",
+      "Read(/__HOME__/Library/LaunchAgents/**)",
+      "Read(/__HOME__/.claude/plugins/cache/thedotmack/claude-mem/10.0.8/**)",
+      "Read(/__HOME__/.claude/plugins/marketplaces/thedotmack/**)",
+      "Read(/__HOME__/.claude-mem/**)",
       "mcp__claude_ai_Notion__notion-search",
       "mcp__claude_ai_Notion__notion-fetch",
-      "Read(//Users/lifeos/Projects/Notion-Workspace/homeserver/**)",
-      "Read(//Users/lifeos/**)",
+      "Read(/__HOME__/Projects/Notion-Workspace/homeserver/**)",
+      "Read(/__HOME__/**)",
       "Read(//opt/homebrew/lib/node_modules/openclaw/node_modules/@mariozechner/pi-ai/dist/utils/oauth/**)",
       "Read(//opt/homebrew/lib/node_modules/openclaw/docs/providers/**)",
       "Read(//opt/homebrew/lib/node_modules/openclaw/dist/plugin-sdk/config/**)",
       "Read(//opt/homebrew/lib/node_modules/openclaw/dist/**)"
     ],
     "additionalDirectories": [
-      "/Users/royengel",
-      "/Users/lifeos/Library/LaunchAgents",
-      "/Users/lifeos/.openclaw",
-      "/Users/lifeos/.cloudflared",
-      "/Users/lifeos/Projects/Notion-Workspace/homeserver",
+      "__OTHER_HOME__",
+      "__HOME__/Library/LaunchAgents",
+      "__HOME__/.openclaw",
+      "__HOME__/.cloudflared",
+      "__HOME__/Projects/Notion-Workspace/homeserver",
       "/tmp",
       "/private/tmp",
-      "/Users/lifeos/Downloads/discord-exports",
-      "/Users/lifeos"
+      "__HOME__/Downloads/discord-exports",
+      "__HOME__"
     ]
   },
   "hooks": {
@@ -93,7 +93,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node /Users/lifeos/.claude/hooks/scripts/user-issue-hook.js",
+            "command": "node __HOME__/.claude/hooks/scripts/user-issue-hook.js",
             "timeout": 5000
           }
         ]
@@ -102,7 +102,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node /Users/lifeos/.claude/hooks/scripts/auto-commit-claude-mem.js",
+            "command": "node __HOME__/.claude/hooks/scripts/auto-commit-claude-mem.js",
             "timeout": 10000
           }
         ]
@@ -111,7 +111,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node /Users/lifeos/.claude/hooks/scripts/ecosystem-awareness-hook.js",
+            "command": "node __HOME__/.claude/hooks/scripts/ecosystem-awareness-hook.js",
             "timeout": 5000
           }
         ]
@@ -133,7 +133,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node /Users/lifeos/.claude/hooks/scripts/issue-detector-tool-hook.js",
+            "command": "node __HOME__/.claude/hooks/scripts/issue-detector-tool-hook.js",
             "timeout": 5000
           }
         ]
@@ -162,7 +162,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "/Users/lifeos/.claude/statusline-command.sh"
+    "command": "__HOME__/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
     "code-simplifier@claude-plugins-official": true,

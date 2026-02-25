@@ -2,8 +2,8 @@
 .DS_Store
 Thumbs.db
 
-# Generated from settings.json.template by scripts/setup.sh
-settings.json
+# settings.json uses git smudge/clean filters for path portability
+# (see .gitattributes and scripts/setup.sh)
 
 # Secrets - DO NOT COMMIT
 .mcp.json
