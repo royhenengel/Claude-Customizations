@@ -31,7 +31,8 @@ Security assessment for browser control via Claude Code. Three modes are configu
 
 ## Configuration
 
-Config file: `~/.claude/plugins/marketplaces/claude-plugins-official/external_plugins/playwright/.mcp.json`
+Config location: `~/.claude.json` under `mcpServers` (global, survives plugin updates).
+Plugin file at `~/.claude/plugins/.../playwright/.mcp.json` left at default (plugin manages it).
 
 Both Playwright entries are `disabled: true` (lazy-loaded via ToolSearch). No persistent daemon. stdio transport (no open ports). Servers terminate when Claude Code session ends.
 
