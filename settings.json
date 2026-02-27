@@ -73,7 +73,12 @@
       "Read(//opt/homebrew/lib/node_modules/openclaw/node_modules/@mariozechner/pi-ai/dist/utils/oauth/**)",
       "Read(//opt/homebrew/lib/node_modules/openclaw/docs/providers/**)",
       "Read(//opt/homebrew/lib/node_modules/openclaw/dist/plugin-sdk/config/**)",
-      "Read(//opt/homebrew/lib/node_modules/openclaw/dist/**)"
+      "Read(//opt/homebrew/lib/node_modules/openclaw/dist/**)",
+      "mcp__claude_ai_Notion__notion-query-database-view",
+      "mcp__plugin_claude-mem_mcp-search__save_memory",
+      "mcp__claude_ai_Notion__notion-update-page",
+      "Skill(start)",
+      "Skill(start:*)"
     ],
     "additionalDirectories": [
       "__OTHER_HOME__",
@@ -89,15 +94,6 @@
   },
   "hooks": {
     "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node __HOME__/.claude/hooks/scripts/user-issue-hook.js",
-            "timeout": 5000
-          }
-        ]
-      },
       {
         "hooks": [
           {
@@ -125,16 +121,6 @@
             "type": "prompt",
             "prompt": "A code file was modified. Check if workspace/STATE.md needs updating.\n\nChange: $ARGUMENTS\n\nRules:\n1. SKIP if file is in workspace/ (avoid loops)\n2. Update Progress if a task was completed\n3. Add to Notes if something unexpected was discovered\n4. Update Current Focus if work shifted\n\nRespond with:\n- updates_needed: true/false\n- changes: [list of STATE.md updates]\n- systemMessage: one-line summary",
             "timeout": 15000
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node __HOME__/.claude/hooks/scripts/issue-detector-tool-hook.js",
-            "timeout": 5000
           }
         ]
       }

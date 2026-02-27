@@ -72,6 +72,23 @@ Persistent record of improvements, ideas, and technical debt discovered during w
   - **Idea**: Add cost tracking mechanisms (token usage per agent invocation, ROI thresholds for subagent vs Agent Teams, cost comparison framework)
   - **Goal**: Data-driven decisions about when multi-agent coordination costs are justified
 
+### Cleanup & Installation
+
+- [ ] Strengthen cleanup policy beyond "clean install preferred"
+  - **Context**: Current installation rule says "When updating, delete the old directory first" (technical-consistency.md). This is insufficient. When something new replaces something old, the old legacy/stale data must be actively removed, not just ignored.
+  - **Examples**: Old n8n workflows left behind after migration, disabled hooks that get re-enabled on settings rebuild, orphaned config files after directory restructuring
+  - **Scope**: Update `technical-consistency.md` Installation Rules to require active cleanup of replaced artifacts, not just "prefer clean install"
+  - **Source**: Notion task "Always Delete all old workflows and just keep what's needed" (migrated 2026-02-26)
+
+### Task Ownership Clarity
+
+- [ ] Document what makes a task belong to a project (LifeOS, Claude-Customizations, etc.)
+  - **Problem**: Claude misidentified LifeOS tasks as "personal" because they lacked a formal Notion Project relation. A task belongs to LifeOS if it relates to building, configuring, or maintaining the system, not based on whether a DB relation field is populated.
+  - **Test**: "Does completing this task improve the project as a system?" If yes, it's a project task.
+  - **Examples**: "Configure browser extensions for Notion capture" = LifeOS task (tooling), "Set up Make.com automation" = LifeOS task (infrastructure), "Buy groceries" = personal task
+  - **Scope**: Add guidance to rules or CLAUDE.md so Claude correctly categorizes tasks by purpose, not by DB metadata
+  - **Source**: Confusion during Notion Tasks DB cleanup (2026-02-26)
+
 ### Docs & Knowledge Capture
 
 - [ ] Document strategic decisions and rules automatically.
@@ -99,11 +116,15 @@ Persistent record of improvements, ideas, and technical debt discovered during w
 - [ ] Fix auto-trigger-fix hooks false positives
   - **Incident**: [INCIDENT-2026-02-05.md](features/auto-trigger-fix/INCIDENT-2026-02-05.md)
   - **Status**: Hooks disabled pending fix
-  - **Root cause**: Overly broad regex patterns (`/error:/i`, `/\berror\b/i`)
+  - **Root cause**: Overly broad regex patterns (`/error:/i`, `/\berror\b/i`, `/\b500\b/i`)
+  - **Re-occurred**: 2026-02-25 during LifeOS Notion cleanup. Hooks had been re-enabled (likely via settings.json rebuild). Disabled again: removed from `settings.json`, deleted `issue-detector-user.json` and `issue-detector-tool.json`. Scripts remain in `~/.claude/hooks/scripts/`.
+  - **Additional finding**: Injected `additionalContext` contains trigger words, creating a feedback loop of phantom user messages
   - **Fix needed**:
-    1. Make patterns context-aware (line start, command type)
-    2. Add exclusions for grep/search commands
-    3. Add exclusions for meta-discussions about the feature
-    4. Consider requiring multiple signals before triggering
+    1. Require 2+ trigger categories to match (not single keyword)
+    2. Add cooldown mechanism to prevent re-triggering
+    3. Add exclusions for meta-discussions about errors
+    4. Make patterns context-aware (line start, command type)
+    5. Add exclusions for grep/search commands
+    6. Prevent settings.json rebuild from re-enabling disabled hooks
 - [ ] Check claude-flow in lifeos
 - [ ] Check what's going on with workspace/solutions

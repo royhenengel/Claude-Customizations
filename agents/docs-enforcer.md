@@ -32,16 +32,22 @@ Default mode. Scan and report.
    - Check location against placement rules
    - Check content against the template for that type (required sections present?)
    - Check for staleness indicators (outdated counts, broken links, stale references)
-5. Validate template-based documents against their templates:
+5. Scan for rogue documentation files:
+   - Check repo root for any `.md` files that don't belong (README.md is allowed, everything else is suspect)
+   - Check for `.md` files outside expected locations (`workspace/`, `infra/`, `src/`)
+   - For each rogue file: identify what it is, suggest where it belongs
+   - If placement is ambiguous, flag it for user decision (do NOT move or delete autonomously)
+   - Common rogue patterns: review artifacts (REVIEW.md, ARCHITECTURE_REVIEW.md), agent output files, orphaned docs from directory restructures
+6. Validate template-based documents against their templates:
    - Compare `workspace/STATE.md` against `templates/project-state-template.md` and `workspace/features/{feature}/PROGRESS.md` against `templates/feature-progress-template.md`
    - Check required sections exist, field formats match (e.g. `**Stage**:`, `**Type**:`, `**Last Updated**:`)
    - Flag missing sections, extra sections, or mismatched structure
    - Apply to any document that has a corresponding template in `templates/`
-6. Cross-reference workflow scenario maps against workflow files:
+7. Cross-reference workflow scenario maps against workflow files:
    - Read `skills/Planning/my-workflow/docs/workflow-scenario-maps.md`
    - For each workflow (/start, /plan, /build, /fix), compare scenario map step descriptions against actual step numbers in the corresponding workflow file (`workflows/start.md`, `workflows/plan.md`, `workflows/build.md`, `skills/Code-Quality/fix/SKILL.md`)
    - Flag mismatched step numbers, missing steps, or steps described in maps but absent from workflows
-7. Generate findings report
+8. Generate findings report
 
 Output format:
 ```markdown
