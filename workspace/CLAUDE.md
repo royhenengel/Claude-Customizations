@@ -14,7 +14,17 @@ See STATE.md for current stage and focus.
 - `STATE.md` - Living state tracker (auto-updated)
 - `BACKLOG.md` - Persistent backlog of improvements
 - `features/` - Feature specifications and plans
-- `docs/` - Reference catalogs and operational guides
+- `docs/` - Documentation hub (see [docs/index.md](docs/index.md))
+  - `references/` - Platform catalogs (agents, skills, MCP, commands)
+  - `guides/` - How-to guides and walkthroughs
+  - `systems/` - Architecture and system-level docs
+  - `setup/` - Installation and configuration guides
+  - `prd/` - Product requirements documents
+  - `architecture/` - Architecture decisions and records
+  - `troubleshooting/` - Troubleshooting guides
+  - `api/` - API documentation
+  - `incidents/` - Post-incident reports
+  - `solutions/` - Reusable problem-solution pairs (/compound)
 - `archive/` - Historical documents (e.g., original constitution.md)
 
 ## Active Feature
