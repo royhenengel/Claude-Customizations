@@ -70,6 +70,7 @@
 - (2026-02-03) automate-stop worktree cleaned up, branch deleted
 - (2026-02-03) Planning automate-stop feature - Living Current State pattern
 - This project is adopting the workflow system it created (meta/dogfooding)
+- (2026-03-02) Docs restructure: workspace/docs/ reorganized into typed subdirs (references/, guides/, systems/, setup/, prd/, architecture/, troubleshooting/, api/). workspace/incidents/ and workspace/solutions/ moved into workspace/docs/. index.md added for navigation. 8 reference files updated.
 - (2026-02-24) Directory restructure: planning/ → workspace/, specs/ → features/, root docs/ → workspace/docs/, root archive/ merged into workspace/archive/. ~40 active files updated. Historical records, archived files, and other-project conventions (.planning/) intentionally unchanged.
 - Migration from specs/ to planning/ completed (superseded by workspace/ rename above)
 - Original constitution.md preserved in workspace/archive/ for reference

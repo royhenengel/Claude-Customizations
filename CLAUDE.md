@@ -9,7 +9,7 @@ Personal Claude Code customizations. This repo is symlinked to `~/.claude/` for 
 - `hooks/` - Event-driven behaviors
 - `mcp/` - MCP server configurations
 - `rules/` - Behavioral rules, standards, and preferences (auto-loaded every session via `~/.claude/rules/`)
-- `workspace/` - Project planning, state, features, docs, and archive
+- `workspace/` - Project planning, state, features, docs (typed subdirs), and archive
 - `scripts/` - Utility scripts
 
 ## Development Workflow

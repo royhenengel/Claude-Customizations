@@ -129,7 +129,7 @@ If yes, create worktree and restart /fix in the new worktree context. If no, add
 
 ## Step 2: Git History Search
 
-**Check existing solutions first:** If `workspace/solutions/` exists, search for matching problems. Present matches with filenames and titles. If user wants to review, read and assess applicability. Apply directly if matching; otherwise proceed.
+**Check existing solutions first:** If `workspace/docs/solutions/` exists, search for matching problems. Present matches with filenames and titles. If user wants to review, read and assess applicability. Apply directly if matching; otherwise proceed.
 
 Search for related past work via git log (keyword search, file-specific changes, recent commits). Document: related past fixes, similar issues addressed, patterns used, what was tried and why.
 
@@ -165,7 +165,7 @@ Root Cause: {the fundamental issue to fix}
 
 Classify severity (ask user): **critical** (production/data/security), **major** (broken functionality, workaround exists), **minor** (cosmetic/edge case).
 
-Create `workspace/incidents/` directory if needed. Generate `INCIDENT-{YYYY-MM-DD}-{slug}.md` (slug: kebab-case from issue description, max 5 words) using the incident report template, populated from investigation steps:
+Create `workspace/docs/incidents/` directory if needed. Generate `INCIDENT-{YYYY-MM-DD}-{slug}.md` (slug: kebab-case from issue description, max 5 words) using the incident report template, populated from investigation steps:
 
 | Section | Source |
 |---|---|
@@ -185,7 +185,7 @@ Say:
 📋 Incident Report Generated
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Report: workspace/incidents/INCIDENT-{date}-{slug}.md
+Report: workspace/docs/incidents/INCIDENT-{date}-{slug}.md
 Severity: {severity}
 
 Summary: {2-3 sentence summary}
@@ -206,7 +206,7 @@ How do you want to proceed?
 
 1. Create `workspace/BACKLOG.md` if it doesn't exist. Append:
    ```
-   - [ ] {Issue summary} - See [INCIDENT-{date}-{slug}](workspace/incidents/INCIDENT-{date}-{slug}.md)
+   - [ ] {Issue summary} - See [INCIDENT-{date}-{slug}](workspace/docs/incidents/INCIDENT-{date}-{slug}.md)
    ```
 2. Update incident report: Status → `deferred`, Resolution → `Deferred to backlog. See workspace/BACKLOG.md.`
 3. Display confirmation and **exit /fix workflow** (skip Steps 6-10)
@@ -301,7 +301,7 @@ Automatically invoke `/compound` with context from this fix session. Pass the ro
 Do not prompt the user. After capture completes, display:
 
 ```text
-Solution captured: workspace/solutions/{category}/{filename}.md
+Solution captured: workspace/docs/solutions/{category}/{filename}.md
 ```
 
 The user can review, edit, or delete solutions at any time.

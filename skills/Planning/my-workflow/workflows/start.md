@@ -29,13 +29,15 @@ ls -la workspace/ 2>/dev/null || echo "No workspace/ directory"
 if [ -f .git ]; then echo "WORKTREE"; else echo "MAIN"; fi
 ```
 
-**If new project (no workspace/)**: Say and proceed to Step 2:
+**If new project (no workspace/)**: Say and proceed to Step 1a then Step 2:
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔧 Setting up new project
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
+
+**If existing project (workspace/ exists)**: Run Step 1a (structure migration) before continuing to the dashboard or resume flow.
 
 **If in a worktree** (`.git` is a file, not a directory):
 
@@ -223,11 +225,74 @@ Open selected worktree in VS Code with Claude panel:
 env -u CLAUDECODE "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" --new-window "{worktree-path}" && sleep 2 && osascript -e 'tell application "System Events" to key code 53 using {command down, shift down}'
 ```
 
-### 2. Create Directory Structure
+### 1a. Ensure Workspace Structure Matches Governing Docs
+
+**Runs for every project** (new or existing). Read the canonical structure from `documentation-types.md` and ensure the workspace matches it.
+
+Required directories (from documentation-types.md Canonical Directory Structure):
+```bash
+mkdir -p workspace/features workspace/archive workspace/docs/{references,guides,systems,setup,prd,architecture,troubleshooting,api,incidents,solutions}
+```
+
+**For existing projects**, check for legacy structures and migrate:
 
 ```bash
-mkdir -p workspace/features
+# Detect legacy: incidents/ or solutions/ at workspace level (pre-2026-03-02 structure)
+ls workspace/incidents/ 2>/dev/null && echo "LEGACY_INCIDENTS"
+ls workspace/solutions/ 2>/dev/null && echo "LEGACY_SOLUTIONS"
+
+# Detect legacy: flat docs/ with no subdirectories
+ls workspace/docs/references/ 2>/dev/null || echo "LEGACY_FLAT_DOCS"
 ```
+
+**If legacy structures detected:**
+
+```text
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔄 Updating workspace structure
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+Apply migrations in order:
+
+1. **Move `workspace/incidents/` → `workspace/docs/incidents/`** if legacy incidents dir exists:
+   ```bash
+   # Move contents, not the dir itself (docs/incidents/ already created above)
+   mv workspace/incidents/* workspace/docs/incidents/ 2>/dev/null
+   rmdir workspace/incidents 2>/dev/null
+   ```
+
+2. **Move `workspace/solutions/` → `workspace/docs/solutions/`** if legacy solutions dir exists:
+   ```bash
+   mv workspace/solutions/* workspace/docs/solutions/ 2>/dev/null
+   rmdir workspace/solutions 2>/dev/null
+   ```
+
+3. **Sort flat docs/ files into typed subdirs** if legacy flat docs detected:
+   - Files matching `*-reference.md` → `workspace/docs/references/`
+   - Files matching `*-security.md` or system-level docs → `workspace/docs/systems/`
+   - Files matching `*-setup.md` or `new-repo-*.md` → `workspace/docs/setup/`
+   - Remaining `.md` files (not index.md) → `workspace/docs/guides/`
+
+4. **Create `workspace/docs/index.md`** if it doesn't exist:
+   Scan all docs subdirs and generate a navigation index listing each category and its files.
+
+5. **Update references in project files**: Search for old paths (`workspace/incidents/`, `workspace/solutions/`) in workspace/*.md and update to new paths (`workspace/docs/incidents/`, `workspace/docs/solutions/`).
+
+Report what was migrated:
+```text
+Migrated:
+- {count} files from workspace/incidents/ → workspace/docs/incidents/
+- {count} files from workspace/solutions/ → workspace/docs/solutions/
+- {count} docs sorted into typed subdirectories
+- Created workspace/docs/index.md
+```
+
+**If no legacy structures detected**: Skip silently. The `mkdir -p` above already ensured all required dirs exist.
+
+### 2. Create Directory Structure
+
+For new projects only (workspace/ did not exist in Step 1). The `mkdir -p` in Step 1a already handles directory creation for all cases.
 
 ### 3. Create Initial Files
 
@@ -250,7 +315,8 @@ See STATE.md for current stage and focus.
 - `OVERVIEW.md` - Project vision and scope
 - `STATE.md` - Living state tracker (auto-updated)
 - `BACKLOG.md` - Persistent backlog of improvements
-- `specs/` - Feature specifications and plans
+- `features/` - Feature specifications and plans
+- `docs/` - Documentation hub (references, guides, systems, setup, incidents, solutions)
 ```
 
 **workspace/STATE.md:**
@@ -340,7 +406,8 @@ workspace/
 ├── CLAUDE.md    (planning context)
 ├── STATE.md     (stage: starting)
 ├── BACKLOG.md   (improvements backlog)
-└── features/       (ready for feature specs)
+├── features/    (ready for feature specs)
+└── docs/        (references, guides, systems, setup, incidents, solutions)
 
 .claude/
 └── hooks.json   (auto-update hook)
@@ -357,7 +424,8 @@ workspace/
 ├── STATE.md     (stage: starting)
 ├── BACKLOG.md   (improvements backlog)
 ├── CODEBASE.md  (codebase analysis)
-└── features/       (ready for feature specs)
+├── features/    (ready for feature specs)
+└── docs/        (references, guides, systems, setup, incidents, solutions)
 
 .claude/
 └── hooks.json   (auto-update hook)
@@ -474,7 +542,19 @@ workspace/
 ├── STATE.md            # Feature Registry
 ├── BACKLOG.md          # Persistent backlog of improvements
 ├── CODEBASE.md         # Codebase map (brownfield only)
-└── features/              # Empty, ready for /plan
+├── features/           # Empty, ready for /plan
+└── docs/               # Documentation hub
+    ├── index.md        # Navigation index
+    ├── references/     # Reference catalogs
+    ├── guides/         # How-to guides
+    ├── systems/        # Architecture and system docs
+    ├── setup/          # Installation and configuration
+    ├── prd/            # Product requirements
+    ├── architecture/   # Architecture decisions
+    ├── troubleshooting/# Troubleshooting guides
+    ├── api/            # API documentation
+    ├── incidents/      # Post-incident reports
+    └── solutions/      # Solved problems (/compound)
 
 .claude/
 └── hooks.json          # Auto-update hook installed

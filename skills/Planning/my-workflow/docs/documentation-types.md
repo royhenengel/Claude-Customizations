@@ -11,31 +11,39 @@ repo-root/
 ├── CLAUDE.md                          # Project Context (auto-loaded, operational)
 ├── README.md                          # Project Intro (human-facing)
 │
-├── docs/                              # Standalone guides and references
-│   └── {guide-name}.md                # Guide (no better home)
-│
 ├── workspace/                          # Project management
 │   ├── CLAUDE.md                      # Planning Context (auto-loaded, navigation)
 │   ├── OVERVIEW.md                    # Project Vision (authoritative governance)
 │   ├── STATE.md                       # Project State (living tracker)
 │   ├── BACKLOG.md                     # Project Backlog (persistent)
-│   ├── solutions/                     # Solved problems (/compound)
-│   │   ├── INDEX.md                   # Solutions index
-│   │   └── {category}/               # Problem categories
-│   │       └── {solution}.md          # Individual solution
-│   └── features/                         # Feature specifications
-│       └── {feature}/                 # One directory per feature
-│           ├── CLAUDE.md              # Feature Context (auto-loaded)
-│           ├── SPEC.md                # Feature Spec (requirements)
-│           ├── DISCOVERY.md           # Feature Discovery (collaborative decision record)
-│           ├── RESEARCH.md            # Feature Research (data, analysis, findings)
-│           ├── PLAN.md                # Feature Plan (executable tasks)
-│           ├── PROGRESS.md            # Feature Progress (live tracking during work)
-│           ├── SUMMARY.md             # Feature Summary (outcomes, post-completion)
-│           ├── INCIDENT-{date}.md     # Incident Report (optional, post-incident)
-│           └── archive/               # Archived artifacts (post-completion)
-│
-└── archive/                           # Archived content
+│   ├── docs/                          # Documentation hub
+│   │   ├── index.md                   # Navigation index
+│   │   ├── references/                # Reference catalogs
+│   │   ├── guides/                    # How-to guides and walkthroughs
+│   │   ├── systems/                   # Architecture and system docs
+│   │   ├── setup/                     # Installation and configuration
+│   │   ├── prd/                       # Product requirements documents
+│   │   ├── architecture/              # Architecture decisions and records
+│   │   ├── troubleshooting/           # Troubleshooting guides
+│   │   ├── api/                       # API documentation
+│   │   ├── incidents/                 # Post-incident reports
+│   │   │   └── INCIDENT-{YYYY-MM-DD}-{slug}.md
+│   │   └── solutions/                 # Solved problems (/compound)
+│   │       ├── INDEX.md               # Solutions index
+│   │       └── {category}/            # Problem categories
+│   │           └── {solution}.md      # Individual solution
+│   ├── features/                      # Feature specifications
+│   │   └── {feature}/                 # One directory per feature
+│   │       ├── CLAUDE.md              # Feature Context (auto-loaded)
+│   │       ├── SPEC.md                # Feature Spec (requirements)
+│   │       ├── DISCOVERY.md           # Feature Discovery (collaborative decision record)
+│   │       ├── RESEARCH.md            # Feature Research (data, analysis, findings)
+│   │       ├── PLAN.md                # Feature Plan (executable tasks)
+│   │       ├── PROGRESS.md            # Feature Progress (live tracking during work)
+│   │       ├── SUMMARY.md             # Feature Summary (outcomes, post-completion)
+│   │       ├── INCIDENT-{date}.md     # Incident Report (optional, post-incident)
+│   │       └── archive/               # Archived artifacts (post-completion)
+│   └── archive/                       # Archived content
 ```
 
 ## Document Type Registry
@@ -55,9 +63,12 @@ repo-root/
 | Feature Progress | PROGRESS.md | workspace/features/{feature}/ | Live tracking of progress, current state, gap stack | Yes |
 | Feature Summary | SUMMARY.md | workspace/features/{feature}/ | Outcomes after feature completion | Yes |
 | Feature Context | CLAUDE.md | workspace/features/{feature}/ | Cascading context for feature (auto-loaded) | Yes |
-| Incident Report | INCIDENT-{YYYY-MM-DD}-{slug}.md | workspace/incidents/ | Post-incident documentation | Yes |
-| Guide | {name}.md | docs/ | Standalone guides with no better home | No |
-| Solution | {category}/{name}.md | workspace/solutions/ | Solved problem documentation | Yes |
+| Incident Report | INCIDENT-{YYYY-MM-DD}-{slug}.md | workspace/docs/incidents/ | Post-incident documentation | Yes |
+| Guide | {name}.md | workspace/docs/guides/ | Standalone guides with no better home | No |
+| Reference | {name}.md | workspace/docs/references/ | Reference catalogs and inventories | No |
+| System Doc | {name}.md | workspace/docs/systems/ | Architecture and system-level docs | No |
+| Setup Guide | {name}.md | workspace/docs/setup/ | Installation and configuration guides | No |
+| Solution | {category}/{name}.md | workspace/docs/solutions/ | Solved problem documentation | Yes |
 
 ## Placement Rules
 
@@ -66,9 +77,12 @@ Decision tree for where a new document goes:
 1. Is it auto-loaded context for a directory? -> **CLAUDE.md** in that directory
 2. Is it a feature artifact (spec, plan, research, progress, summary, discovery)? -> **workspace/features/{feature}/**
 3. Is it project management (state, backlog, governance)? -> **workspace/**
-4. Is it a solved problem to reference later? -> **workspace/solutions/**
-5. Is it a standalone guide that doesn't fit elsewhere? -> **docs/**
-6. Is it human-facing documentation for a directory? -> **README.md** in that directory
+4. Is it a solved problem to reference later? -> **workspace/docs/solutions/**
+5. Is it a reference catalog or inventory? -> **workspace/docs/references/**
+6. Is it an architecture or system-level doc? -> **workspace/docs/systems/**
+7. Is it a setup or configuration guide? -> **workspace/docs/setup/**
+8. Is it a standalone guide that doesn't fit elsewhere? -> **workspace/docs/guides/**
+9. Is it human-facing documentation for a directory? -> **README.md** in that directory
 
 ## Role Separation for Root Files
 

@@ -24,30 +24,40 @@ You are a documentation enforcement agent for repositories using the my-workflow
 <mode name="audit">
 Default mode. Scan and report.
 
-1. Read `skills/Planning/my-workflow/docs/documentation-types.md` for the type registry and placement rules
+1. Read `skills/Planning/my-workflow/docs/documentation-types.md` for the type registry, placement rules, and **canonical directory structure**
 2. Read `skills/Planning/my-workflow/templates/` to understand expected structure for each type
-3. Scan all markdown files in the repo (excluding archive/, reference/, node_modules/)
-4. For each file:
+3. **Verify directory structure matches governing docs** (documentation-types.md Canonical Directory Structure):
+   - Required directories: `workspace/features`, `workspace/archive`, `workspace/docs/{references,guides,systems,setup,prd,architecture,troubleshooting,api,incidents,solutions}`
+   - For each required directory: check it exists. Missing directories are **critical** findings.
+   - Detect legacy structures:
+     - `workspace/incidents/` existing (should be `workspace/docs/incidents/`) → **critical**
+     - `workspace/solutions/` existing (should be `workspace/docs/solutions/`) → **critical**
+     - `workspace/docs/` existing but missing typed subdirectories (flat docs) → **critical**
+     - `.md` files directly in `workspace/docs/` that belong in a typed subdir (e.g., `*-reference.md` should be in `references/`) → **warning**
+   - Check `workspace/docs/index.md` exists → **warning** if missing
+4. Scan all markdown files in the repo (excluding archive/, node_modules/)
+5. For each file:
    - Identify its document type (from the type registry)
    - Check location against placement rules
    - Check content against the template for that type (required sections present?)
    - Check for staleness indicators (outdated counts, broken links, stale references)
-5. Scan for rogue documentation files:
+6. Scan for rogue documentation files:
    - Check repo root for any `.md` files that don't belong (README.md is allowed, everything else is suspect)
    - Check for `.md` files outside expected locations (`workspace/`, `infra/`, `src/`)
    - For each rogue file: identify what it is, suggest where it belongs
    - If placement is ambiguous, flag it for user decision (do NOT move or delete autonomously)
    - Common rogue patterns: review artifacts (REVIEW.md, ARCHITECTURE_REVIEW.md), agent output files, orphaned docs from directory restructures
-6. Validate template-based documents against their templates:
+7. Validate template-based documents against their templates:
    - Compare `workspace/STATE.md` against `templates/project-state-template.md` and `workspace/features/{feature}/PROGRESS.md` against `templates/feature-progress-template.md`
    - Check required sections exist, field formats match (e.g. `**Stage**:`, `**Type**:`, `**Last Updated**:`)
    - Flag missing sections, extra sections, or mismatched structure
    - Apply to any document that has a corresponding template in `templates/`
-7. Cross-reference workflow scenario maps against workflow files:
+8. Cross-reference workflow scenario maps against workflow files:
    - Read `skills/Planning/my-workflow/docs/workflow-scenario-maps.md`
    - For each workflow (/start, /plan, /build, /fix), compare scenario map step descriptions against actual step numbers in the corresponding workflow file (`workflows/start.md`, `workflows/plan.md`, `workflows/build.md`, `skills/Code-Quality/fix/SKILL.md`)
    - Flag mismatched step numbers, missing steps, or steps described in maps but absent from workflows
-8. Generate findings report
+9. **Verify path references are current**: Grep workspace files for legacy paths (`workspace/incidents/`, `workspace/solutions/` outside of `workspace/docs/`). Any hits are **warning** findings suggesting stale references.
+10. Generate findings report
 
 Output format:
 ```markdown
@@ -71,17 +81,20 @@ Explicit invocation only. Scan, report, then fix after confirmation.
 
 1. Run the full audit (same as audit mode)
 2. Present findings grouped by action type:
-   - Files to move (misplaced)
+   - Directories to create (missing from canonical structure)
+   - Directories to migrate (legacy locations like `workspace/incidents/` → `workspace/docs/incidents/`)
+   - Files to move (misplaced, including flat docs files into typed subdirs)
+   - Path references to update (stale paths in workspace files)
    - Sections to add (missing required content)
    - Content to update (stale data)
    - Catalogs to regenerate
 3. Ask for confirmation before proceeding
-4. Apply fixes, reporting each change
+4. Apply fixes in order: directories first, then migrations, then file moves, then reference updates, then content fixes
 
 For catalog regeneration, rebuild from source:
-- `workspace/docs/claude-skills-reference.md`: Scan `skills/**/SKILL.md` frontmatter
-- `workspace/docs/claude-agents-reference.md`: Scan `agents/*.md` frontmatter
-- `workspace/docs/claude-mcp-servers-reference.md`: Scan `.mcp.json` or `mcp/` configs
+- `workspace/docs/references/claude-skills-reference.md`: Scan `skills/**/SKILL.md` frontmatter
+- `workspace/docs/references/claude-agents-reference.md`: Scan `agents/*.md` frontmatter
+- `workspace/docs/references/claude-mcp-servers-reference.md`: Scan `.mcp.json` or `mcp/` configs
 
 For completed feature spec archiving:
 

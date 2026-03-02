@@ -38,7 +38,7 @@ External repositories, plugins, and tools that have been evaluated and integrate
 
 | Resource | License | Status | Integration |
 |----------|---------|--------|-------------|
-| [compound-engineering](https://github.com/EveryInc/compound-engineering-plugin) | - | Complete | /compound command → workspace/solutions/ |
+| [compound-engineering](https://github.com/EveryInc/compound-engineering-plugin) | - | Complete | /compound command → workspace/docs/solutions/ |
 | [living-requirements](https://github.com/peterbe/death-of-the-prd) | - | Complete | Skill → [skills/Planning/living-requirements/](../skills/Planning/living-requirements/) |
 
 ---

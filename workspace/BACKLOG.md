@@ -127,4 +127,4 @@ Persistent record of improvements, ideas, and technical debt discovered during w
     5. Add exclusions for grep/search commands
     6. Prevent settings.json rebuild from re-enabling disabled hooks
 - [ ] Check claude-flow in lifeos
-- [ ] Check what's going on with workspace/solutions
+- [ ] Check what's going on with workspace/docs/solutions

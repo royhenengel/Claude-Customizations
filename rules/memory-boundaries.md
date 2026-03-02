@@ -32,7 +32,7 @@ Automatic session capture via plugin. Searchable via MCP tools. Injects recent c
 
 ### /compound (Solutions)
 
-Curated problem-solution pairs in `workspace/solutions/`. Created via /compound skill.
+Curated problem-solution pairs in `workspace/docs/solutions/`. Created via /compound skill.
 
 **Purpose**: Detailed case files for recurring problems. Root cause analysis with verified fixes.
 **Not here**: One-off debugging (claude-mem), architectural decisions (STATE.md), brief patterns (MEMORY.md).
@@ -52,7 +52,7 @@ Curated problem-solution pairs in `workspace/solutions/`. Created via /compound 
 I learned something. Where does it go?
 
 Is it a verified solution to a recurring problem with clear symptoms?
-  YES -> /compound (workspace/solutions/) - full diagnostic document
+  YES -> /compound (workspace/docs/solutions/) - full diagnostic document
   NO  -> continue
 
 Is it an architectural or design decision made during feature work?

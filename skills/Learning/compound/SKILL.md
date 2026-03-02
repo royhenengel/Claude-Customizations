@@ -130,17 +130,17 @@ created: {timestamp}
 
 Check if solutions directory exists:
 ```bash
-ls workspace/solutions/ 2>/dev/null || mkdir -p workspace/solutions
+ls workspace/docs/solutions/ 2>/dev/null || mkdir -p workspace/docs/solutions
 ```
 
 Create category directory if needed:
 ```bash
-mkdir -p workspace/solutions/{category}
+mkdir -p workspace/docs/solutions/{category}
 ```
 
 Write the solution file:
 ```
-workspace/solutions/{category}/{filename}.md
+workspace/docs/solutions/{category}/{filename}.md
 ```
 
 ## Step 5: Confirm and Index
@@ -148,7 +148,7 @@ workspace/solutions/{category}/{filename}.md
 Display:
 ```text
 Solution documented:
-  workspace/solutions/{category}/{filename}.md
+  workspace/docs/solutions/{category}/{filename}.md
 
 Tags: {tags}
 
@@ -159,8 +159,8 @@ will be faster to resolve.
 Update index if it exists:
 ```bash
 # Append to index if present
-if [ -f workspace/solutions/INDEX.md ]; then
-  echo "| {title} | {category} | {date} |" >> workspace/solutions/INDEX.md
+if [ -f workspace/docs/solutions/INDEX.md ]; then
+  echo "| {title} | {category} | {date} |" >> workspace/docs/solutions/INDEX.md
 fi
 ```
 
