@@ -20,15 +20,15 @@ The current Claude Code setup (Claude-Customizations repo symlinked to `~/.claud
 
 ## Approach
 
-**Fresh start with evaluation-first strategy.** Do not modify the existing Claude-Customizations repo. Install PAI + Mission Control as the primary configuration to evaluate. Build a custom LifeOS setup separately in a worktree, migrating elements from the current repo one at a time after review.
+**Fresh start with evaluation-first strategy.** Do not modify the existing Claude-Customizations repo. Install PAI + Mission Control as the primary configuration to evaluate. Build a custom Claude Code setup in a separate new repo, migrating elements from the old repo one at a time after review.
 
-### Two-track setup
+### Three-repo setup
 
-| Track | Purpose | Location |
-|-------|---------|----------|
-| **Main** | PAI + Mission Control (evaluate as daily driver) | `~/.claude/` |
-| **Worktree** | Custom LifeOS build (constructed from scratch) | TBD worktree branch |
-| **Archive** | Current Claude-Customizations (reference only) | `~/Projects/Claude-Customizations` |
+| Repo | Purpose | Location |
+|------|---------|----------|
+| **PAI (active)** | PAI + Mission Control, daily driver during evaluation | `~/.claude/` |
+| **Claude-Code-v2 (new)** | Custom Claude Code setup, built from scratch | `~/Projects/Claude-Code-v2` |
+| **Claude-Customizations (archive)** | Current setup, reference only, do not modify | `~/Projects/Claude-Customizations` |
 
 ## What to Preserve
 
@@ -128,20 +128,21 @@ Post-install tasks:
 - [ ] MC can spawn Claude Code sessions
 - [ ] Project memories accessible
 
-### Phase 3: Build Custom LifeOS Setup
+### Phase 3: Build Custom Claude Code Setup
 
-#### Step 7: Create worktree for custom build
+#### Step 7: Create new repo
 
-Create a worktree from the Claude-Customizations repo for building the custom LifeOS configuration.
+Create a fresh repo for the custom Claude Code configuration. No shared history with Claude-Customizations.
 
 ```bash
-cd ~/Projects/Claude-Customizations
-git worktree add ~/.claude/worktrees/lifeos-build lifeos-build
+mkdir ~/Projects/Claude-Code-v2
+cd ~/Projects/Claude-Code-v2
+git init
 ```
 
 #### Step 8: Audit and migrate (item by item)
 
-Review every component in Claude-Customizations and decide what migrates to the custom build. Nothing is pre-decided.
+Review every component in Claude-Customizations (`~/Projects/Claude-Customizations`) and decide what migrates to the new repo. Copy selected files, do not symlink between repos. Nothing is pre-decided.
 
 **Skills audit** (~95 skills across 16 categories):
 
@@ -190,7 +191,7 @@ Review `~/.claude.json` MCP server configs. Decide what's still needed alongside
 
 #### Step 9: Swap when ready
 
-Once the custom build is validated, swap it in as the main configuration. Keep PAI available as a reference or fallback.
+Once the custom build is validated, symlink `~/Projects/Claude-Code-v2` to `~/.claude/` (replacing PAI). Keep PAI clone available as a reference.
 
 Timing: No deadline. Evaluate PAI for as long as needed before deciding.
 
