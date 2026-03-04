@@ -43,6 +43,8 @@ The current Claude Code setup (Claude-Customizations repo symlinked to `~/.claud
 
 ### Phase 1: Backup and Disconnect
 
+The Claude-Customizations repo at `~/Projects/Claude-Customizations` is not affected by any step below. Only symlinks inside `~/.claude/` are removed, the repo itself stays intact as the reference archive. Runtime data (debug logs, telemetry, cache) exists only inside `~/.claude/` and is not part of the repo.
+
 #### Step 1: Back up project memories and global config
 
 ```bash
